@@ -92,7 +92,7 @@ export default {
         {
           name: "Settings",
           page: "/setting",
-          page_name: "settings",
+          page_name: "setting",
         },
       ],
     };
