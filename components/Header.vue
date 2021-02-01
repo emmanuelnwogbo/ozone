@@ -30,7 +30,7 @@ export default {
           return "Support";
         case "notifications":
           return "Notifications";
-        case "settings":
+        case "setting":
           return "Settings";
         default:
           return "Welcome Back";
