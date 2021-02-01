@@ -8,7 +8,7 @@
 
 <script>
 import Header from "@/components/Header";
-import Sidenav from "@/components/Sidenav";
+import Sidenav from "@/components/SideNav";
 export default {
   components: {
     Header,
