@@ -118,10 +118,10 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  width: 21rem;
-  background: #ffffff;
+  width: 26rem;
   border-right: 1px solid rgba(0, 0, 0, 0.1);
   padding: 1rem 0;
+  background: #e5e5e5;
 
   &__sec {
     display: flex;

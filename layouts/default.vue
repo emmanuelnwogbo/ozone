@@ -43,15 +43,14 @@ body {
   width: 100%;
   height: 100%;
   overflow-x: hidden;
+  background: #e5e5e5;
+  padding-bottom: 3rem;
+  min-height: 120vh;
+}
 
-  &::-webkit-scrollbar {
-    width: 0px;
-    opacity: 0;
-  }
-
-  &::-moz-scrollbar {
-    width: 0px;
-    opacity: 0;
-  }
+img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
 }
 </style>

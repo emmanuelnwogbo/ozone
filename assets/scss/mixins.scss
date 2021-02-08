@@ -1,0 +1,45 @@
+@mixin absolutePos() {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+@mixin btn() {
+  outline: none;
+  cursor: pointer;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
+}
+
+@mixin section() {
+  display: flex;
+  margin-top: 5.7rem;
+  justify-content: space-between;
+}
+
+@mixin sectionCard() {
+  background: #fff;
+  border-radius: 2.4rem;
+
+  min-height: 30rem;
+  flex-shrink: 0;
+}
+
+@mixin sectionCardHeader() {
+  font-weight: 500;
+  font-size: 1.8rem;
+  line-height: 2.4rem;
+}
+
+@mixin pageStyle() {
+  padding-left: 21rem;
+
+  &__body {
+    padding: 15rem 4.5rem 0 10rem;
+  }
+}

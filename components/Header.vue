@@ -7,9 +7,7 @@
 
 <script>
 export default {
-  mounted() {
-    console.log(this.$route.name);
-  },
+  mounted() {},
   computed: {
     title() {
       const current_route = this.$route.name;
@@ -42,11 +40,11 @@ export default {
 
 <style lang="scss">
 .header {
-  position: fixed;
+  position: absolute;
   top: 0;
   right: 0;
-  width: 133rem;
-  padding: 4rem 4rem 4rem 4rem;
+  width: 127rem;
+  padding: 4rem 4rem 4rem 6rem;
 
   &__h3 {
     font-size: 2rem;
