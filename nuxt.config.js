@@ -24,8 +24,18 @@ export default {
         content: process.env.npm_package_description || ""
       }
     ],
+    script: [
+      {
+        src: "https://unpkg.com/vue-multiselect@2.1.0"
+      }
+    ],
     link: [
-      /*{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }*/
+      { rel: "icon", type: "image/x-icon", href: "" },
+      {
+        rel: "stylesheet",
+        href:
+          "https://unpkg.com/vue-multiselect@2.1.0/dist/vue-multiselect.min.css"
+      }
     ]
   },
   /*
@@ -36,7 +46,10 @@ export default {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: [],
+  plugins: [
+    { src: "~/plugins/vuequill.js", mode: "client" }
+    //{ src: "~/plugins/multiselect.js", mode: "client" }
+  ],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
@@ -54,7 +67,7 @@ export default {
     scss: [
       "~/assets/scss/mixins.scss",
       "~/assets/scss/variables.scss",
-      "~/assets/scss/utils.scss",
+      "~/assets/scss/utils.scss"
       //"~/assets/scss/animations.scss"
     ]
   },
@@ -62,5 +75,8 @@ export default {
    ** Build configuration
    ** See https://nuxtjs.org/api/configuration-build/
    */
-  build: {}
+  build: {},
+  proxy: {
+    prefix: "3.123.189.154:3000"
+  }
 };

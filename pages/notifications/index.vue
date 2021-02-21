@@ -2,6 +2,9 @@
   <div class="notifications">
     <div class="notifications__body">
       <div class="notifications__sectionone">
+        <div class="notifications__toput">
+          
+        </div>
         <div class="notifications__buttons">
           <button
             v-bind:class="{
@@ -106,8 +109,12 @@
 </template>
 
 <script>
+
 export default {
   name: "Notifications",
+  components: {
+    
+  },
   data() {
     return {
       currentBtn: "Merchants",

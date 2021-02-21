@@ -20,31 +20,122 @@
 
       <div class="products__section">
         <div class="products__productlist products__section--card">
-          <h2>Your Products</h2>
-          <div class="products__productlist--products">
-            <div
-              class="products__productlist--product"
-              v-for="(item, index) in products"
-              :key="index"
-              v-bind:class="{
-                active: currentProduct === item.label,
-              }"
-            >
-              <div class="products__productlist--product-left">
-                <figure>
-                  <img src="~/assets/products/tanker.png" alt="" />
-                </figure>
-              </div>
-              <div class="products__productlist--product-right">
-                <span>{{ item.label }}</span>
-                <span>{{ item.desc }}</span>
-                <span>{{ item.bottomLabel }}</span>
+          <ProductCard background="#fff" borderRadius="2.5rem">
+            <h2>Your Products</h2>
+            <div class="products__productlist--products">
+              <div
+                class="products__productlist--product"
+                v-for="(item, index) in products"
+                :key="index"
+              >
+                <ProductCard
+                  v-bind:background="
+                    currentProduct === item.label ? '#159183' : '#fff'
+                  "
+                  borderRadius="1.5rem"
+                >
+                  <div
+                    class="products__productlist--productcontent"
+                    v-bind:class="{
+                      active: currentProduct === item.label,
+                    }"
+                  >
+                    <div class="products__productlist--figure">
+                      <ProductCard
+                        v-bind:background="item.figColor"
+                        borderRadius="1.5rem"
+                        v-bind:deactivate="
+                          currentProduct === item.label ? true : false
+                        "
+                      >
+                        <figure class="products__productlist--figure">
+                          <img src="~/assets/products/tanker.png" alt="" />
+                        </figure>
+                      </ProductCard>
+                    </div>
+                    <div
+                      class="products__productlist--right"
+                      v-bind:class="{
+                        active: currentProduct === item.label,
+                      }"
+                    >
+                      <span>{{ item.label }}</span>
+                      <span>{{ item.desc }}</span>
+                      <span>{{ item.bottomLabel }}</span>
+                    </div>
+                  </div>
+                </ProductCard>
               </div>
             </div>
-          </div>
+            <button @click="open_page(addProduct)" class="products__productlist--btn">Add Product</button>
+          </ProductCard>
         </div>
-        <div class="products__section--ordersovertime products__section--card">
-          j
+        <div class="products__ordersovertime products__section--card">
+          <ProductCard v-bind:background="'#fff'" borderRadius="1.5rem">
+          </ProductCard>
+        </div>
+      </div>
+
+      <div class="products__section">
+        <div class="products__averagesales">
+          <ProductCard v-bind:background="'#fff'" borderRadius="1.5rem">
+          </ProductCard>
+        </div>
+        <div class="products__salesreport">
+          <ProductCard v-bind:background="'#fff'" borderRadius="1.5rem">
+          </ProductCard>
+        </div>
+      </div>
+
+      <div class="products__section">
+        <div class="products__saleslocation">
+          <ProductCard v-bind:background="'#fff'" borderRadius="1.5rem">
+            <div class="products__saleslocation--body">
+              <div class="products__saleslocation--left">
+                <div class="products__saleslocation--title">
+                  <h2>Sales Location</h2>
+                  <span>2020 - 2021</span>
+                </div>
+                <div class="products__saleslocation--stats">
+                  <div class="products__saleslocation--number">
+                    <span>21.2k</span>
+                    <span>Our customers</span>
+                  </div>
+                  <div class="products__saleslocation--percent">
+                    <span></span>
+                    <span>105.23 %</span>
+                  </div>
+                </div>
+                <div class="products__saleslocation--locations">
+                  <div
+                    class="products__saleslocation--location"
+                    v-for="(location, index) in saleslocation"
+                    :key="index"
+                  >
+                    <div
+                      v-bind:style="{
+                        background: getRandomColor(),
+                        position: 'absolute',
+                        top: '0',
+                        height: '100%',
+                        width: '100%',
+                        left: '0',
+                        zIndex: 1,
+                        opacity: '.1',
+                      }"
+                    ></div>
+                    <div class="products__saleslocation--name">
+                      <span>{{ index + 1 }}.</span>
+                      <span>{{ location.name }}</span>
+                    </div>
+                    <div>
+                      <span>{{ location.numbers }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ProductCard>
         </div>
       </div>
     </div>
@@ -52,11 +143,30 @@
 </template>
 
 <script>
+import ProductCard from "@/components/products/ProductCard";
+
 export default {
   data() {
     return {
       currentProduct: "LPG",
+      addProduct: "/products/addproduct"
     };
+  },
+  components: {
+    ProductCard,
+  },
+  methods: {
+    getRandomColor() {
+      var letters = "0123456789ABCDEF";
+      var color = "#";
+      for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    },
+    open_page(page) {
+      this.$router.push(page);
+    },
   },
   computed: {
     products() {
@@ -67,6 +177,7 @@ export default {
           label: "AGO",
           desc: "200,000L in Stock",
           bottomLabel: "N200/Litre",
+          figColor: "#FFEBF6",
         },
         {
           icon:
@@ -74,6 +185,7 @@ export default {
           label: "LPG",
           desc: "9KG in Stock",
           bottomLabel: "N100/KG",
+          figColor: "#CDF4FF",
         },
         {
           icon:
@@ -81,10 +193,37 @@ export default {
           label: "PMS",
           desc: "200,000L in Stock",
           bottomLabel: "N200/Litre",
+          figColor: "#CDF4FF",
         },
       ];
 
       return products;
+    },
+    saleslocation() {
+      const locations = [
+        {
+          flag: "Lagos",
+          name: "Lagos",
+          numbers: "12.8k",
+        },
+        {
+          flag: "Lagos",
+          name: "Edo",
+          numbers: "5.3k",
+        },
+        {
+          flag: "Lagos",
+          name: "Portharcourt",
+          numbers: "2.7k",
+        },
+        {
+          flag: "Lagos",
+          name: "Abuja",
+          numbers: "1.0k",
+        },
+      ];
+
+      return locations;
     },
   },
 };
@@ -170,79 +309,235 @@ export default {
 
     & h2 {
       @include sectionCardHeader;
-    }
 
-    &--card {
-      @include sectionCard;
-    }
-
-    &--ordersovertime {
-      width: 72rem;
+      padding: 4rem 5rem 0rem 5rem;
     }
   }
 
   &__productlist {
-    width: 42rem;
-    height: 51rem;
-    padding: 6rem;
+    width: 37rem;
+    height: 58rem;
 
     &--products {
       display: flex;
       flex-direction: column;
       align-items: center;
+      margin-bottom: 2rem;
     }
 
     &--product {
       display: flex;
-      height: 8rem;
-      width: 30rem;
+      height: 9rem;
+      width: 26rem;
       margin: 2rem 0;
       align-items: center;
       border-radius: 1.2rem;
 
-      &.active {
-        background: $color-primary;
+      cursor: pointer;
+    }
+
+    &--productcontent {
+      padding: 0;
+      display: flex;
+      align-items: center;
+      height: 100%;
+    }
+
+    &--productcontent.active {
+      padding: 1rem 1.5rem;
+    }
+
+    &--figure {
+      height: 7rem;
+      border-radius: 1.5rem;
+      width: 7.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      & img {
+        height: 3rem;
+        width: 4rem;
       }
+    }
 
-      &-left {
-        flex-shrink: 0;
-        margin-right: 2rem;
+    &--right {
+      display: flex;
+      flex-direction: column;
+      margin-left: 2.3rem;
 
-        & figure {
-          width: 3rem;
-          height: 3rem;
+      & span {
+        font-weight: 500;
+        margin-bottom: 0.8rem;
+
+        &:nth-child(1) {
+          color: #11142d;
+          font-size: 1.5rem;
+        }
+
+        &:nth-child(2) {
+          color: #808191;
+          font-size: 1.16rem;
+        }
+
+        &:nth-child(3) {
+          font-size: 1.1rem;
+          background: $color-primary;
+          color: #ebf2ff;
+          text-align: center;
+          border-radius: 0.9rem;
+          padding: 0.5rem;
+          display: inline-block;
+          max-width: 7rem;
+          margin-bottom: 0;
         }
       }
 
-      &-right {
-        display: flex;
-        flex-shrink: 0;
-        flex-direction: column;
-
+      &.active {
         & span {
-          &:nth-child(1) {
-            font-weight: 600;
-            font-size: 16px;
-            line-height: 19px;
-          }
-
-          &:nth-child(2) {
-            font-style: normal;
-            font-weight: 500;
-            font-size: 1.2rem;
-            line-height: 1.6rem;
-
-            color: #808191;
-          }
+          color: #ebf2ff;
 
           &:nth-child(3) {
-            font-weight: 600;
-            font-size: 1.3rem;
-            line-height: 1.8rem;
+            background: #ebf2ff;
+            color: $color-primary;
           }
         }
       }
     }
+
+    &--btn {
+      @include btn;
+      border: none;
+      background: $color-blue;
+      color: #fff;
+      border-radius: 1.6rem;
+      display: block;
+      margin: 0 auto;
+      height: 4.5rem;
+      width: 27rem;
+      font-size: 1.3rem;
+      font-weight: 600;
+    }
+  }
+
+  &__ordersovertime {
+    width: 77rem;
+  }
+
+  &__saleslocation {
+    height: 45rem;
+    width: 100%;
+    position: relative;
+
+    &--body {
+      display: flex;
+    }
+
+    &--left {
+      width: 30rem;
+      padding: 4rem 5rem 0rem 5rem;
+
+      & h2 {
+        padding: 0;
+      }
+    }
+
+    &--title {
+      & span {
+        color: #8f92a1;
+        font-size: 1.2rem;
+      }
+    }
+
+    &--stats {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 4rem;
+      margin-bottom: 3rem;
+
+      & span {
+        color: #8f92a1;
+        font-size: 1.2rem;
+      }
+    }
+
+    &--number {
+      display: flex;
+      flex-direction: column;
+
+      & span {
+        &:nth-child(1) {
+          color: #000000;
+          font-weight: 600;
+          font-size: 2rem;
+        }
+      }
+    }
+
+    &--percent {
+      & span {
+        color: $color-primary;
+        font-size: 1.3rem;
+        font-weight: 600;
+      }
+    }
+
+    &--locations {
+      position: relative;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: -11rem;
+        right: -4rem;
+        height: 37.5rem;
+        width: 0.4px;
+        background: #8f92a1;
+        opacity: 0.4;
+      }
+    }
+
+    &--location {
+      position: relative;
+      display: flex;
+      padding: 1.2rem 2rem;
+      border-radius: 1.2rem;
+      overflow: hidden;
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin: 1.8rem 0;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+
+      & span {
+        display: block;
+        position: relative;
+        z-index: 2;
+      }
+    }
+
+    &--name {
+      display: flex;
+
+      & span {
+        &:nth-child(1) {
+          margin-right: 0.44rem;
+        }
+      }
+    }
+  }
+
+  &__averagesales {
+    flex-shrink: 0;
+    height: 40rem;
+    width: 74rem;
+  }
+
+  &__salesreport {
+    flex-shrink: 0;
+    height: 40rem;
+    width: 40rem;
   }
 }
 </style>
