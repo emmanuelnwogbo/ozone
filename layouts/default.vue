@@ -45,7 +45,6 @@ body {
   overflow-x: hidden;
   background: #e5e5e5;
   padding-bottom: 3rem;
-  min-height: 120vh;
 
   color: $color-black-font;
   padding-bottom: 10rem;

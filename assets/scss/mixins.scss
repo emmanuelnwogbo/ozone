@@ -44,3 +44,28 @@
     padding: 15rem 4.5rem 0 10rem;
   }
 }
+
+@mixin btnLoadMore() {
+  font-weight: 600;
+  background: #1b1d21;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  cursor: pointer;
+  border: none;
+  font-size: 1.3rem;
+  border-radius: 1.2rem;
+  height: 4.5rem;
+  width: 14rem;
+}
+
+@mixin typicalCard() {
+  border-radius: 1.8rem;
+  background: #fff;
+  cursor: pointer;
+  box-shadow: -3px 0 20px rgba(0, 0, 0, 0.1)  ; 
+	-webkit-box-shadow: -3px 0 20px rgba(0, 0, 0, 0.1)  ; 
+	-moz-box-shadow: -3px 0 20px rgba(0, 0, 0, 0.1)  ; 
+}
