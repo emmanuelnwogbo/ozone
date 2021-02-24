@@ -1,5 +1,8 @@
 <template>
   <div class="sidenav">
+    <figure class="sidenav__logo">
+      <img src="~/assets/sidenav/logo.png" alt="" />
+    </figure>
     <div class="sidenav__sec">
       <h2 class="sidenav__h2">Admin tools</h2>
       <div class="sidenav__btns">
@@ -14,9 +17,9 @@
           >{{ item.name }}</span
         >
       </div>
-      <div class="sidenav__bottom1">
+      <!--<div class="sidenav__bottom1">
         <div class="sidenav__bottom1--strip"></div>
-      </div>
+      </div>-->
     </div>
     <div class="sidenav__sec">
       <h2 class="sidenav__h2">Insights</h2>
@@ -123,6 +126,13 @@ export default {
   padding: 1rem 0;
   background: #e5e5e5;
 
+  &__logo {
+    height: 9rem;
+    width: 9rem;
+    margin: 0 auto;
+    margin-bottom: 1.5rem;
+  }
+
   &__sec {
     display: flex;
     flex-direction: column;
@@ -186,7 +196,7 @@ export default {
         left: 0;
         height: 0.4px;
         width: 100%;
-        background: rgba(0, 0, 0, 0.1);
+        //background: rgba(0, 0, 0, 0.1);
       }
     }
   }
