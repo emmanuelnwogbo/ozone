@@ -449,6 +449,7 @@ export default {
       font-size: 2rem;
       cursor: pointer;
       transition: all 0.3s ease;
+      width: auto !important;
 
       &.inactive {
         font-size: 1.5rem;

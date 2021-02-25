@@ -1,3 +1,711 @@
 <template>
-  <div class="activity"></div>
+  <div class="activity">
+    <div class="activity__body">
+      <div class="activity__left">
+        <div class="activity__lefttop activity__card">
+          <div class="activity__header">
+            <span>
+              <h2>Active Users Right Now</h2>
+            </span>
+          </div>
+          <div class="activity__lefttoptop">
+            <div class="activity__number">
+              <div class="activity__number--figure">478</div>
+              <div class="activity__number--perminute">
+                <div class="activity__number--perminutesvg">
+                  <span>
+                    <img src="~/assets/activity/img.svg" />
+                  </span>
+                </div>
+                <div class="activity__number--description">
+                  <span>Average user</span>
+                  <span>per minute</span>
+                </div>
+              </div>
+              <div class="activity__number--colors">
+                <div class="activity__number--color">
+                  <span class="mobilecolor"></span>
+                  <span>Mobile</span>
+                </div>
+                <div class="activity__number--color">
+                  <span class="webcolor"></span>
+                  <span>Web</span>
+                </div>
+              </div>
+            </div>
+            <div class="activity__wiregraph activity__card">
+              <div class="activity__wiregraph--btn">
+                <button>Export as CSV</button>
+              </div>
+            </div>
+          </div>
+          <div class="activity__lefttopbottom">
+            <div class="activity__lefttopboxes">
+              <div class="activity__lefttopbox">
+                <div class="activity__lefttopbox--users">
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                    >
+                      <rect width="16" height="16" rx="6" fill="#159183" />
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M8.48329 5.62667H9.50663C10.7366 5.62667 11.3366 6.28333 11.3333 7.63V9.25333C11.3333 10.54 10.54 11.3333 9.24996 11.3333H6.74663C5.46329 11.3333 4.66663 10.54 4.66663 9.25V6.74667C4.66663 5.36667 5.27996 4.66667 6.48996 4.66667H7.01663C7.32696 4.66333 7.61663 4.80667 7.80663 5.05L8.09996 5.44C8.19329 5.55667 8.33329 5.62667 8.48329 5.62667ZM6.45663 9.09665H9.54329C9.67996 9.09665 9.78996 8.98332 9.78996 8.84665C9.78996 8.70665 9.67996 8.59665 9.54329 8.59665H6.45663C6.31663 8.59665 6.20663 8.70665 6.20663 8.84665C6.20663 8.98332 6.31663 9.09665 6.45663 9.09665Z"
+                        fill="white"
+                      />
+                    </svg>
+                  </span>
+                  <span>Users</span>
+                </div>
+                <div class="activity__lefttopbox--number">36K</div>
+                <div class="activity__lefttopbox--track">
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+              <div class="activity__lefttopbox">
+                <div class="activity__lefttopbox--users">
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                    >
+                      <rect width="16" height="16" rx="6" fill="#FFA2C0" />
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M9.72666 5.47C9.72666 5.02666 10.0867 4.66666 10.53 4.66666C10.9733 4.66666 11.3333 5.02666 11.3333 5.47C11.3333 5.91333 10.9733 6.27333 10.53 6.27333C10.0867 6.27333 9.72666 5.91333 9.72666 5.47ZM8.44329 8.91976L9.40662 7.67676L9.39329 7.68342C9.44662 7.61009 9.45662 7.51676 9.41996 7.43342C9.38362 7.35009 9.30329 7.29342 9.21696 7.28676C9.12662 7.27676 9.03696 7.31676 8.98329 7.39009L8.17696 8.43342L7.25329 7.70676C7.19662 7.66342 7.12996 7.64642 7.06329 7.65342C6.99696 7.66342 6.93696 7.69976 6.89662 7.75309L5.91029 9.03676L5.88996 9.06676C5.83329 9.17309 5.85996 9.30976 5.95996 9.38342C6.00662 9.41342 6.05663 9.43342 6.11329 9.43342C6.19029 9.43676 6.26329 9.39642 6.30996 9.33342L7.14662 8.25642L8.09662 8.97009L8.12662 8.98976C8.23329 9.04642 8.36662 9.02009 8.44329 8.91976ZM9.14996 5.26009C9.13663 5.34343 9.12996 5.42676 9.12996 5.51009C9.12996 6.26009 9.73663 6.86643 10.4833 6.86643C10.5666 6.86643 10.6466 6.85676 10.73 6.84343V9.53309C10.73 10.6634 10.0633 11.3334 8.92996 11.3334H6.46696C5.33329 11.3334 4.66663 10.6634 4.66663 9.53309V7.06676C4.66663 5.93343 5.33329 5.26009 6.46696 5.26009H9.14996Z"
+                        fill="white"
+                      />
+                    </svg>
+                  </span>
+                  <span>Deposits</span>
+                </div>
+                <div class="activity__lefttopbox--number">1m</div>
+                <div class="activity__lefttopbox--track">
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+              <div class="activity__lefttopbox">
+                <div class="activity__lefttopbox--users">
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                    >
+                      <rect width="16" height="16" rx="6" fill="#3F8CFF" />
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M10.7144 7.50416L10.971 9.50083C11.1614 10.8042 10.4044 11.3342 9.38769 11.3342H6.62435C5.60469 11.3342 4.82435 10.9675 5.03435 9.50083L5.29435 7.50416C5.33435 7.2075 5.47769 6.93083 5.70102 6.7275C5.87135 6.57783 6.09102 6.4975 6.31769 6.4975V6.42083C6.29102 5.80416 6.60802 5.22083 7.14102 4.90416C7.67435 4.5875 8.34102 4.5875 8.87435 4.90416C9.40769 5.22083 9.72102 5.80416 9.69769 6.42083V6.4975C10.1177 6.4975 10.561 6.79083 10.7144 7.50416ZM6.82435 6.42084C6.82435 5.77417 7.35102 5.2475 8.00102 5.2475C8.65435 5.2475 9.18102 5.77417 9.18102 6.42084V6.4945H6.82435V6.42084ZM6.73435 7.86417C6.73435 8.02417 6.86768 8.1575 7.03101 8.1575C7.19435 8.1575 7.32435 8.02417 7.32435 7.86417C7.32435 7.70083 7.19435 7.57083 7.03101 7.57083C6.86768 7.57083 6.73435 7.70083 6.73435 7.86417ZM8.96435 8.1575C9.04102 8.1575 9.11769 8.1275 9.17102 8.07083C9.22769 8.0175 9.25769 7.94083 9.25769 7.86417C9.25769 7.70083 9.12435 7.57083 8.96435 7.57083C8.80135 7.57083 8.66769 7.70083 8.66769 7.86417C8.66769 8.02417 8.80135 8.1575 8.96435 8.1575Z"
+                        fill="white"
+                      />
+                    </svg>
+                  </span>
+                  <span>Sales</span>
+                </div>
+                <div class="activity__lefttopbox--number">$327</div>
+                <div class="activity__lefttopbox--track">
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+              <div class="activity__lefttopbox">
+                <div class="activity__lefttopbox--users">
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                    >
+                      <rect width="16" height="16" rx="6" fill="#FF9A7B" />
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M8.0002 4.66666C8.8832 4.66666 9.7332 5.01666 10.3565 5.64333C10.9832 6.27033 11.3335 7.11666 11.3335 8.00333C11.3335 9.17 10.7199 10.2533 9.71987 10.8567C8.71987 11.46 7.47654 11.4933 6.44354 10.9433H6.4332C6.37615 10.9204 6.32543 10.8877 6.27498 10.8551C6.2373 10.8308 6.19977 10.8066 6.15987 10.7867C6.05687 10.7433 5.93987 10.7367 5.83354 10.7703C5.58654 10.8567 5.33654 10.9267 5.07987 10.9867C4.94654 10.99 4.90654 10.91 4.90654 10.78C4.96654 10.5167 5.04654 10.2563 5.1402 10.0033C5.17654 9.89333 5.16687 9.77666 5.1102 9.673L5.04354 9.54333C4.79654 9.07333 4.66687 8.55 4.66687 8.02033V8C4.66687 7.11666 5.01654 6.26666 5.6432 5.64333C6.26987 5.01666 7.11654 4.66666 8.0002 4.66666ZM6.4632 8.42999C6.22653 8.42999 6.03653 8.23666 6.03653 8.00332C6.03653 7.76666 6.22653 7.57666 6.4632 7.57666C6.69653 7.57666 6.8902 7.76666 6.8902 8.00332C6.8902 8.23666 6.69653 8.42999 6.4632 8.42999ZM7.57321 8.00332C7.57321 8.23666 7.76354 8.42999 8.00021 8.42999C8.23687 8.42999 8.42654 8.23666 8.42654 8.00332C8.42654 7.76666 8.23687 7.57666 8.00021 7.57666C7.76354 7.57666 7.57321 7.76666 7.57321 8.00332ZM9.11021 8.00332C9.11021 8.23666 9.30321 8.42999 9.53655 8.42999C9.77321 8.42999 9.96321 8.23666 9.96321 8.00332C9.96321 7.76666 9.77321 7.57666 9.53655 7.57666C9.30321 7.57666 9.11021 7.76666 9.11021 8.00332Z"
+                        fill="white"
+                      />
+                    </svg>
+                  </span>
+                  <span>Products</span>
+                </div>
+                <div class="activity__lefttopbox--number">03</div>
+                <div class="activity__lefttopbox--track">
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="activity__leftmiddle">
+          <div class="activity__card activity__leftmiddlecard">
+            <div class="activity__header">
+              <span>
+                <h2>Users Category</h2>
+              </span>
+            </div>
+          </div>
+          <div
+            class="activity__card activity__leftmiddlecard activity__cardgreen"
+          >
+            <div class="activity__header">
+              <span>
+                <h2>Users by Platform</h2>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="activity__leftmiddle">
+          <div class="activity__card activity__leftmiddlecard">
+            <div class="activity__header">
+              <span>
+                <h2>Stock</h2>
+              </span>
+            </div>
+          </div>
+          <div class="activity__card activity__leftmiddlecard">
+            <div class="activity__header">
+              <span>
+                <h2>Most Popular Product</h2>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="activity__right">
+        <div class="activity__righttop activity__card">
+          <div class="activity__header">
+            <span>
+              <h2>Pending Orders</h2>
+            </span>
+          </div>
+          <div class="activity__pendingorders">
+            <div class="activity__pendingorder">
+              <div class="activity__pendingorder--left">
+                <ProductCard
+                  v-bind:background="'#A0D7E7'"
+                  borderRadius="1.5rem"
+                >
+                  <div class="activity__pendingorder--leftbody">
+                    <span>Mon</span>
+                    <span>20</span>
+                  </div>
+                </ProductCard>
+              </div>
+              <div class="activity__pendingorder--right">
+                <span>ago</span>
+                <span>23 Litres</span>
+                <span>N50,000</span>
+              </div>
+            </div>
+            <div class="activity__pendingorderactive">
+              <ProductCard v-bind:background="'#6c5dd3'" borderRadius="1.5rem">
+                <div class="activity__pendingorderactive--body">
+                  <div class="activity__pendingorderactive--left">
+                    <span>Mon</span>
+                    <span>20</span>
+                  </div>
+                  <div class="activity__pendingorderactive--right">
+                    <span>ago</span>
+                    <span>23 Litres</span>
+                    <span>N50,000</span>
+                  </div>
+                </div>
+              </ProductCard>
+            </div>
+            <div class="activity__pendingorder">
+              <div class="activity__pendingorder--left">
+                <ProductCard
+                  v-bind:background="'#A0D7E7'"
+                  borderRadius="1.5rem"
+                >
+                  <div class="activity__pendingorder--leftbody">
+                    <span>Wed</span>
+                    <span>22</span>
+                  </div>
+                </ProductCard>
+              </div>
+              <div class="activity__pendingorder--right">
+                <span>lpg</span>
+                <span>23 Litres</span>
+                <span>N50,000</span>
+              </div>
+            </div>
+            <div class="activity__pendingorder">
+              <div class="activity__pendingorder--left">
+                <ProductCard
+                  v-bind:background="'#A0D7E7'"
+                  borderRadius="1.5rem"
+                >
+                  <div class="activity__pendingorder--leftbody">
+                    <span>Thu</span>
+                    <span>23</span>
+                  </div>
+                </ProductCard>
+              </div>
+              <div class="activity__pendingorder--right">
+                <span>pms</span>
+                <span>23 Litres</span>
+                <span>N50,000</span>
+              </div>
+            </div>
+
+            <div class="activity__button activity__wiregraph--btn">
+              <button>View More</button>
+            </div>
+          </div>
+        </div>
+        <div class="activity__rightbottom"></div>
+      </div>
+    </div>
+  </div>
 </template>
+
+<script>
+import ProductCard from "@/components/products/ProductCard";
+
+export default {
+  components: {
+    ProductCard,
+  },
+};
+</script>
+
+<style lang="scss">
+.activity {
+  padding-left: 21rem;
+
+  &__body {
+    padding: 15rem 4.5rem 0 10rem;
+    display: flex;
+    justify-content: space-between;
+
+    &::before {
+      content: "";
+      right: 44rem;
+      position: fixed;
+      top: 0;
+      width: 1px;
+      opacity: 0.1;
+      background: #000000;
+      height: 97%;
+    }
+  }
+
+  &__left {
+    display: flex;
+    flex-direction: column;
+    width: 72rem;
+    flex-shrink: 0;
+    min-height: 68rem;
+  }
+
+  &__card {
+    background: linear-gradient(to bottom, rgba(248, 248, 248, 0.2), white);
+    box-shadow: -3px 0 20px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: -3px 0 20px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: -3px 0 20px rgba(0, 0, 0, 0.1);
+    padding: 3rem;
+    border-radius: 1.5rem;
+  }
+
+  &__lefttop {
+    margin-bottom: 4rem;
+  }
+
+  &__lefttoptop {
+    display: flex;
+  }
+
+  &__number {
+    width: 14.5rem;
+    display: flex;
+    flex-direction: column;
+
+    &--figure {
+      font-size: 5rem;
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+    }
+
+    &--perminute {
+      display: flex;
+      align-items: center;
+    }
+
+    &--perminutesvg {
+      margin-right: 1.4rem;
+
+      & svg {
+        & img {
+          width: 2rem;
+          height: 2rem;
+        }
+      }
+    }
+
+    &--description {
+      display: flex;
+      flex-direction: column;
+      color: #0049c6;
+      font-weight: 500;
+      font-size: 1.2rem;
+    }
+
+    &--colors {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 3rem;
+
+      & span {
+        display: inline-block;
+      }
+    }
+
+    &--color {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #808191;
+
+      & span {
+        &:nth-child(1) {
+          margin-right: 1rem;
+          height: 1.6rem;
+          width: 1.6rem;
+          border-radius: 0.3rem;
+          background: red;
+
+          &.mobilecolor {
+            background: #6c5dd3;
+          }
+
+          &.webcolor {
+            background: #a0d7e7;
+          }
+        }
+
+        &:nth-child(2) {
+          font-size: 1.3rem;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+
+  &__header {
+    font-weight: 400;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.85rem;
+    font-weight: 500;
+    margin-bottom: 2.5rem;
+
+    & h2 {
+      font-size: 1.85rem;
+      font-weight: 500;
+    }
+  }
+
+  &__wiregraph {
+    position: relative;
+    width: 42rem;
+    height: 25rem;
+    margin-left: 4rem;
+
+    box-shadow: -3px 0 20px rgba(0, 0, 0, 0.001);
+    -webkit-box-shadow: -3px 0 20px rgba(0, 0, 0, 0.07);
+    -moz-box-shadow: -3px 0 20px rgba(0, 0, 0, 0.07);
+
+    &--btn {
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      bottom: 2rem;
+      left: 0;
+      width: 100%;
+      padding: 0 3rem;
+
+      & button {
+        outline: none;
+        border: none;
+        color: #fff;
+        background: #6c5dd3;
+        height: 4.3rem;
+        width: 100%;
+        border-radius: 1.2rem;
+        font-weight: 500;
+        cursor: pointer;
+      }
+    }
+  }
+
+  &__lefttopbottom {
+  }
+
+  &__lefttopboxes {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3rem;
+    border: 0.2px solid rgba(47, 54, 64, 0.2);
+    border-radius: 1.5rem;
+    margin-bottom: 0.7rem;
+  }
+
+  &__lefttopbox {
+    display: flex;
+    flex-shrink: 0;
+    padding: 1rem 2rem;
+    width: 16rem;
+    height: 12rem;
+    flex-direction: column;
+    justify-content: center;
+
+    border-right: 0.2px solid rgba(47, 54, 64, 0.2);
+
+    &:nth-child(4) {
+      border: none;
+    }
+
+    &--users {
+      font-size: 1.3rem;
+      color: #808191;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      line-height: 1rem;
+
+      & span {
+        display: inline-block;
+
+        &:nth-child(1) {
+          margin-right: 1rem;
+        }
+      }
+    }
+
+    &--number {
+      font-size: 3.3rem;
+      font-weight: 700;
+      margin-top: 0.5rem;
+    }
+
+    &--track {
+      position: relative;
+      width: 100%;
+      height: 0.2rem;
+      border-radius: 3rem;
+      background: rgba(47, 54, 64, 0.2);
+      margin-top: 1rem;
+
+      & span {
+        display: inline-block;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+
+        &:nth-child(1) {
+          background: #808191;
+        }
+
+        &:nth-child(2) {
+          background: red;
+          width: 30%;
+        }
+      }
+    }
+  }
+
+  &__leftmiddle {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4rem;
+  }
+
+  &__leftmiddlecard {
+    min-height: 40rem;
+    flex-basis: 47.5%;
+  }
+
+  &__cardgreen {
+    background: $color-primary;
+
+    & h2 {
+      color: #fff;
+    }
+  }
+
+  &__righttop {
+    width: 35rem;
+    min-height: 63rem;
+    position: relative;
+  }
+
+  &__pendingorder {
+    display: flex;
+    margin-bottom: 3rem;
+    cursor: pointer;
+
+    &--left {
+      height: 8rem;
+      width: 9rem;
+      text-align: center;
+    }
+
+    &--right {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      margin-left: 1.7rem;
+
+      & span {
+        display: inline-block;
+
+        &:nth-child(1) {
+          font-size: 1.7rem;
+          font-weight: 600;
+          text-transform: uppercase;
+        }
+
+        &:nth-child(2) {
+          color: #000000;
+          opacity: 0.7;
+          font-size: 1.2rem;
+          margin-top: 0.5rem;
+          font-weight: 500;
+        }
+
+        &:nth-child(3) {
+          border-radius: 0.8rem;
+          background: #6c5dd3;
+          padding: 0.5rem 1.4rem;
+          color: #fff;
+          font-size: 1.2rem;
+          margin-top: 0.5rem;
+        }
+      }
+    }
+
+    &--leftbody {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 1rem;
+      height: 100%;
+      width: 100%;
+
+      & span {
+        &:nth-child(1) {
+          font-size: 1.3rem;
+          font-weight: 500;
+          opacity: 0.5;
+        }
+
+        &:nth-child(2) {
+          font-size: 3rem;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+
+  &__pendingorderactive {
+    width: 100%;
+    height: 10rem;
+    margin-bottom: 3rem;
+
+    cursor: pointer;
+
+    &--body {
+      display: flex;
+      width: 100%;
+      height: 100%;
+    }
+
+    &--left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      padding-top: 1rem;
+      height: 8rem;
+      width: 9rem;
+      text-align: center;
+
+      & span {
+        &:nth-child(1) {
+          font-size: 1.3rem;
+          font-weight: 500;
+          opacity: 0.5;
+        }
+
+        &:nth-child(2) {
+          font-size: 3rem;
+          font-weight: 600;
+        }
+      }
+    }
+
+    &--right {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-left: 1.7rem;
+
+      & span {
+        display: inline-block;
+
+        color: #fff;
+
+        &:nth-child(1) {
+          font-size: 1.7rem;
+          font-weight: 600;
+          text-transform: uppercase;
+        }
+
+        &:nth-child(2) {
+          opacity: 0.7;
+          font-size: 1.2rem;
+          margin-top: 0.5rem;
+          font-weight: 500;
+        }
+
+        &:nth-child(3) {
+          border-radius: 0.8rem;
+          color: #6c5dd3;
+          padding: 0.5rem 1.4rem;
+          background: #ffebf6;
+          font-size: 1.2rem;
+          margin-top: 0.5rem;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+
+  &__button {
+    & button {
+      background: #0049c6;
+    }
+  }
+}
+</style>
