@@ -1,7 +1,12 @@
 <template>
   <div class="header">
-    <h3 class="header__h3">Hi {{ "Druids" }},</h3>
+    <h3 class="header__h3" v-if="this.$route.name !== 'products-productorders'">
+      Hi {{ "Druids" }},
+    </h3>
     <h1 class="header__h1">{{ title }}</h1>
+    <h3 class="header__h3" v-if="this.$route.name === 'products-productorders'">
+      {{ "54 Orders" }},
+    </h3>
   </div>
 </template>
 
@@ -11,6 +16,7 @@ export default {
   computed: {
     title() {
       const current_route = this.$route.name;
+      console.log(this.$route.name, "hello");
       switch (current_route) {
         case "products":
           return "Product Analysis";
@@ -30,6 +36,8 @@ export default {
           return "Notifications";
         case "setting":
           return "Settings";
+        case "products-productorders":
+          return "Your Orders";
         default:
           return "Welcome Back";
       }

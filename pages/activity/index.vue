@@ -159,6 +159,36 @@
                 <h2>Users Category</h2>
               </span>
             </div>
+            <div class="activity__leftmiddlecard--body">
+              <div class="activity__usercat">
+                <div class="activity__usercat--left">
+                  <span>Lite</span>
+                  <span>57m</span>
+                  <span>21.77%</span>
+                </div>
+                <div class="activity__usercat--right"></div>
+              </div>
+              <div class="activity__usercat">
+                <div class="activity__usercat--left">
+                  <span>Lite</span>
+                  <span>57m</span>
+                  <span>21.77%</span>
+                </div>
+                <div class="activity__usercat--right"></div>
+              </div>
+              <div class="activity__usercat">
+                <div class="activity__usercat--left">
+                  <span>Lite</span>
+                  <span>57m</span>
+                  <span>21.77%</span>
+                </div>
+                <div class="activity__usercat--right"></div>
+              </div>
+
+              <div class="activity__leftmiddlecard--gotosettings">
+                <button>Go to setting</button>
+              </div>
+            </div>
           </div>
           <div
             class="activity__card activity__leftmiddlecard activity__cardgreen"
@@ -266,7 +296,7 @@
             </div>
 
             <div class="activity__button activity__wiregraph--btn">
-              <button>View More</button>
+              <button @click="vieworders">View More</button>
             </div>
           </div>
         </div>
@@ -282,6 +312,11 @@ import ProductCard from "@/components/products/ProductCard";
 export default {
   components: {
     ProductCard,
+  },
+  methods: {
+    vieworders() {
+      this.$router.push("/products/productorders");
+    },
   },
 };
 </script>
@@ -543,6 +578,34 @@ export default {
   &__leftmiddlecard {
     min-height: 40rem;
     flex-basis: 47.5%;
+    padding: 3rem 0;
+    position: relative;
+
+    & .activity__header {
+      padding: 0 3rem;
+    }
+
+    &--gotosettings {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 5rem;
+      cursor: pointer;
+
+      & button {
+        border: none;
+        outline: none;
+        background: transparent;
+        font-weight: 500;
+        color: #6c5dd3;
+        font-size: 1.3rem;
+        cursor: pointer;
+      }
+    }
   }
 
   &__cardgreen {
@@ -705,6 +768,53 @@ export default {
   &__button {
     & button {
       background: #0049c6;
+    }
+  }
+
+  &__usercat {
+    display: flex;
+    cursor: pointer;
+    position: relative;
+    padding: 0 0 0 0;
+    padding: 1rem 3rem 2.5rem 3rem;
+
+    &::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: #000000;
+      opacity: 0.1;
+    }
+
+    &--left {
+      display: flex;
+      flex-direction: column;
+
+      & span {
+        display: inline-block;
+
+        &:nth-child(1) {
+          color: #000000;
+          opacity: 0.5;
+          font-weight: 500;
+          font-size: 1.1rem;
+        }
+
+        &:nth-child(2) {
+          font-size: 2.1rem;
+          font-weight: 600;
+        }
+
+        &:nth-child(3) {
+          color: $color-primary;
+          opacity: 0.5;
+          font-weight: 500;
+          font-size: 1.1rem;
+        }
+      }
     }
   }
 }

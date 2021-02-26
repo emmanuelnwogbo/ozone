@@ -381,7 +381,7 @@ export default {
     openCustomerpage() {
       this.$router.push("/customer");
     },
-    inputValidator() {}
+    inputValidator() {},
   },
 };
 </script>
@@ -443,7 +443,7 @@ export default {
   }
 
   &__left {
-    width: 72rem;
+    width: 75rem;
   }
 
   &__right {
@@ -459,7 +459,7 @@ export default {
     height: 34rem;
     padding: 3rem;
     border-radius: 1.8rem;
-    width: 29rem;
+    width: 33rem;
     @include typicalCard;
     background: linear-gradient(to bottom, rgba(248, 248, 248, 0.6), white);
     box-shadow: 7px 14px 20px rgba(0, 0, 0, 0.2);
