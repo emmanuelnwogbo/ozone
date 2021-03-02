@@ -3,7 +3,19 @@ import axios from "axios";
 
 const createStore = () => {
   return new Vuex.Store({
-    state: {},
+    state: {
+      customers: [],
+      merchants: [],
+      orders: []
+    },
+    mutations: {
+      updateCustomers(state, data) {
+        state.customers = data;
+      },
+      updateMerchants(state, data) {
+        state.merchants = data;
+      }
+    },
     actions: {
       submitProduct(vuexContext, productData) {
         /*var formData = new FormData();
@@ -28,6 +40,95 @@ const createStore = () => {
           .catch(err => {
             console.log(err);
           });
+      },
+      getCustomers(vuexContext) {
+        axios({
+          method: "get",
+          headers: {
+            "Content-Type": "multipart/form-data",
+            token:
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVtbWFudWVsbndvZ2JvMjBAZ21haWwuY29tIiwiaWQiOjIzLCJ0aW1lIjoiMjAyMS0wMy0wMlQyMTozNTowNy4yNDFaIiwiaWF0IjoxNjE0NzIwOTA3LCJleHAiOjE2MTQ3NDI1MDd9.ZEvLubeLkO2bP_HIctbIH1NPxw6A7iCLdyb6M1y5VvA"
+          },
+          baseURL: "http://3.123.189.154:3000/",
+          url: "/getAllSystemUsers"
+        })
+          .then(res => {
+            //console.log(res.data.data);
+            const data = res.data.data;
+            //return data;
+            vuexContext.commit("updateCustomers", data);
+          })
+          .catch(err => {
+            console.log("there is an error", err);
+          });
+      },
+      createMerchant(vuexContext, data) {
+        return axios({
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+            token:
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVtbWFudWVsbndvZ2JvMjBAZ21haWwuY29tIiwiaWQiOjIzLCJ0aW1lIjoiMjAyMS0wMy0wMlQyMTozNTowNy4yNDFaIiwiaWF0IjoxNjE0NzIwOTA3LCJleHAiOjE2MTQ3NDI1MDd9.ZEvLubeLkO2bP_HIctbIH1NPxw6A7iCLdyb6M1y5VvA"
+          },
+          baseURL: "http://3.123.189.154:3000/",
+          url: "/createMerchant",
+          data: data
+        });
+      },
+      getMerchants(vuexContext) {
+        axios({
+          method: "get",
+          headers: {
+            "Content-Type": "multipart/form-data",
+            token:
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVtbWFudWVsbndvZ2JvMjBAZ21haWwuY29tIiwiaWQiOjIzLCJ0aW1lIjoiMjAyMS0wMy0wMlQyMTozNTowNy4yNDFaIiwiaWF0IjoxNjE0NzIwOTA3LCJleHAiOjE2MTQ3NDI1MDd9.ZEvLubeLkO2bP_HIctbIH1NPxw6A7iCLdyb6M1y5VvA"
+          },
+          baseURL: "http://3.123.189.154:3000/",
+          url: "/getMerchants"
+        })
+          .then(res => {
+            //console.log(res.data.data);
+            const data = res.data.data;
+            //return data;
+            console.log(data);
+            vuexContext.commit("updateMerchants", data);
+          })
+          .catch(err => {
+            console.log("there is an error", err);
+          });
+      },
+      getOrders(vuexContext) {
+        axios({
+          method: "get",
+          headers: {
+            "Content-Type": "multipart/form-data",
+            token:
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVtbWFudWVsbndvZ2JvMjBAZ21haWwuY29tIiwiaWQiOjIzLCJ0aW1lIjoiMjAyMS0wMy0wMlQyMTozNTowNy4yNDFaIiwiaWF0IjoxNjE0NzIwOTA3LCJleHAiOjE2MTQ3NDI1MDd9.ZEvLubeLkO2bP_HIctbIH1NPxw6A7iCLdyb6M1y5VvA"
+          },
+          baseURL: "http://3.123.189.154:3000/",
+          url: "/getMerchants"
+        })
+          .then(res => {
+            //console.log(res.data.data);
+            const data = res.data.data;
+            //return data;
+            console.log(data);
+            vuexContext.commit("updateOrders", data);
+          })
+          .catch(err => {
+            console.log("there is an error", err);
+          });
+      }
+    },
+    getters: {
+      customers(state) {
+        return state.customers;
+      },
+      merchants(state) {
+        return state.merchants;
+      },
+      orders(state) {
+        return state.orders;
       }
     }
   });

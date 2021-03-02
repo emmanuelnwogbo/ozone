@@ -79,37 +79,19 @@
               <span>Action</span>
             </div>
             <div class="customer__bottom--container">
-              <div class="customer__bottom--tile">
+              <div
+                class="customer__bottom--tile"
+                v-for="(item, index) in customers"
+                :key="index"
+              >
                 <div class="customer__bottom--name">
                   <div></div>
-                  <div>Usifo Murphy</div>
+                  <div>{{ item.name }}</div>
                 </div>
-                <span>@druids</span>
-                <span>Lite</span>
+                <span>{{ item.name }}</span>
+                <span>{{ item.accountType }}</span>
                 <span>Lagos, Ikoyi</span>
-                <span>UsifoMurphy@gmail.com</span>
-                <span>Manage</span>
-              </div>
-              <div class="customer__bottom--tile">
-                <div class="customer__bottom--name">
-                  <div></div>
-                  <div>Usifo Murphy</div>
-                </div>
-                <span>@druids</span>
-                <span>Lite</span>
-                <span>Lagos, Ikoyi</span>
-                <span>UsifoMurphy@gmail.com</span>
-                <span>Manage</span>
-              </div>
-              <div class="customer__bottom--tile">
-                <div class="customer__bottom--name">
-                  <div></div>
-                  <div>Usifo Murphy</div>
-                </div>
-                <span>@druids</span>
-                <span>Lite</span>
-                <span>Lagos, Ikoyi</span>
-                <span>UsifoMurphy@gmail.com</span>
+                <span>{{ item.email }}</span>
                 <span>Manage</span>
               </div>
             </div>
@@ -130,6 +112,20 @@ import ProductCard from "@/components/products/ProductCard";
 export default {
   component: {
     ProductCard,
+  },
+  data() {
+    return {};
+  },
+  mounted() {
+    this.$store.dispatch("getCustomers");
+  },
+  computed: {
+    customers() {
+      const customers = this.$store.getters.customers.filter(
+        (item) => item.accountType !== "admin"
+      );
+      return customers;
+    },
   },
 };
 </script>

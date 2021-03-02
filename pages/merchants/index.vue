@@ -151,7 +151,7 @@
               </svg>
             </span>
           </div>
-          <div class="merchants__head--addmerchant">
+          <div class="merchants__head--addmerchant" @click="addMerchant">
             <span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -176,64 +176,24 @@
           <span>Merchant</span>
           <span>Total Orders</span>
           <span>Pending Orders</span>
-          <span>Location</span>
+          <span>Phone Number</span>
           <span>Email</span>
           <span>Action</span>
         </div>
         <div class="merchants__table--body">
-          <div class="merchants__card">
+          <div
+            class="merchants__card"
+            v-for="(item, index) in merchants"
+            :key="index"
+          >
             <span class="checkbox">
               <input type="checkbox" id="" name="" value="" />
             </span>
-            <span>Usifo Murphy</span>
+            <span>{{ item.businessName }}</span>
             <span>2324</span>
             <span>12</span>
-            <span>Lagos, Ikoyi</span>
-            <span>MurphyUisfu@gmail.com</span>
-            <span>Manage</span>
-            <span class="menu">
-              <span class="actions">Actions</span>
-              <span class="accept option">
-                <span class="">View Merchant</span>
-                <span></span>
-              </span>
-              <span class="decline option">
-                <span class="">Delete Merchant</span>
-                <span></span>
-              </span>
-            </span>
-          </div>
-          <div class="merchants__card">
-            <span class="checkbox">
-              <input type="checkbox" id="" name="" value="" />
-            </span>
-            <span>Annetthe Black</span>
-            <span>2324</span>
-            <span>12</span>
-            <span>Delta, Warri</span>
-            <span>MurphyUisfu@gmail.com</span>
-            <span>Manage</span>
-            <span class="menu">
-              <span class="actions">Actions</span>
-              <span class="accept option">
-                <span class="">View Merchant</span>
-                <span></span>
-              </span>
-              <span class="decline option">
-                <span class="">Delete Merchant</span>
-                <span></span>
-              </span>
-            </span>
-          </div>
-          <div class="merchants__card">
-            <span class="checkbox">
-              <input type="checkbox" id="" name="" value="" />
-            </span>
-            <span>Kathreen Becky</span>
-            <span>2324</span>
-            <span>12</span>
-            <span>Portharcourt, GRA</span>
-            <span>MurphyUisfu@gmail.com</span>
+            <span>{{ item["user.phoneNumber"] }}</span>
+            <span>{{ item.businessEmail }}</span>
             <span>Manage</span>
             <span class="menu">
               <span class="actions">Actions</span>
@@ -255,6 +215,28 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  name: "Merchants",
+  mounted() {
+    this.$store.dispatch("getMerchants");
+  },
+  computed: {
+    merchants() {
+      const merchants = this.$store.getters.merchants.filter(
+        (item) => item.accountType !== "admin"
+      );
+      return merchants;
+    },
+  },
+  methods: {
+    addMerchant() {
+      this.$router.push("/merchants/addmerchant");
+    },
+  },
+};
+</script>
 
 <style lang="scss">
 .merchants {

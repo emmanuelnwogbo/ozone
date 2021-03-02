@@ -280,6 +280,10 @@ export default {
       datetwo: "30-Oct-2020",
     };
   },
+  mounted() {
+
+  },
+  
 };
 </script>
 
