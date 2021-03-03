@@ -48,13 +48,12 @@ const createStore = () => {
             console.log(err);
           });
       },
-      getCustomers(vuexContext) {
+      getCustomers({ commit, state }) {
         axios({
           method: "get",
           headers: {
             "Content-Type": "multipart/form-data",
-            token:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVtbWFudWVsbndvZ2JvMjBAZ21haWwuY29tIiwiaWQiOjIzLCJ0aW1lIjoiMjAyMS0wMy0wMlQyMTozNTowNy4yNDFaIiwiaWF0IjoxNjE0NzIwOTA3LCJleHAiOjE2MTQ3NDI1MDd9.ZEvLubeLkO2bP_HIctbIH1NPxw6A7iCLdyb6M1y5VvA"
+            token: state.adminToken
           },
           baseURL: "http://3.123.189.154:3000/",
           url: "/getAllSystemUsers"
@@ -63,32 +62,30 @@ const createStore = () => {
             //console.log(res.data.data);
             const data = res.data.data;
             //return data;
-            vuexContext.commit("updateCustomers", data);
+            commit("updateCustomers", data);
           })
           .catch(err => {
             console.log("there is an error", err);
           });
       },
-      createMerchant(vuexContext, data) {
+      createMerchant({ commit, state }, data) {
         return axios({
           method: "post",
           headers: {
             "Content-Type": "application/json",
-            token:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVtbWFudWVsbndvZ2JvMjBAZ21haWwuY29tIiwiaWQiOjIzLCJ0aW1lIjoiMjAyMS0wMy0wMlQyMTozNTowNy4yNDFaIiwiaWF0IjoxNjE0NzIwOTA3LCJleHAiOjE2MTQ3NDI1MDd9.ZEvLubeLkO2bP_HIctbIH1NPxw6A7iCLdyb6M1y5VvA"
+            token: state.adminToken
           },
           baseURL: "http://3.123.189.154:3000/",
           url: "/createMerchant",
           data: data
         });
       },
-      getMerchants(vuexContext) {
+      getMerchants({ commit, state }) {
         axios({
           method: "get",
           headers: {
             "Content-Type": "multipart/form-data",
-            token:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVtbWFudWVsbndvZ2JvMjBAZ21haWwuY29tIiwiaWQiOjIzLCJ0aW1lIjoiMjAyMS0wMy0wMlQyMTozNTowNy4yNDFaIiwiaWF0IjoxNjE0NzIwOTA3LCJleHAiOjE2MTQ3NDI1MDd9.ZEvLubeLkO2bP_HIctbIH1NPxw6A7iCLdyb6M1y5VvA"
+            token: state.adminToken
           },
           baseURL: "http://3.123.189.154:3000/",
           url: "/getMerchants"
@@ -98,19 +95,18 @@ const createStore = () => {
             const data = res.data.data;
             //return data;
             console.log(data);
-            vuexContext.commit("updateMerchants", data);
+            commit("updateMerchants", data);
           })
           .catch(err => {
             console.log("there is an error", err);
           });
       },
-      getOrders(vuexContext) {
+      getOrders({ commit, state }) {
         axios({
           method: "get",
           headers: {
             "Content-Type": "multipart/form-data",
-            token:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVtbWFudWVsbndvZ2JvMjBAZ21haWwuY29tIiwiaWQiOjIzLCJ0aW1lIjoiMjAyMS0wMy0wMlQyMTozNTowNy4yNDFaIiwiaWF0IjoxNjE0NzIwOTA3LCJleHAiOjE2MTQ3NDI1MDd9.ZEvLubeLkO2bP_HIctbIH1NPxw6A7iCLdyb6M1y5VvA"
+            token: state.adminToken
           },
           baseURL: "http://3.123.189.154:3000/",
           url: "/getOrders"
@@ -120,19 +116,18 @@ const createStore = () => {
             const data = res.data.data;
             //return data;
             console.log(data);
-            vuexContext.commit("updateOrders", data);
+            commit("updateOrders", data);
           })
           .catch(err => {
             console.log("there is an error", err);
           });
       },
-      acceptOrder(vuexContext, data) {
+      acceptOrder({ commit, state }, data) {
         axios({
           method: "post",
           headers: {
             "Content-Type": "application/json",
-            token:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVtbWFudWVsbndvZ2JvMjBAZ21haWwuY29tIiwiaWQiOjIzLCJ0aW1lIjoiMjAyMS0wMy0wMlQyMTozNTowNy4yNDFaIiwiaWF0IjoxNjE0NzIwOTA3LCJleHAiOjE2MTQ3NDI1MDd9.ZEvLubeLkO2bP_HIctbIH1NPxw6A7iCLdyb6M1y5VvA"
+            token: state.adminToken
           },
           baseURL: "http://3.123.189.154:3000/",
           url: "/confirmOrder",
@@ -145,13 +140,12 @@ const createStore = () => {
             console.log(err, "this is a err");
           });
       },
-      cancelOrder(vuexContext, data) {
+      cancelOrder({ commit, state }, data) {
         return axios({
           method: "post",
           headers: {
             "Content-Type": "application/json",
-            token:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVtbWFudWVsbndvZ2JvMjBAZ21haWwuY29tIiwiaWQiOjIzLCJ0aW1lIjoiMjAyMS0wMy0wMlQyMTozNTowNy4yNDFaIiwiaWF0IjoxNjE0NzIwOTA3LCJleHAiOjE2MTQ3NDI1MDd9.ZEvLubeLkO2bP_HIctbIH1NPxw6A7iCLdyb6M1y5VvA"
+            token: state.adminToken
           },
           baseURL: "http://3.123.189.154:3000/",
           url: "/cancelOrder",
@@ -160,7 +154,7 @@ const createStore = () => {
           }
         });
       },
-      authSignUp(vuexContext, data) {
+      authSignUp({ commit, state }, data) {
         return axios({
           method: "post",
           headers: {
@@ -171,7 +165,7 @@ const createStore = () => {
           data: data
         });
       },
-      authSignIn(vuexContext, data) {
+      authSignIn({ commit, state }, data) {
         return axios({
           method: "post",
           headers: {
@@ -184,7 +178,7 @@ const createStore = () => {
           .then(res => {
             console.log(res.data.data, "signed in");
             const token = res.data.data.token;
-            vuexContext.commit("updateToken", token);
+            commit("updateToken", token);
           })
           .catch(err => {
             console.log(err, "this is a err");
