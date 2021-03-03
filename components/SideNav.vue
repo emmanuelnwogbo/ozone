@@ -1,5 +1,5 @@
 <template>
-  <div class="sidenav">
+  <div class="sidenav" v-if="adminToken !== null">
     <figure class="sidenav__logo">
       <img src="~/assets/sidenav/logo.png" alt="" />
     </figure>
@@ -47,8 +47,8 @@ export default {
       admintools: [
         {
           name: "Overview",
-          page: "/",
-          page_name: "index",
+          page: "/overview",
+          page_name: "overview",
         },
         {
           name: "Products",
@@ -100,9 +100,18 @@ export default {
       ],
     };
   },
+  watch: {
+    adminToken(newValue) {
+      this.$router.push("/overview");
+    },
+  },
   computed: {
     current_route() {
       return this.$route.name;
+    },
+    adminToken() {
+      const token = this.$store.getters.adminToken;
+      return token;
     },
   },
   methods: {

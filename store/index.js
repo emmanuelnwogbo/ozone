@@ -6,7 +6,8 @@ const createStore = () => {
     state: {
       customers: [],
       merchants: [],
-      orders: []
+      orders: [],
+      adminToken: null
     },
     mutations: {
       updateCustomers(state, data) {
@@ -14,6 +15,12 @@ const createStore = () => {
       },
       updateMerchants(state, data) {
         state.merchants = data;
+      },
+      updateOrders(state, data) {
+        state.orders = data;
+      },
+      updateToken(state, data) {
+        state.adminToken = data;
       }
     },
     actions: {
@@ -106,7 +113,7 @@ const createStore = () => {
               "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVtbWFudWVsbndvZ2JvMjBAZ21haWwuY29tIiwiaWQiOjIzLCJ0aW1lIjoiMjAyMS0wMy0wMlQyMTozNTowNy4yNDFaIiwiaWF0IjoxNjE0NzIwOTA3LCJleHAiOjE2MTQ3NDI1MDd9.ZEvLubeLkO2bP_HIctbIH1NPxw6A7iCLdyb6M1y5VvA"
           },
           baseURL: "http://3.123.189.154:3000/",
-          url: "/getMerchants"
+          url: "/getOrders"
         })
           .then(res => {
             //console.log(res.data.data);
@@ -117,6 +124,70 @@ const createStore = () => {
           })
           .catch(err => {
             console.log("there is an error", err);
+          });
+      },
+      acceptOrder(vuexContext, data) {
+        axios({
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+            token:
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVtbWFudWVsbndvZ2JvMjBAZ21haWwuY29tIiwiaWQiOjIzLCJ0aW1lIjoiMjAyMS0wMy0wMlQyMTozNTowNy4yNDFaIiwiaWF0IjoxNjE0NzIwOTA3LCJleHAiOjE2MTQ3NDI1MDd9.ZEvLubeLkO2bP_HIctbIH1NPxw6A7iCLdyb6M1y5VvA"
+          },
+          baseURL: "http://3.123.189.154:3000/",
+          url: "/confirmOrder",
+          data: data
+        })
+          .then(res => {
+            console.log(res);
+          })
+          .catch(err => {
+            console.log(err, "this is a err");
+          });
+      },
+      cancelOrder(vuexContext, data) {
+        return axios({
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+            token:
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVtbWFudWVsbndvZ2JvMjBAZ21haWwuY29tIiwiaWQiOjIzLCJ0aW1lIjoiMjAyMS0wMy0wMlQyMTozNTowNy4yNDFaIiwiaWF0IjoxNjE0NzIwOTA3LCJleHAiOjE2MTQ3NDI1MDd9.ZEvLubeLkO2bP_HIctbIH1NPxw6A7iCLdyb6M1y5VvA"
+          },
+          baseURL: "http://3.123.189.154:3000/",
+          url: "/cancelOrder",
+          data: {
+            order_id: data
+          }
+        });
+      },
+      authSignUp(vuexContext, data) {
+        return axios({
+          method: "post",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          baseURL: "http://3.123.189.154:3000/",
+          url: "/createAdmin",
+          data: data
+        });
+      },
+      authSignIn(vuexContext, data) {
+        return axios({
+          method: "post",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          baseURL: "http://3.123.189.154:3000/",
+          url: "/login",
+          data: data
+        })
+          .then(res => {
+            console.log(res.data.data, "signed in");
+            const token = res.data.data.token;
+            vuexContext.commit("updateToken", token);
+          })
+          .catch(err => {
+            console.log(err, "this is a err");
           });
       }
     },
@@ -129,6 +200,9 @@ const createStore = () => {
       },
       orders(state) {
         return state.orders;
+      },
+      adminToken(state) {
+        return state.adminToken;
       }
     }
   });

@@ -5,7 +5,9 @@
         <div class="yourorders__ordercard">
           <div class="yourorders__ordercard--order">Orders Today</div>
           <div class="yourorders__ordercard--middle">
-            <h2 class="yourorders__ordercard--h2">469 Orders</h2>
+            <h2 class="yourorders__ordercard--h2">
+              {{ orders.length }} Orders
+            </h2>
             <div class="yourorders__ordercard--percent">
               <span>
                 <svg
@@ -43,7 +45,10 @@
         <div class="yourorders__ordercard">
           <div class="yourorders__ordercard--order">Pending Orders</div>
           <div class="yourorders__ordercard--middle">
-            <h2 class="yourorders__ordercard--h2">46 Orders</h2>
+            <h2 class="yourorders__ordercard--h2">
+              {{ orders.filter((item) => item.status === "pending").length }}
+              Orders
+            </h2>
             <div class="yourorders__ordercard--percent">
               <span>
                 <svg
@@ -76,7 +81,10 @@
         <div class="yourorders__ordercard">
           <div class="yourorders__ordercard--order">Cancelled Orders</div>
           <div class="yourorders__ordercard--middle">
-            <h2 class="yourorders__ordercard--h2">469 Orders</h2>
+            <h2 class="yourorders__ordercard--h2">
+              {{ orders.filter((item) => item.status === "canceled").length }}
+              Orders
+            </h2>
             <div class="yourorders__ordercard--percent">
               <span>
                 <svg
@@ -154,104 +162,34 @@
             <span>Customer</span>
             <span>Price</span>
             <span>Status</span>
-            <span>Action</span>
+            <span style="width: 10rem">Action</span>
           </div>
 
-          <div class="yourorders__tablecard yourorders__tabletop--labels">
+          <div
+            class="yourorders__tablecard yourorders__tabletop--labels"
+            v-for="(item, index) in orders"
+            :key="index"
+          >
             <span class="checkbox">
               <input type="checkbox" id="" name="" value="" />
             </span>
-            <span>211345346</span>
+            <span>{{ item.transaction_id }}</span>
             <span>21-Oct-2020</span>
-            <span>Kristin Watson</span>
+            <span>{{ item.sender_name }}</span>
             <span>23,000</span>
-            <span>Pending</span>
+            <span>{{ item.status }}</span>
             <span>Action</span>
             <span class="menu">
               <span class="actions">Actions</span>
-              <span class="accept option">
+              <span class="accept option" @click="acceptOrder()">
                 <span class="">Accept Order</span>
                 <span></span>
               </span>
-              <span class="decline option">
-                <span class="">Decline Order</span>
-                <span></span>
-              </span>
-              <span class="delete option">
-                <span class="">Delete Order</span>
-                <span></span>
-              </span>
-            </span>
-          </div>
-          <div class="yourorders__tablecard yourorders__tabletop--labels">
-            <span class="checkbox">
-              <input type="checkbox" id="" name="" value="" />
-            </span>
-            <span>211349487</span>
-            <span>21-Oct-2020</span>
-            <span>Mary Jane</span>
-            <span>23,000</span>
-            <span>Fulfilled</span>
-            <span>Action</span>
-            <span class="menu">
-              <span class="actions">Actions</span>
-              <span class="accept option">
-                <span class="">Accept Order</span>
-                <span></span>
-              </span>
-              <span class="decline option">
-                <span class="">Decline Order</span>
-                <span></span>
-              </span>
-              <span class="delete option">
-                <span class="">Delete Order</span>
-                <span></span>
-              </span>
-            </span>
-          </div>
-          <div class="yourorders__tablecard yourorders__tabletop--labels">
-            <span class="checkbox">
-              <input type="checkbox" id="" name="" value="" />
-            </span>
-            <span>211345346</span>
-            <span>21-Oct-2020</span>
-            <span>Kristin Watson</span>
-            <span>23,000</span>
-            <span>Pending</span>
-            <span>Action</span>
-            <span class="menu">
-              <span class="actions">Actions</span>
-              <span class="accept option">
-                <span class="">Accept Order</span>
-                <span></span>
-              </span>
-              <span class="decline option">
-                <span class="">Decline Order</span>
-                <span></span>
-              </span>
-              <span class="delete option">
-                <span class="">Delete Order</span>
-                <span></span>
-              </span>
-            </span>
-          </div>
-          <div class="yourorders__tablecard yourorders__tabletop--labels">
-            <span class="checkbox">
-              <input type="checkbox" id="" name="" value="" />
-            </span>
-            <span>211349487</span>
-            <span>21-Oct-2020</span>
-            <span>Mary Jane</span>
-            <span>23,000</span>
-            <span>Fulfilled</span>
-            <span>Action</span>
-            <span class="menu">
-              <span class="actions">Actions</span>
-              <span class="accept option">
-                <span class="">Accept Order</span>
-                <span></span>
-              </span>
-              <span class="decline option">
+              <span
+                class="decline option"
+                @click="cancelOrder(item.id)"
+                v-if="item.status !== 'canceled'"
+              >
                 <span class="">Decline Order</span>
                 <span></span>
               </span>
@@ -281,9 +219,30 @@ export default {
     };
   },
   mounted() {
-
+    this.$store.dispatch("getOrders");
   },
-  
+  methods: {
+    acceptOrder(data) {
+      this.$store.dispatch("acceptOrder", data);
+    },
+    cancelOrder(order_id) {
+      console.log(order_id);
+      this.$store
+        .dispatch("cancelOrder", order_id)
+        .then((res) => {
+          this.$store.dispatch("getOrders");
+        })
+        .catch((err) => {
+          console.log(err, "this is a err");
+        });
+    },
+  },
+  computed: {
+    orders() {
+      const orders = this.$store.getters.orders;
+      return orders;
+    },
+  },
 };
 </script>
 
@@ -444,7 +403,7 @@ export default {
 
       & span {
         display: block;
-        width: 18rem;
+        width: 20rem;
 
         &.checkbox {
           width: 4rem;
