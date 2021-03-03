@@ -35,7 +35,12 @@
           />
         </div>
         <div class="auth__input">
-          <label for="">Password</label>
+          <div>
+            <label for="">Password</label
+            ><label for="" v-if="passwordError"
+              >passwords should be the same</label
+            >
+          </div>
           <input
             v-model="password"
             type="password"
@@ -44,7 +49,12 @@
           />
         </div>
         <div class="auth__input">
-          <label for="">Confirm Password</label>
+          <div>
+            <label for="">Confirm Password</label>
+            <label for="" v-if="passwordError"
+              >passwords should be the same</label
+            >
+          </div>
           <input
             v-model="confirmPassword"
             type="password"
@@ -53,7 +63,9 @@
           />
         </div>
         <div class="auth__submit">
-          <button @click.prevent="signup">SIGN UP</button>
+          <button @click.prevent="signup">
+            {{ loading ? "SIGNING UP..." : "SIGN UP" }}
+          </button>
         </div>
       </div>
     </div>
@@ -70,6 +82,8 @@ export default {
       fullName: "",
       confirmPassword: "",
       accountType: "admin",
+      passwordError: false,
+      loading: false,
     };
   },
   mounted() {
@@ -80,8 +94,11 @@ export default {
   methods: {
     signup() {
       if (this.confirmPassword !== this.password || !this.password.length) {
-        return;
+        return (this.passwordError = true);
       }
+
+      this.passwordError = false;
+      this.loading = true;
 
       this.$store
         .dispatch("authSignUp", {
@@ -105,6 +122,9 @@ export default {
   watch: {
     adminToken(newValue) {
       this.$router.push("/overview");
+    },
+    confirmPassword(newValue) {
+      newValue === this.password ? (this.passwordError = false) : "";
     },
   },
   computed: {
@@ -193,7 +213,11 @@ export default {
       font-size: 1.2rem;
       margin-bottom: 1.2rem;
       color: #000;
-      display: inline-block;
+      display: block;
+
+      &:nth-child(2) {
+        color: red;
+      }
     }
 
     & input {
