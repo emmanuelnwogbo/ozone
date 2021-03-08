@@ -79,6 +79,7 @@ export default {
       ],
     };
   },
+  middleware: "auth",
   methods: {
     click(option) {
       const options = this.clicked;

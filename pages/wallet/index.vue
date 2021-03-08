@@ -325,6 +325,7 @@ export default {
       this.currentHeader = section;
     },
   },
+  middleware: "auth",
 };
 </script>
 ,

@@ -76,7 +76,6 @@ export default {
    ** See https://nuxtjs.org/api/configuration-build/
    */
   build: {},
-  proxy: {
-    prefix: "3.123.189.154:3000"
-  }
+  proxy: {},
+  middleware: ["auth"]
 };

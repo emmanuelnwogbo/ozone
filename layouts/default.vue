@@ -14,19 +14,33 @@ export default {
     Header,
     Sidenav,
   },
+  middleware: "auth",
 };
 </script>
 
 <style lang="scss">
-$breakpoints: (
-  "xs": 480px,
-  "sm": 768px,
-  "md": 992px,
-  "lg": 1200px,
-  "xl": 1600px,
-);
-
-$breakpoints-count: length($breakpoints);
+@mixin respond($breakpoint) {
+  @if $breakpoint == phone {
+    @media only screen and (max-width: 37.5em) {
+      @content;
+    } //600px
+  }
+  @if $breakpoint == tab-port {
+    @media only screen and (max-width: 56.25em) {
+      @content;
+    } //900px
+  }
+  @if $breakpoint == tab-land {
+    @media only screen and (max-width: 75em) {
+      @content;
+    } //1200px
+  }
+  @if $breakpoint == big-desktop {
+    @media only screen and (min-width: 112.5em) {
+      @content;
+    } //1800
+  }
+}
 
 html {
   font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -40,10 +54,18 @@ html {
   box-sizing: border-box;
   overflow-x: hidden;
 
-  @for $i from 1 through 1824 {
-    @media screen and (min-width: #{$i}px) {
-      
-    }
+  @include respond(tab-land) {
+    // width < 1200?
+    font-size: 56.25%; //1 rem = 9px, 9/16 = 50%
+  }
+
+  @include respond(tab-port) {
+    // width < 900?
+    font-size: 50%; //1 rem = 8px, 8/16 = 50%
+  }
+
+  @include respond(big-desktop) {
+    font-size: 78%; //1rem = 12, 12/16
   }
 }
 

@@ -522,6 +522,7 @@ export default {
     },
   },
   mounted() {},
+  middleware: "auth",
 };
 </script>
 

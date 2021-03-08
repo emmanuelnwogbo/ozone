@@ -131,6 +131,7 @@ export default {
       submitting: false,
     };
   },
+  middleware: "auth",
   methods: {
     createMerchant() {
       this.submitting = true;

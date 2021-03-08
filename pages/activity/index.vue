@@ -318,6 +318,7 @@ export default {
       this.$router.push("/products/productorders");
     },
   },
+  middleware: "auth",
 };
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="sidenav" v-if="adminToken !== null">
+  <div class="sidenav" v-if="adminToken !== null || token !== null">
     <figure class="sidenav__logo">
       <img src="~/assets/sidenav/logo.png" alt="" />
     </figure>
@@ -44,6 +44,7 @@ export default {
   name: "Sidenav",
   data() {
     return {
+      token: null,
       admintools: [
         {
           name: "Overview",
@@ -100,9 +101,18 @@ export default {
       ],
     };
   },
+  mounted() {
+    const token = localStorage.getItem("hebhukvyaew");
+    console.log(token);
+    if (token) {
+      this.token = token;
+    }
+  },
   watch: {
     adminToken(newValue) {
-      this.$router.push("/overview");
+      const token = localStorage.getItem("hebhukvyaew");
+      this.token = token;
+      //this.$router.push("/overview");
     },
   },
   computed: {

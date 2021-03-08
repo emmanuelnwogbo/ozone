@@ -246,7 +246,7 @@
                     <span>45 Litres</span>
                   </div>
                 </div>
-                <div class="container__leftbottomrighttile--right">+$55</div>
+                <div class="container__leftbottomrighttile--right">+N55</div>
               </div>
               <div class="container__leftbottomrighttile">
                 <div class="container__leftbottomrighttile--left">
@@ -300,7 +300,7 @@
                     <span>200 Litres</span>
                   </div>
                 </div>
-                <div class="container__leftbottomrighttile--right">+$55</div>
+                <div class="container__leftbottomrighttile--right">+N55</div>
               </div>
               <div class="container__leftbottomrighttile">
                 <div class="container__leftbottomrighttile--left">
@@ -344,7 +344,7 @@
                     <span>300 Litres</span>
                   </div>
                 </div>
-                <div class="container__leftbottomrighttile--right">+$55</div>
+                <div class="container__leftbottomrighttile--right">+N55</div>
               </div>
             </div>
             <div class="container__leftbottomright--btn">
@@ -356,7 +356,7 @@
       <div class="container__right">
         <div class="container__righttop">
           <h1 class="container__righttop--h1">Total number of users</h1>
-          <div class="container__righttop--number">12,123</div>
+          <div class="container__righttop--number">{{ customers.length }}</div>
           <div class="container__righttop--tip">
             Admin can delete and add users
           </div>
@@ -383,6 +383,18 @@ export default {
     },
     inputValidator() {},
   },
+  mounted() {
+    this.$store.dispatch("getCustomers");
+  },
+  computed: {
+    customers() {
+      const customers = this.$store.getters.customers.filter(
+        (item) => item.accountType !== "admin"
+      );
+      return customers;
+    },
+  },
+  middleware: "auth",
 };
 </script>
 

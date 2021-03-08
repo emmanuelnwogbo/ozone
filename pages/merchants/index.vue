@@ -230,6 +230,7 @@ export default {
       return merchants;
     },
   },
+  middleware: "auth",
   methods: {
     addMerchant() {
       this.$router.push("/merchants/addmerchant");

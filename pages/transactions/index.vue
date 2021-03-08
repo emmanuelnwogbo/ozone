@@ -144,6 +144,7 @@ export default {
     ProductCard,
     InputField,
   },
+  middleware: "auth",
   methods: {
     inputValidator(value, name) {},
   },

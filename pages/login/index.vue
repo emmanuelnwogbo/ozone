@@ -1,11 +1,21 @@
 <template>
   <div class="auth">
     <div class="auth__left auth__side">
-      <h2>Login as Admin</h2>
+      <h2>Don't have an account?</h2>
+      <button>SIGN UP</button>
     </div>
     <div class="auth__right auth__side">
       <div class="auth__right auth__form">
-        <h2>Admin Login</h2>
+        <h2>Sign Up as an Admin</h2>
+        <div class="auth__input">
+          <label for="">Username</label>
+          <input
+            v-model="fullName"
+            type="text"
+            placeholder="Enter Your fullname"
+            name=""
+          />
+        </div>
         <div class="auth__input">
           <label for="">Email</label>
           <input
@@ -16,8 +26,20 @@
           />
         </div>
         <div class="auth__input">
+          <label for="">Phone number</label>
+          <input
+            v-model="phoneNumber"
+            type="number"
+            placeholder="Phone number"
+            name=""
+          />
+        </div>
+        <div class="auth__input">
           <div>
-            <label for="">Password</label>
+            <label for="">Password</label
+            ><label for="" v-if="passwordError"
+              >passwords should be the same</label
+            >
           </div>
           <input
             v-model="password"
@@ -26,9 +48,23 @@
             name=""
           />
         </div>
+        <div class="auth__input">
+          <div>
+            <label for="">Confirm Password</label>
+            <label for="" v-if="passwordError"
+              >passwords should be the same</label
+            >
+          </div>
+          <input
+            v-model="confirmPassword"
+            type="password"
+            placeholder="Confirm new password"
+            name=""
+          />
+        </div>
         <div class="auth__submit">
-          <button @click.prevent="login">
-            {{ loading ? "PLEASE WAIT..." : "LOGIN" }}
+          <button @click.prevent="signup">
+            {{ loading ? "SIGNING UP..." : "SIGN UP" }}
           </button>
         </div>
       </div>
@@ -54,26 +90,37 @@ export default {
     if (this.adminToken !== null) {
       //this.$router.push("/overview");
     }
-
-    const user = localStorage.getItem("jhbfgehgwbhef");
-    if (user !== null) {
-      console.log("user already exists", JSON.parse(user));
-      this.$store.dispatch("updateUser", JSON.parse(user));
-      //this.$router.push("/overview");
-    }
   },
   methods: {
-    login() {
+    signup() {
+      if (this.confirmPassword !== this.password || !this.password.length) {
+        return (this.passwordError = true);
+      }
+
+      this.passwordError = false;
       this.loading = true;
-      this.$store.dispatch("authSignIn", {
-        email: this.email,
-        password: this.password,
-      });
+
+      this.$store
+        .dispatch("authSignUp", {
+          email: this.email,
+          password: this.password,
+          phoneNumber: this.phoneNumber,
+          fullName: this.fullName,
+          accountType: "admin",
+        })
+        .then((res) => {
+          this.$store.dispatch("authSignIn", {
+            email: this.email,
+            password: this.password,
+          });
+        })
+        .catch((err) => {
+          console.log(err, "this is a err");
+        });
     },
   },
   watch: {
     adminToken(newValue) {
-      this.loading = false;
       this.$router.push("/overview");
     },
     confirmPassword(newValue) {

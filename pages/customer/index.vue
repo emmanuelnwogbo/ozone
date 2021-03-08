@@ -119,6 +119,7 @@ export default {
   mounted() {
     this.$store.dispatch("getCustomers");
   },
+  middleware: "auth",
   computed: {
     customers() {
       const customers = this.$store.getters.customers.filter(

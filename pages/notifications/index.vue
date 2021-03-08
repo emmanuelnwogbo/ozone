@@ -127,6 +127,7 @@ export default {
       ],
     };
   },
+  middleware: "auth",
   computed: {
     recentNotifications() {
       const notifications = [

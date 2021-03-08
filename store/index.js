@@ -7,7 +7,8 @@ const createStore = () => {
       customers: [],
       merchants: [],
       orders: [],
-      adminToken: null
+      adminToken: null,
+      user: null
     },
     mutations: {
       updateCustomers(state, data) {
@@ -21,9 +22,15 @@ const createStore = () => {
       },
       updateToken(state, data) {
         state.adminToken = data;
+      },
+      updateUser(state, data) {
+        state.user = data;
       }
     },
     actions: {
+      updateUser(vuexContext, data) {
+        vuexContext.commit("updateUser", data);
+      },
       submitProduct(vuexContext, productData) {
         /*var formData = new FormData();
         var details = JSON.stringify(productData);
@@ -49,11 +56,12 @@ const createStore = () => {
           });
       },
       getCustomers({ commit, state }) {
+        const token = localStorage.getItem("hebhukvyaew");
         axios({
           method: "get",
           headers: {
             "Content-Type": "multipart/form-data",
-            token: state.adminToken
+            token: token
           },
           baseURL: "http://3.123.189.154:3000/",
           url: "/getAllSystemUsers"
@@ -69,11 +77,12 @@ const createStore = () => {
           });
       },
       createMerchant({ commit, state }, data) {
+        const token = localStorage.getItem("hebhukvyaew");
         return axios({
           method: "post",
           headers: {
             "Content-Type": "application/json",
-            token: state.adminToken
+            token: token
           },
           baseURL: "http://3.123.189.154:3000/",
           url: "/createMerchant",
@@ -81,11 +90,12 @@ const createStore = () => {
         });
       },
       getMerchants({ commit, state }) {
+        const token = localStorage.getItem("hebhukvyaew");
         axios({
           method: "get",
           headers: {
             "Content-Type": "multipart/form-data",
-            token: state.adminToken
+            token: token
           },
           baseURL: "http://3.123.189.154:3000/",
           url: "/getMerchants"
@@ -102,11 +112,12 @@ const createStore = () => {
           });
       },
       getOrders({ commit, state }) {
+        const token = localStorage.getItem("hebhukvyaew");
         axios({
           method: "get",
           headers: {
             "Content-Type": "multipart/form-data",
-            token: state.adminToken
+            token: token
           },
           baseURL: "http://3.123.189.154:3000/",
           url: "/getOrders"
@@ -123,11 +134,12 @@ const createStore = () => {
           });
       },
       acceptOrder({ commit, state }, data) {
+        const token = localStorage.getItem("hebhukvyaew");
         axios({
           method: "post",
           headers: {
             "Content-Type": "application/json",
-            token: state.adminToken
+            token: token
           },
           baseURL: "http://3.123.189.154:3000/",
           url: "/confirmOrder",
@@ -141,11 +153,12 @@ const createStore = () => {
           });
       },
       cancelOrder({ commit, state }, data) {
+        const token = localStorage.getItem("hebhukvyaew");
         return axios({
           method: "post",
           headers: {
             "Content-Type": "application/json",
-            token: state.adminToken
+            token: token
           },
           baseURL: "http://3.123.189.154:3000/",
           url: "/cancelOrder",
@@ -176,9 +189,11 @@ const createStore = () => {
           data: data
         })
           .then(res => {
-            console.log(res.data.data, "signed in");
-            const token = res.data.data.token;
+            const { userData, token } = res.data.data;
+            commit("updateUser", userData);
             commit("updateToken", token);
+            localStorage.setItem("hebhukvyaew", token);
+            localStorage.setItem("jhbfgehgwbhef", JSON.stringify(userData));
           })
           .catch(err => {
             console.log(err, "this is a err");
@@ -197,6 +212,9 @@ const createStore = () => {
       },
       adminToken(state) {
         return state.adminToken;
+      },
+      user(state) {
+        return state.user;
       }
     }
   });

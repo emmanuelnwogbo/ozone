@@ -243,6 +243,7 @@ export default {
       return orders;
     },
   },
+  middleware: "auth",
 };
 </script>
 

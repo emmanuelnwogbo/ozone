@@ -7,7 +7,7 @@
         this.$route.name !== 'merchants-addmerchant'
       "
     >
-      Hi {{ "Druids" }},
+      Hi, {{ user === null ? "" : user.name }}
     </h3>
     <h1 class="header__h1">{{ title }}</h1>
     <h3 class="header__h3" v-if="this.$route.name === 'products-productorders'">
@@ -18,8 +18,23 @@
 
 <script>
 export default {
-  mounted() {},
+  data() {
+    return {
+      user: null,
+    };
+  },
+  watch: {
+    userDatails(newValue) {
+      const user = localStorage.getItem("jhbfgehgwbhef");
+      this.user = JSON.parse(user);
+      //this.$store.dispatch("updateUser", this.user);
+    },
+  },
   computed: {
+    userDatails() {
+      const user = this.$store.getters.user;
+      return user;
+    },
     title() {
       const current_route = this.$route.name;
       console.log(this.$route.name, "hello");

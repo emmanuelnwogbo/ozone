@@ -226,6 +226,7 @@ export default {
       return locations;
     },
   },
+  middleware: "auth",
 };
 </script>
 
