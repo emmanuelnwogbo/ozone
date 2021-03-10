@@ -28,32 +28,45 @@ const createStore = () => {
       }
     },
     actions: {
+      nuxtServerInit(vuexContext, context) {
+        console.log(vuexContext);
+      },
       updateUser(vuexContext, data) {
         vuexContext.commit("updateUser", data);
       },
-      submitProduct(vuexContext, productData) {
-        /*var formData = new FormData();
-        var details = JSON.stringify(productData);
-        console.log(details, "this is a test");
-        formData.append("details", details);*/
-        console.log(productData);
-        axios({
+      async submitProduct(vuexContext, data) {
+        const token = localStorage.getItem("hebhukvyaew");
+        console.log(data);
+        let response = await fetch("http://3.123.189.154:3000/createProduct", {
+          method: "POST",
+          headers: {
+            Accept: "application/json;charset=utf-8",
+            "Content-Type": "multipart/form-data",
+            token
+          },
+          body: JSON.stringify(data)
+        });
+
+        let result = await response.json();
+        console.log(result);
+        /*axios({
           method: "post",
           headers: {
+            Accept: "application/json",
             "Content-Type": "multipart/form-data",
-            token:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5lcmR5ZW1tYW51ZWwyQGdtYWlsLmNvbSIsImlkIjoxOCwidGltZSI6IjIwMjEtMDItMjFUMTU6NTM6MTMuNzQ5WiIsImlhdCI6MTYxMzkyMjc5MywiZXhwIjoxNjEzOTQ0MzkzfQ.GmWhFP-K8DC5gJMAjD4c8xzzO3cv8p5kQXL8M-grlx0"
+            token: token
           },
           baseURL: "http://3.123.189.154:3000/",
           url: "/createProduct",
-          data: productData
+          data: data
         })
           .then(res => {
             console.log(res);
           })
           .catch(err => {
             console.log(err);
-          });
+            console.log(err.response.data);
+          });*/
       },
       getCustomers({ commit, state }) {
         const token = localStorage.getItem("hebhukvyaew");
@@ -117,6 +130,7 @@ const createStore = () => {
           method: "get",
           headers: {
             "Content-Type": "multipart/form-data",
+            "Content-type": "application/json",
             token: token
           },
           baseURL: "http://3.123.189.154:3000/",
@@ -190,6 +204,7 @@ const createStore = () => {
         })
           .then(res => {
             const { userData, token } = res.data.data;
+            console.log("logged", userData);
             commit("updateUser", userData);
             commit("updateToken", token);
             localStorage.setItem("hebhukvyaew", token);

@@ -93,6 +93,21 @@
                 <span>Lagos, Ikoyi</span>
                 <span>{{ item.email }}</span>
                 <span>Manage</span>
+                <div class="customer__bottom--manage">
+                  <div class="customer__bottom--optionactions">Actions</div>
+                  <div
+                    class="customer__bottom--option"
+                    @click="viewprofile(item)"
+                  >
+                    <span>View Account</span><span></span>
+                  </div>
+                  <div class="customer__bottom--option">
+                    <span>Freeze Account</span><span></span>
+                  </div>
+                  <div class="customer__bottom--option">
+                    <span>Delete Account</span><span></span>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -116,10 +131,12 @@ export default {
   data() {
     return {};
   },
-  mounted() {
-    this.$store.dispatch("getCustomers");
-  },
   middleware: "auth",
+  methods: {
+    viewprofile(item) {
+      this.$router.push('customer/profile/' + item.id)
+    },
+  },
   computed: {
     customers() {
       const customers = this.$store.getters.customers.filter(
@@ -356,6 +373,13 @@ export default {
           justify-content: center;
           align-items: center;
           cursor: pointer;
+
+          &:hover {
+            & + .customer__bottom--manage {
+              display: block;
+              z-index: 10;
+            }
+          }
         }
       }
     }
@@ -388,6 +412,56 @@ export default {
     &--name {
       width: 20rem;
       flex-shrink: 0;
+    }
+
+    &--manage {
+      position: absolute;
+      right: 0;
+      top: 5rem;
+      background: #fff;
+      width: 23rem;
+      height: 24rem;
+      border-radius: 0.5rem;
+      padding: 4rem 2rem 3rem 2rem;
+      box-shadow: 13px 27px 100px rgba(0, 0, 0, 0.2);
+      -webkit-box-shadow: 13px 27px 100px rgba(0, 0, 0, 0.2);
+      -moz-box-shadow: 13px 27px 100px rgba(0, 0, 0, 0.2);
+
+      display: none;
+      z-index: -1;
+
+      &:hover {
+        display: block;
+        z-index: 10;
+      }
+    }
+
+    &--optionactions {
+      color: #808191;
+      font-size: 1.3rem;
+      font-weight: 400;
+      margin-bottom: 1rem;
+    }
+
+    &--option {
+      border-bottom: 0.1px solid rgba(0, 0, 0, 0.2);
+      padding: 1rem 0rem 0 0;
+      cursor: pointer;
+      position: relative;
+      font-weight: 600 !important;
+
+      &:nth-child(2) {
+        color: $color-primary;
+      }
+
+      &:nth-child(3) {
+        color: #0049c6;
+      }
+
+      &:nth-child(4) {
+        border: none;
+        color: #ff647c;
+      }
     }
   }
 }

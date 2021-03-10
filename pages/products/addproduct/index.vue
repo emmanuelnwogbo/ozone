@@ -38,33 +38,28 @@
                 <div class="addproduct__form--flexarea">
                   <span class="addproduct__form--label">Product Name</span>
                   <div class="addproduct__form--input">
-                    <InputField
-                      v-bind:inputValidator="inputValidator"
-                      v-bind:name="'Product Name'"
-                      v-bind:type="'text'"
-                      v-bind:width="'60rem'"
+                    <input
+                      class="inputfield__input"
+                      v-model="name"
+                      v-bind:style="{
+                        width: '60rem',
+                      }"
+                      :placeholder="''"
+                      type="text"
                     />
                   </div>
                 </div>
                 <div class="addproduct__form--flexarea">
                   <span class="addproduct__form--label">Product Ticker</span>
                   <div class="addproduct__form--input">
-                    <InputField
-                      v-bind:inputValidator="inputValidator"
-                      v-bind:name="'Product Ticker'"
-                      :block="true"
-                      :dropIconSize="'18'"
-                      v-bind:values="[
-                        'Test',
-                        'Test2',
-                        'Test',
-                        'Test2',
-                        'Test',
-                        'Test2',
-                      ]"
-                      v-bind:type="'dropdown'"
-                      v-bind:width="'30rem'"
-                      v-bind:bottom="'-26rem'"
+                    <input
+                      class="inputfield__input"
+                      v-model="ticker"
+                      v-bind:style="{
+                        width: '30rem',
+                      }"
+                      :placeholder="''"
+                      type="text"
                     />
                   </div>
                 </div>
@@ -82,11 +77,12 @@
                     >
                       <quill-editor
                         ref="myQuillEditor"
-                        v-model="content"
+                        v-model="description"
                         :options="editorOption"
                         @blur="onEditorBlur($event)"
                         @focus="onEditorFocus($event)"
                         @ready="onEditorReady($event)"
+                        @change="onEditorChange($event)"
                       />
                     </div>
                   </div>
@@ -96,22 +92,28 @@
                 <div class="addproduct__form--flexarea">
                   <span class="addproduct__form--label">Category</span>
                   <div class="addproduct__form--input">
-                    <InputField
-                      v-bind:inputValidator="inputValidator"
-                      v-bind:name="'Category'"
-                      v-bind:type="'text'"
-                      v-bind:width="'60rem'"
+                    <input
+                      class="inputfield__input"
+                      v-model="category"
+                      v-bind:style="{
+                        width: '60rem',
+                      }"
+                      :placeholder="''"
+                      type="text"
                     />
                   </div>
                 </div>
                 <div class="addproduct__form--flexarea">
                   <span class="addproduct__form--label">Tags</span>
                   <div class="addproduct__form--input">
-                    <InputField
-                      v-bind:inputValidator="inputValidator"
-                      v-bind:name="'Tags'"
-                      v-bind:type="'text'"
-                      v-bind:width="'38rem'"
+                    <input
+                      class="inputfield__input"
+                      v-model="tags"
+                      v-bind:style="{
+                        width: '38rem',
+                      }"
+                      :placeholder="''"
+                      type="text"
                     />
                   </div>
                 </div>
@@ -170,31 +172,28 @@
                 <div class="addproduct__form--flexarea">
                   <span class="addproduct__form--label">Unit Price</span>
                   <div class="addproduct__form--input">
-                    <InputField
-                      v-bind:inputValidator="inputValidator"
-                      v-bind:name="'Unit Price'"
-                      v-bind:type="'text'"
-                      v-bind:width="'60rem'"
+                    <input
+                      class="inputfield__input"
+                      v-model="unit_price"
+                      v-bind:style="{
+                        width: '60rem',
+                      }"
+                      :placeholder="''"
+                      type="text"
                     />
                   </div>
                 </div>
                 <div class="addproduct__form--flexarea">
-                  <span class="addproduct__form--label">Per</span>
+                  <span class="addproduct__form--label">Measurement</span>
                   <div class="addproduct__form--input">
-                    <InputField
-                      v-bind:inputValidator="inputValidator"
-                      v-bind:name="'Per'"
-                      v-bind:values="[
-                        'Test',
-                        'Test2',
-                        'Test',
-                        'Test2',
-                        'Test',
-                        'Test2',
-                      ]"
-                      v-bind:type="'dropdown'"
-                      v-bind:width="'30rem'"
-                      v-bind:bottom="'-26rem'"
+                    <input
+                      class="inputfield__input"
+                      v-model="measurment"
+                      v-bind:style="{
+                        width: '30rem',
+                      }"
+                      :placeholder="''"
+                      type="text"
                     />
                   </div>
                 </div>
@@ -203,11 +202,14 @@
                 <div class="addproduct__form--flexarea">
                   <span class="addproduct__form--label">Tax Rule</span>
                   <div class="addproduct__form--input">
-                    <InputField
-                      v-bind:inputValidator="inputValidator"
-                      v-bind:name="'Tax Rule'"
-                      v-bind:type="'text'"
-                      v-bind:width="'60rem'"
+                     <input
+                      class="inputfield__input"
+                      v-model="tax"
+                      v-bind:style="{
+                        width: '60rem',
+                      }"
+                      :placeholder="'tax'"
+                      type="text"
                     />
                   </div>
                 </div>
@@ -220,23 +222,29 @@
                   <div class="addproduct__form--flexarea">
                     <span class="addproduct__form--label">City</span>
                     <div class="addproduct__form--input">
-                      <InputField
-                        v-bind:inputValidator="inputValidator"
-                        v-bind:name="'City'"
-                        v-bind:type="'text'"
-                        v-bind:width="'60rem'"
-                      />
+                       <input
+                      class="inputfield__input"
+                      v-model="city"
+                      v-bind:style="{
+                        width: '60rem',
+                      }"
+                      :placeholder="'City'"
+                      type="text"
+                    />
                     </div>
                   </div>
                   <div class="addproduct__form--flexarea">
                     <span class="addproduct__form--label">State</span>
                     <div class="addproduct__form--input">
-                      <InputField
-                        v-bind:inputValidator="inputValidator"
-                        v-bind:name="'State'"
-                        v-bind:type="'text'"
-                        v-bind:width="'30rem'"
-                      />
+                       <input
+                      class="inputfield__input"
+                      v-model="state"
+                      v-bind:style="{
+                        width: '30rem',
+                      }"
+                      :placeholder="'State'"
+                      type="text"
+                    />
                     </div>
                   </div>
                 </div>
@@ -253,23 +261,29 @@
                   <div class="addproduct__form--flexarea">
                     <span class="addproduct__form--label">Width</span>
                     <div class="addproduct__form--input">
-                      <InputField
-                        v-bind:inputValidator="inputValidator"
-                        v-bind:name="'Width'"
-                        v-bind:type="'text'"
-                        v-bind:width="'60rem'"
-                      />
+                       <input
+                      class="inputfield__input"
+                      v-model="value"
+                      v-bind:style="{
+                        width: '60rem',
+                      }"
+                      :placeholder="'Width'"
+                      type="text"
+                    />
                     </div>
                   </div>
                   <div class="addproduct__form--flexarea">
                     <span class="addproduct__form--label">Height</span>
                     <div class="addproduct__form--input">
-                      <InputField
-                        v-bind:inputValidator="inputValidator"
-                        v-bind:name="'Height'"
-                        v-bind:type="'text'"
-                        v-bind:width="'30rem'"
-                      />
+                       <input
+                      class="inputfield__input"
+                      v-model="value"
+                      v-bind:style="{
+                        width: '30rem',
+                      }"
+                      :placeholder="'Height'"
+                      type="text"
+                    />
                     </div>
                   </div>
                 </div>
@@ -278,23 +292,29 @@
                   <div class="addproduct__form--flexarea">
                     <span class="addproduct__form--label">Depth</span>
                     <div class="addproduct__form--input">
-                      <InputField
-                        v-bind:inputValidator="inputValidator"
-                        v-bind:name="'Depth'"
-                        v-bind:type="'text'"
-                        v-bind:width="'60rem'"
-                      />
+                       <input
+                      class="inputfield__input"
+                      v-model="value"
+                      v-bind:style="{
+                        width: '60rem',
+                      }"
+                      :placeholder="'Depth'"
+                      type="text"
+                    />
                     </div>
                   </div>
                   <div class="addproduct__form--flexarea">
                     <span class="addproduct__form--label">Weight</span>
                     <div class="addproduct__form--input">
-                      <InputField
-                        v-bind:inputValidator="inputValidator"
-                        v-bind:name="'Weight'"
-                        v-bind:type="'text'"
-                        v-bind:width="'30rem'"
-                      />
+                       <input
+                      class="inputfield__input"
+                      v-model="value"
+                      v-bind:style="{
+                        width: '30rem',
+                      }"
+                      :placeholder="'Weight'"
+                      type="text"
+                    />
                     </div>
                   </div>
                 </div>
@@ -303,12 +323,15 @@
                   <div class="addproduct__form--flexarea">
                     <span class="addproduct__form--label">Shipping Fee</span>
                     <div class="addproduct__form--input">
-                      <InputField
-                        v-bind:inputValidator="inputValidator"
-                        v-bind:name="'Shipping Fee'"
-                        v-bind:type="'text'"
-                        v-bind:width="'60rem'"
-                      />
+                       <input
+                      class="inputfield__input"
+                      v-model="shipping_fee"
+                      v-bind:style="{
+                        width: '60rem',
+                      }"
+                      :placeholder="'Shipping Fees'"
+                      type="text"
+                    />
                     </div>
                   </div>
                 </div>
@@ -339,52 +362,29 @@
 </template>
 
 <script>
-import InputField from "@/components/InputField";
-
-import axios from "axios";
 
 export default {
   data() {
     return {
       header: "Add Product Information",
       productIcon: null,
-      formData: {
-        name: "",
-        ticker: "",
-        description: "",
-        //category: "",
-        measurment: "",
-        tax: "",
-        unit_price: "",
-        coverage: {
-          state: "",
-          city: "",
-        },
-        shipping_fee: "",
-        tags: ["test"],
-        image: null,
-      },
-      content: "",
+      name: null,
+      ticker: null,
+      description: null,
+      category: null,
+      tags: null,
+      unit_price: null,
+      shipping_fee: null,
+      tax: null,
+      city: null,
+      state: null,
+      measurment: null,
+      file: null,
       editorOption: {
         // Some Quill options...
       },
       pageTracker: 0,
       value: "",
-      options: [
-        "Select option",
-        "options",
-        "selected",
-        "mulitple",
-        "label",
-        "searchable",
-        "clearOnSelect",
-        "hideSelected",
-        "maxHeight",
-        "allowEmpty",
-        "showLabels",
-        "onChange",
-        "touched",
-      ],
       nav: [
         {
           name: "Step One",
@@ -409,9 +409,6 @@ export default {
       ],
     };
   },
-  components: {
-    InputField,
-  },
   methods: {
     handleImgUpload(event) {
       console.log(event, "trigger the image upload");
@@ -424,58 +421,8 @@ export default {
       reader.onloadend = () => {
         console.log(reader.result);
         this.productIcon = reader.result;
-        const formData = this.formData;
-        formData.image = file;
-        this.formDate = formData;
+        this.file = file;
       };
-    },
-    inputValidator(value, name) {
-      console.log(value, name);
-      const formData = this.formData;
-
-      switch (name) {
-        case "Product Name":
-          console.log(value, "this isa rea ts");
-          formData.name = value;
-          this.formData = formData;
-          break;
-        case "Product Ticker":
-          console.log(value, "this isa rea ts");
-          formData.ticker = value;
-          this.formData = formData;
-          break;
-        /*case "Description":
-          console.log(value, 'this isa rea ts')
-          formData.description = value;
-          this.formData = formData;
-          break;
-        /*case "Category":
-          formData.category = value;
-          this.formData = formData;
-          break;*/
-        case "Unit Price":
-          formData.unit_price = value;
-          this.formData = formData;
-          break;
-        case "Tax Rule":
-          formData.tax = value;
-          this.formData = formData;
-          break;
-        case "Shipping Fee":
-          formData.shipping_fee = value;
-          this.formData = formData;
-          break;
-        case "City":
-          formData.coverage.city = value;
-          this.formData = formData;
-          break;
-        case "State":
-          formData.coverage.state = value;
-          this.formData = formData;
-          break;
-        default:
-        // code block
-      }
     },
     onEditorBlur(quill) {
       console.log("editor blur!", quill);
@@ -487,14 +434,7 @@ export default {
       console.log("editor ready!", quill);
     },
     onEditorChange({ quill, html, text }) {
-      console.log("editor change!", quill, html, text);
-      console.log("the change:", text);
-      const formData = this.formData;
-      formData.description = html;
-      this.formData = formData;
-      console.log(this.formData);
-      this.content = html;
-      //this.inputValidator(this.content, "Description");
+     console.log('editor changed here')
     },
     nextPage() {
       if (this.pageTracker !== this.nav.length - 1) {
@@ -515,9 +455,24 @@ export default {
       }
     },
     submitProduct() {
-      const formContent = this.formData;
+      const formContent = {
+        name: 'name of product',
+        ticker: 'ths ticker',
+        description: 'Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Donec sollicitudin molestie malesuada. Praesent sapien massa, convallis a pellentesque nec, e',
+        merchant_id: '2',
+        tags: ['test', 'secondtest'],
+        unit_price: '50000',
+        measurment: 'litre',
+        tax: '10000',
+        coverage: {
+          city: 'lagos',
+          state:'lagos'
+        },
+        image: this.file,
+        shipping_fee: '40000'
+      };
 
-      this.$store.dispatch("submitProduct", this.formData);
+      this.$store.dispatch("submitProduct", formContent);
       //this.$router.push("/products");
     },
   },
@@ -527,6 +482,75 @@ export default {
 </script>
 
 <style lang="scss">
+.inputfield {
+  position: relative;
+  height: 100%;
+
+  &__input {
+    background: #ffffff;
+    border: 1px solid #f3f4f6;
+    box-sizing: border-box;
+    border-radius: 0.6rem;
+    height: 100%;
+    padding: 1.5rem 2rem;
+
+    &:focus {
+      outline: none;
+      border: 1px solid $color-primary;
+    }
+
+    &::-webkit-input-placeholder {
+      color: $color-gray;
+    }
+  }
+
+  &__dropdowns {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    border: 1px solid #f3f4f6;
+    background: #fff;
+    z-index: 3;
+    overflow: scroll;
+    overflow-x: hidden;
+    height: 20rem;
+    bottom: -20.1rem !important;
+  }
+
+  &__dropicon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* width: 2rem; */
+    padding-right: 2rem;
+  }
+
+  &__drop {
+    position: relative;
+    font-weight: 500;
+    font-size: 1.4rem;
+    color: #2f3147;
+    background: #ffffff;
+    border-bottom: 1px solid #f3f4f6;
+    letter-spacing: 1.2px;
+    padding: 0.5rem 2rem;
+    z-index: 3;
+    cursor: pointer;
+    height: 4.2rem;
+    display: flex;
+    align-items: center;
+    transition: all 0.5s ease;
+
+    &:hover {
+      background: rgba(178, 190, 195, 0.1);
+    }
+  }
+}
+
 .addproduct {
   padding-left: 21rem;
 

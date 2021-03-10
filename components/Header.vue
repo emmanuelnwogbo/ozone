@@ -7,7 +7,8 @@
         this.$route.name !== 'merchants-addmerchant'
       "
     >
-      Hi, {{ user === null ? "" : user.name }}
+      {{ this.$route.name === "customer-profile" ? "User" : "Hi," }}
+      {{ user === null ? "" : user.name }}
     </h3>
     <h1 class="header__h1">{{ title }}</h1>
     <h3 class="header__h3" v-if="this.$route.name === 'products-productorders'">
@@ -23,6 +24,9 @@ export default {
       user: null,
     };
   },
+  mounted() {
+    this.$store.dispatch("getCustomers");
+  },
   watch: {
     userDatails(newValue) {
       const user = localStorage.getItem("jhbfgehgwbhef");
@@ -35,9 +39,15 @@ export default {
       const user = this.$store.getters.user;
       return user;
     },
+    customerDetails() {
+      return this.$store.getters.customers !== null
+        ? this.$store.getters.customers
+            .filter((item) => item.accountType !== "admin")
+            .filter((customer) => customer.id == this.$route.params.index)[0]
+        : "";
+    },
     title() {
       const current_route = this.$route.name;
-      console.log(this.$route.name, "hello");
       switch (current_route) {
         case "products":
           return "Product Analysis";
@@ -45,6 +55,14 @@ export default {
           return "Activity";
         case "customer":
           return "Customer Insight";
+        case "customer-profile":
+          return this.$store.getters.customers.length
+            ? this.$store.getters.customers
+                .filter((item) => item.accountType !== "admin")
+                .filter(
+                  (customer) => customer.id == this.$route.params.index
+                )[0].name
+            : "";
         case "wallet":
           return "Wallet";
         case "transactions":

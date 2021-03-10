@@ -47,8 +47,12 @@ export default {
       confirmPassword: "",
       accountType: "admin",
       passwordError: false,
-      loading: false,
+      loading: false
     };
+  },
+  created() {
+    console.log("hello world from index");
+    //this.$router.push("/overview");
   },
   mounted() {
     if (this.adminToken !== null) {
@@ -58,7 +62,7 @@ export default {
     const user = localStorage.getItem("jhbfgehgwbhef");
     if (user !== null) {
       console.log("user already exists", JSON.parse(user));
-      this.$store.dispatch("updateUser", JSON.parse(user));
+      //this.$store.dispatch("updateUser", JSON.parse(user));
       //this.$router.push("/overview");
     }
   },
@@ -75,9 +79,6 @@ export default {
     adminToken(newValue) {
       this.loading = false;
       this.$router.push("/overview");
-    },
-    confirmPassword(newValue) {
-      newValue === this.password ? (this.passwordError = false) : "";
     },
   },
   computed: {
