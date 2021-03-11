@@ -59,8 +59,18 @@
         <div class="notifications__recent">
           <h2 class="notifications__recent--h2">Recent Notifications</h2>
 
+          <div
+            class="notifications__none"
+            v-if="!notifications || !notifications.length"
+          >
+            You have no notifications
+          </div>
+
           <div class="notifications__cards">
-            <div class="notifications__card">
+            <div
+              class="notifications__card"
+              v-if="notifications && notifications.length"
+            >
               <div class="notifications__card--left">
                 <figure class="notifications__card--img">
                   <span>
@@ -225,22 +235,12 @@ export default {
     };
   },
   middleware: "auth",
+  mounted() {
+    this.$store.dispatch("getNotifications");
+  },
   computed: {
-    recentNotifications() {
-      const notifications = [
-        {
-          profilePhoto:
-            "https://data.whicdn.com/images/322027365/original.jpg?t=1541703413",
-          userName: "Cameron Williamson",
-        },
-        {
-          profilePhoto:
-            "https://data.whicdn.com/images/322027365/original.jpg?t=1541703413",
-          userName: "Cameron Williamson",
-        },
-      ];
-
-      return notifications;
+    notifications() {
+      return this.$store.getters.notifications;
     },
   },
   methods: {
@@ -363,6 +363,16 @@ export default {
         font-size: 1.5rem;
       }
     }
+  }
+
+  &__none {
+    margin: 0 auto;
+    width: 42rem;
+    text-align: center;
+    padding: 5rem 0;
+    font-weight: 500;
+    font-size: 2rem;
+    opacity: 0.4;
   }
 
   &__btns {

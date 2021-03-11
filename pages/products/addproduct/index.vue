@@ -464,10 +464,10 @@ export default {
         unit_price: '50000',
         measurment: 'litre',
         tax: '10000',
-        coverage: {
+        /*coverage: {
           city: 'lagos',
           state:'lagos'
-        },
+        },*/
         image: this.file,
         shipping_fee: '40000'
       };

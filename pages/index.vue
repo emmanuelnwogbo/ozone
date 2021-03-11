@@ -10,7 +10,7 @@
           <label for="">Email</label>
           <input
             v-model="email"
-            type="text"
+            type="email"
             placeholder="Enter Your email"
             name=""
           />

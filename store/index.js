@@ -8,7 +8,8 @@ const createStore = () => {
       merchants: [],
       orders: [],
       adminToken: null,
-      user: null
+      user: null,
+      notifications: null
     },
     mutations: {
       updateCustomers(state, data) {
@@ -25,6 +26,9 @@ const createStore = () => {
       },
       updateUser(state, data) {
         state.user = data;
+      },
+      updateNotifications(state, data) {
+        state.notifications = data;
       }
     },
     actions: {
@@ -40,11 +44,12 @@ const createStore = () => {
         let response = await fetch("http://3.123.189.154:3000/createProduct", {
           method: "POST",
           headers: {
-            Accept: "application/json;charset=utf-8",
-            "Content-Type": "multipart/form-data",
+            Accept: "application/json",
+            "Content-Type":
+              "multipart/form-data; boundary=----WebKitFormBoundarydMIgtiA2YeB1Z0kl",
             token
           },
-          body: JSON.stringify(data)
+          body: data
         });
 
         let result = await response.json();
@@ -213,6 +218,26 @@ const createStore = () => {
           .catch(err => {
             console.log(err, "this is a err");
           });
+      },
+      getNotifications({ commit, state }) {
+        const token = localStorage.getItem("hebhukvyaew");
+        axios({
+          method: "get",
+          headers: {
+            "Content-Type": "multipart/form-data",
+            "Content-type": "application/json",
+            token: token
+          },
+          baseURL: "http://3.123.189.154:3000/",
+          url: "/getNotifications"
+        })
+          .then(res => {
+            console.log(res);
+            commit("updateNotifications", res.data.data);
+          })
+          .catch(err => {
+            console.log(err, "there is an error");
+          });
       }
     },
     getters: {
@@ -230,6 +255,9 @@ const createStore = () => {
       },
       user(state) {
         return state.user;
+      },
+      notifications(state) {
+        return state.notifications;
       }
     }
   });
