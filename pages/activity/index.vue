@@ -166,7 +166,22 @@
                   <span>57m</span>
                   <span>21.77%</span>
                 </div>
-                <div class="activity__usercat--right"></div>
+                <div class="activity__usercat--right">
+                  <BarGraph
+                    :colors="[
+                      '#A0D7E7',
+                      '#0049C6',
+                      '#A0D7E7',
+                      '#A0D7E7',
+                      '#A0D7E7',
+                    ]"
+                    :numberOfBarsPerArea="[['20%', '20%', '20%', '60%', '47%']]"
+                    :YScale="[]"
+                    :XScale="[]"
+                    :barBodyWidth="'100%'"
+                    :barWidth="'2rem'"
+                  />
+                </div>
               </div>
               <div class="activity__usercat">
                 <div class="activity__usercat--left">
@@ -174,7 +189,22 @@
                   <span>57m</span>
                   <span>21.77%</span>
                 </div>
-                <div class="activity__usercat--right"></div>
+                <div class="activity__usercat--right">
+                  <BarGraph
+                    :colors="[
+                      '#A0D7E7',
+                      '#0049C6',
+                      '#A0D7E7',
+                      '#A0D7E7',
+                      '#A0D7E7',
+                    ]"
+                    :numberOfBarsPerArea="[['20%', '80%', '20%', '60%', '67%']]"
+                    :YScale="[]"
+                    :XScale="[]"
+                    :barBodyWidth="'100%'"
+                    :barWidth="'2rem'"
+                  />
+                </div>
               </div>
               <div class="activity__usercat">
                 <div class="activity__usercat--left">
@@ -182,7 +212,24 @@
                   <span>57m</span>
                   <span>21.77%</span>
                 </div>
-                <div class="activity__usercat--right"></div>
+                <div class="activity__usercat--right">
+                  <BarGraph
+                    :colors="[
+                      '#A0D7E7',
+                      '#0049C6',
+                      '#A0D7E7',
+                      '#A0D7E7',
+                      '#A0D7E7',
+                    ]"
+                    :numberOfBarsPerArea="[
+                      ['20%', '10%', '20%', '100%', '67%'],
+                    ]"
+                    :YScale="[]"
+                    :XScale="[]"
+                    :barBodyWidth="'100%'"
+                    :barWidth="'2rem'"
+                  />
+                </div>
               </div>
 
               <div class="activity__leftmiddlecard--gotosettings">
@@ -197,6 +244,33 @@
               <span>
                 <h2>Users by Platform</h2>
               </span>
+            </div>
+
+            <div class="activity__cardgreen--body">
+              <div class="activity__leftmiddlecard activity__cardgreen--graph">
+                <BarGraph
+                  :colors="['#159183', '#AAF3EA']"
+                  :numberOfBarsPerArea="[
+                    ['20%', '10%'],
+                    ['20%', '100%'],
+                    ['67%', '30%'],
+                  ]"
+                  :YScale="['60', '40', '20', '0']"
+                  :XScale="['Oct', 'Sept', 'Nov']"
+                  :barBodyWidth="'5rem'"
+                  :barWidth="'2rem'"
+                />
+              </div>
+              <div class="activity__cardgreen--label">
+                <div class="activity__cardgreen--sec">
+                  <span class="mobile"></span>
+                  <span>Mobile</span>
+                </div>
+                <div class="activity__cardgreen--sec">
+                  <span class="web"></span>
+                  <span>Web</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -300,7 +374,24 @@
             </div>
           </div>
         </div>
-        <div class="activity__rightbottom"></div>
+        <div class="activity__rightbottom">
+          <h3>Average Time Spent On App</h3>
+
+          <div class="activity__rightbottom--graph">
+            <BarGraph
+              :colors="['#159183', '#AAF3EA']"
+              :numberOfBarsPerArea="[
+                ['20%', '10%'],
+                ['20%', '100%'],
+                ['67%', '30%'],
+              ]"
+              :YScale="['16h', '12h', '8h', '4h', '0']"
+              :XScale="['Oct', 'Sept', 'Nov']"
+              :barBodyWidth="'5rem'"
+              :barWidth="'2rem'"
+            />
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -577,10 +668,11 @@ export default {
   }
 
   &__leftmiddlecard {
-    min-height: 40rem;
+    height: 48rem;
     flex-basis: 47.5%;
     padding: 3rem 0;
     position: relative;
+    padding-bottom: 1rem;
 
     & .activity__header {
       padding: 0 3rem;
@@ -596,6 +688,7 @@ export default {
       align-items: center;
       height: 5rem;
       cursor: pointer;
+      padding: 3rem 0;
 
       & button {
         border: none;
@@ -611,9 +704,55 @@ export default {
 
   &__cardgreen {
     background: $color-primary;
+    padding: 1.8rem;
 
     & h2 {
       color: #fff;
+    }
+
+    &--body {
+      width: 100%;
+      padding: 3rem;
+      background: #fff;
+      border-radius: 2rem;
+    }
+
+    &--label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1.2rem;
+      font-weight: 500;
+      opacity: 0.8;
+      margin-top: 1.5rem;
+    }
+
+    &--sec {
+      display: flex;
+      align-items: center;
+
+      & span {
+        &:nth-child(1) {
+          display: inline-block;
+          height: 1.2rem;
+          width: 1.2rem;
+          border-radius: 0.2rem;
+          margin-right: 1rem;
+
+          &.mobile {
+            background: #159183;
+          }
+
+          &.web {
+            background: #aaf3ea;
+          }
+        }
+      }
+    }
+
+    &--graph {
+      height: 30rem;
+      width: 100%;
     }
   }
 
@@ -778,6 +917,7 @@ export default {
     position: relative;
     padding: 0 0 0 0;
     padding: 1rem 3rem 2.5rem 3rem;
+    align-items: flex-end;
 
     &::before {
       content: "";
@@ -816,6 +956,28 @@ export default {
           font-size: 1.1rem;
         }
       }
+    }
+
+    &--right {
+      height: 8rem;
+      width: 16rem;
+      margin-left: 1rem;
+      transform: translateY(1rem);
+    }
+  }
+
+  &__rightbottom {
+    margin-top: 5rem;
+
+    & h3 {
+      font-size: 1.7rem;
+      font-weight: 500;
+    }
+
+    &--graph {
+      height: 30rem;
+    width: 25rem;
+    margin: 4rem 0;
     }
   }
 }

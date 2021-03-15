@@ -27,6 +27,15 @@ export default {
     script: [
       {
         src: "https://unpkg.com/vue-multiselect@2.1.0"
+      },
+      {
+        src: "//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"
+      },
+      {
+        src: "//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"
+      },
+      {
+        src: "//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"
       }
     ],
     link: [
@@ -35,6 +44,10 @@ export default {
         rel: "stylesheet",
         href:
           "https://unpkg.com/vue-multiselect@2.1.0/dist/vue-multiselect.min.css"
+      },
+      {
+        rel: "stylesheet",
+        href: "//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css"
       }
     ]
   },
@@ -47,11 +60,12 @@ export default {
    ** https://nuxtjs.org/guide/plugins
    */
   plugins: [
+    { src: "~/plugins/vue-graph.js", mode: "client" },
     { src: "~/plugins/vuequill.js", mode: "client" }
     //{ src: "~/plugins/multiselect.js", mode: "client" }
   ],
   /*
-   ** Auto import components
+   ** Auto import componentd
    ** See https://nuxtjs.org/api/configuration-components
    */
   components: true,
@@ -75,7 +89,11 @@ export default {
    ** Build configuration
    ** See https://nuxtjs.org/api/configuration-build/
    */
-  build: {},
+  build: {
+    extend(config) {
+      config.resolve.alias["vue"] = "vue/dist/vue.common";
+    }
+  },
   proxy: {},
   middleware: ["auth"]
 };

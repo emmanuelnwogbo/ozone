@@ -448,7 +448,7 @@ export default {
         right: 0;
         background: #fff;
         width: 23rem;
-        bottom: -17rem;
+        top: 4rem;
         border-radius: 0.9rem;
         padding: 2rem;
         box-shadow: -3px 0 20px rgba(0, 0, 0, 0.1);

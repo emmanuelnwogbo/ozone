@@ -195,6 +195,7 @@ export default {
 
   &__bell {
     position: relative;
+    cursor: pointer;
 
     & span {
       display: flex;

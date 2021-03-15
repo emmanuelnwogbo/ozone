@@ -41,19 +41,24 @@ const createStore = () => {
       async submitProduct(vuexContext, data) {
         const token = localStorage.getItem("hebhukvyaew");
         console.log(data);
-        let response = await fetch("http://3.123.189.154:3000/createProduct", {
-          method: "POST",
+        axios({
+          method: "post",
           headers: {
             Accept: "application/json",
-            "Content-Type":
-              "multipart/form-data; boundary=----WebKitFormBoundarydMIgtiA2YeB1Z0kl",
-            token
+            "Content-Type": "multipart/form-data",
+            token: token
           },
-          body: data
-        });
-
-        let result = await response.json();
-        console.log(result);
+          baseURL: "http://3.123.189.154:3000/",
+          url: "/createProduct",
+          data: data
+        })
+          .then(res => {
+            console.log(res);
+          })
+          .catch(err => {
+            console.log(err);
+            console.log(err.response.data);
+          });
         /*axios({
           method: "post",
           headers: {
@@ -217,6 +222,25 @@ const createStore = () => {
           })
           .catch(err => {
             console.log(err, "this is a err");
+          });
+      },
+      getTransactions({ commit, state }) {
+        const token = localStorage.getItem("hebhukvyaew");
+        axios({
+          method: "get",
+          headers: {
+            "Content-Type": "multipart/form-data",
+            "Content-type": "application/json",
+            token: token
+          },
+          baseURL: "http://3.123.189.154:3000/",
+          url: "/getTransactions"
+        })
+          .then(res => {
+            console.log(res);
+          })
+          .catch(err => {
+            console.log(err, "there is an error");
           });
       },
       getNotifications({ commit, state }) {

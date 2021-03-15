@@ -25,7 +25,7 @@
           </div>
           <div class="container__middle">
             <div class="container__middle--left">
-              <h2>N10K</h2>
+              <h2>N0</h2>
               <div class="container__middle--fundsavail">
                 <div class="container__middle--bag">
                   <span>
@@ -51,7 +51,48 @@
                 </div>
               </div>
             </div>
-            <div class="container__middle--right"></div>
+            <div class="container__middle--right">
+              <div class="container__middle--graphbody">
+                <BarGraph
+                  :colors="['#159183', '#AAF3EA']"
+                  :numberOfBarsPerArea="[
+                    ['20%', '40%'],
+                    ['20%', '30%'],
+                    ['45%', '30%'],
+                    ['67%', '100%'],
+                    ['100%', '56%'],
+                  ]"
+                  :YScale="[60, 40, 20, 0]"
+                  :XScale="['Jan', 'Feb', 'Mar', 'Apr', 'May']"
+                  :barBodyWidth="'7rem'"
+                  :barWidth="'3rem'"
+                />
+                <!-- <graph-bar
+                  :width="400"
+                  :height="300"
+                  :margin="10"
+                  :axis-min="0"
+                  :axis-max="60"
+                  :labels="['May', 'Apr', 'Mar', 'Feb', 'Jan']"
+                  :colors="['#159183', '#AAF3EA']"
+                  :values="values"
+                  :styles="{
+                    gridXAxisBorderColor: '#fff',
+                    gridYAxisBorderColor: '#fff',
+                    gridZAxisBorderColor: '#fff',
+                    gridCAxisBorderColor: '#fff',
+                    gridFaceBackgroundColor: '#fff',
+                    axisBackgroundColor: '#fff',
+                    axisBorderColor: '#fff',
+                    backgroundColor: '#fff',
+                  }"
+                >
+                  <note :text="''"></note>
+                 <tooltip :names="names" :position="'left'"></tooltip>
+        <legends :names="names" :filter="false"></legends>
+                </graph-bar>-->
+              </div>
+            </div>
           </div>
           <div class="container__updatesettings"></div>
           <div class="container__table">
@@ -77,7 +118,7 @@
                 <span>Total Deposit</span>
               </div>
               <div class="container__table--number">
-                <p>N200K</p>
+                <p>N0</p>
               </div>
               <div class="container__table--stat">
                 <span></span>
@@ -102,10 +143,10 @@
                     />
                   </svg>
                 </span>
-                <span>Total Deposit</span>
+                <span>Total Withdrawal</span>
               </div>
               <div class="container__table--number">
-                <p>N28.93K</p>
+                <p>N0</p>
               </div>
               <div class="container__table--stat">
                 <span class="middle"></span>
@@ -130,10 +171,10 @@
                     />
                   </svg>
                 </span>
-                <span>Total Deposit</span>
+                <span>Total Sales</span>
               </div>
               <div class="container__table--number">
-                <p>N35K</p>
+                <p>N0</p>
               </div>
               <div class="container__table--stat">
                 <span class="last"></span>
@@ -150,29 +191,91 @@
               <div class="container__leftbottomleft--tile">
                 <div class="container__leftbottomleft--contentdata">
                   <span>Lite</span>
-                  <span>57m</span>
+                  <span>{{
+                    customers.filter(
+                      (customer) => customer.accountType === "lite"
+                    ).length
+                  }}</span>
                   <span>21.77%</span>
                 </div>
-                <div class="container__leftbottomleft--chart"></div>
+                <div class="container__leftbottomleft--chart">
+                  <BarGraph
+                    :colors="[
+                      '#A0D7E7',
+                      '#0049C6',
+                      '#A0D7E7',
+                      '#A0D7E7',
+                      '#A0D7E7',
+                    ]"
+                    :numberOfBarsPerArea="[['20%', '80%', '20%', '60%', '67%']]"
+                    :YScale="[]"
+                    :XScale="[]"
+                    :barBodyWidth="'100%'"
+                    :barWidth="'2rem'"
+                  />
+                </div>
               </div>
               <div class="container__leftbottomleft--tile">
                 <div class="container__leftbottomleft--contentdata">
                   <span>Family</span>
-                  <span>36k</span>
+                  <span>{{
+                    customers.filter(
+                      (customer) => customer.accountType === "family"
+                    ).length
+                  }}</span>
                   <span>21.77%</span>
                 </div>
-                <div class="container__leftbottomleft--chart"></div>
+                <div class="container__leftbottomleft--chart">
+                  <BarGraph
+                    :colors="[
+                      '#A0D7E7',
+                      '#0049C6',
+                      '#A0D7E7',
+                      '#A0D7E7',
+                      '#A0D7E7',
+                    ]"
+                    :numberOfBarsPerArea="[['20%', '80%', '20%', '30%', '67%']]"
+                    :YScale="[]"
+                    :XScale="[]"
+                    :barBodyWidth="'100%'"
+                    :barWidth="'2rem'"
+                  />
+                </div>
               </div>
               <div class="container__leftbottomleft--tile">
                 <div class="container__leftbottomleft--contentdata">
-                  <span>Lite</span>
-                  <span>57m</span>
+                  <span>Pro</span>
+                  <span>{{
+                    customers.filter(
+                      (customer) => customer.accountType === "Pro"
+                    ).length
+                  }}</span>
                   <span>21.77%</span>
                 </div>
-                <div class="container__leftbottomleft--chart"></div>
+                <div class="container__leftbottomleft--chart">
+                  <BarGraph
+                    :colors="[
+                      '#A0D7E7',
+                      '#0049C6',
+                      '#A0D7E7',
+                      '#A0D7E7',
+                      '#A0D7E7',
+                    ]"
+                    :numberOfBarsPerArea="[['20%', '30%', '20%', '37%', '67%']]"
+                    :YScale="[]"
+                    :XScale="[]"
+                    :barBodyWidth="'100%'"
+                    :barWidth="'2rem'"
+                  />
+                </div>
               </div>
             </div>
-            <div class="container__leftbottomleft--setting">Go To setting</div>
+            <div
+              class="container__leftbottomleft--setting"
+              @click="$router.push('/setting')"
+            >
+              Go To settings
+            </div>
           </div>
           <div class="container__leftbottomright">
             <div class="container__leftheader">
@@ -346,9 +449,56 @@
                 </div>
                 <div class="container__leftbottomrighttile--right">+N55</div>
               </div>
+
+              <div class="container__leftbottomrighttile">
+                <div class="container__leftbottomrighttile--left">
+                  <div class="container__leftbottomrighttile--icon">
+                    <span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="48"
+                        height="49"
+                        viewBox="0 0 48 49"
+                        fill="none"
+                      >
+                        <g clip-path="url(#clip0)">
+                          <rect
+                            y="0.805237"
+                            width="48"
+                            height="48"
+                            rx="12"
+                            fill="#EBF2FF"
+                          />
+                          <path
+                            d="M15.4875 14.8C15.157 14.8305 14.9133 15.1258 14.9438 15.4562C14.9742 15.7867 15.2695 16.0305 15.6 16H19.2C19.4156 16.0023 19.6172 15.8898 19.7273 15.7023C19.8352 15.5148 19.8352 15.2851 19.7273 15.0976C19.6172 14.9101 19.4156 14.7976 19.2 14.8H15.6C15.5813 14.8 15.5625 14.8 15.5438 14.8C15.525 14.8 15.5063 14.8 15.4875 14.8ZM28.0875 14.8C27.757 14.8305 27.5133 15.1258 27.5437 15.4562C27.5742 15.7867 27.8695 16.0305 28.2 16H31.8C32.0156 16.0023 32.2172 15.8898 32.3273 15.7023C32.4352 15.5148 32.4352 15.2851 32.3273 15.0976C32.2172 14.9101 32.0156 14.7976 31.8 14.8H28.2C28.1812 14.8 28.1625 14.8 28.1437 14.8C28.125 14.8 28.1062 14.8 28.0875 14.8ZM12.6 16.6C10.6313 16.6 9.6 20.2211 9.6 23.8C9.6 26.1133 10.0383 28.4406 10.875 29.8H37.125C37.9617 28.4406 38.4 26.1133 38.4 23.8C38.4 20.2211 37.3687 16.6 35.4 16.6H12.6ZM24 20.0875C24 20.0875 26.4 23.0734 26.4 24.4C26.4 25.7266 25.3266 26.8 24 26.8C22.6734 26.8 21.6 25.7266 21.6 24.4C21.6 23.0734 24 20.0875 24 20.0875ZM10.0875 31C9.80156 31.0539 9.59531 31.307 9.6 31.6V32.8C9.6 33.1305 9.86953 33.4 10.2 33.4H10.2938C10.2422 33.5945 10.2 33.7891 10.2 34C10.2 35.3195 11.2805 36.4 12.6 36.4C13.5094 36.4 14.2922 35.8773 14.7 35.125C15.1078 35.8773 15.8906 36.4 16.8 36.4C18.1195 36.4 19.2 35.3195 19.2 34C19.2 33.7891 19.1578 33.5945 19.1062 33.4H28.8937C28.8422 33.5945 28.8 33.7891 28.8 34C28.8 35.3195 29.8805 36.4 31.2 36.4C32.1094 36.4 32.8922 35.8773 33.3 35.125C33.7078 35.8773 34.4906 36.4 35.4 36.4C36.7195 36.4 37.8 35.3195 37.8 34C37.8 33.7891 37.7578 33.5945 37.7062 33.4H37.8C38.1305 33.4 38.4 33.1305 38.4 32.8V31.6C38.4 31.2695 38.1305 31 37.8 31H10.2C10.1813 31 10.1625 31 10.1438 31C10.125 31 10.1063 31 10.0875 31ZM11.6438 33.4H13.5563C13.6711 33.5828 13.8 33.7703 13.8 34C13.8 34.6703 13.2703 35.2 12.6 35.2C11.9297 35.2 11.4 34.6703 11.4 34C11.4 33.7703 11.5289 33.5828 11.6438 33.4ZM15.8438 33.4H17.7563C17.8711 33.5828 18 33.7703 18 34C18 34.6703 17.4703 35.2 16.8 35.2C16.1297 35.2 15.6 34.6703 15.6 34C15.6 33.7703 15.7289 33.5828 15.8438 33.4ZM30.2437 33.4H32.1562C32.2711 33.5828 32.4 33.7703 32.4 34C32.4 34.6703 31.8703 35.2 31.2 35.2C30.5297 35.2 30 34.6703 30 34C30 33.7703 30.1289 33.5828 30.2437 33.4ZM34.4437 33.4H36.3562C36.4711 33.5828 36.6 33.7703 36.6 34C36.6 34.6703 36.0703 35.2 35.4 35.2C34.7297 35.2 34.2 34.6703 34.2 34C34.2 33.7703 34.3289 33.5828 34.4437 33.4Z"
+                            fill="#0049C6"
+                          />
+                        </g>
+                        <defs>
+                          <clipPath id="clip0">
+                            <rect
+                              width="48"
+                              height="47.895"
+                              fill="white"
+                              transform="translate(0 0.805237)"
+                            />
+                          </clipPath>
+                        </defs>
+                      </svg>
+                    </span>
+                  </div>
+                  <div class="container__leftbottomrighttile--details">
+                    <span>AGO</span>
+                    <span>45 Litres</span>
+                  </div>
+                </div>
+                <div class="container__leftbottomrighttile--right">+N55</div>
+              </div>
             </div>
             <div class="container__leftbottomright--btn">
-              <button>View Orders</button>
+              <button @click="$router.push('/products/productorders')">
+                View Orders
+              </button>
             </div>
           </div>
         </div>
@@ -364,6 +514,19 @@
         </div>
         <div class="container__rightbottom">
           <h1 class="container__righttop--h1">Transactions by Product Type</h1>
+          <div class="container__rightbottom--graph">
+            <BarGraph
+              :colors="['#159183', '#0049C6', '#144A91']"
+              :numberOfBarsPerArea="[
+                ['20%', '70%', '60%'],
+                ['80%', '50%', '20%'],
+              ]"
+              :YScale="['100k', '60k', '40k', '20k', '0']"
+              :XScale="['October', 'September']"
+              :barBodyWidth="'11rem'"
+              :barWidth="'3rem'"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -372,10 +535,21 @@
 
 <script>
 import InputField from "@/components/InputField";
+import BarGraph from "@/components/BarGraph";
 
 export default {
   components: {
     InputField,
+    BarGraph,
+  },
+  data() {
+    return {
+      names: ["", "", "", "", ""],
+      values: [
+        [10, 5, 5, 10, 10],
+        [40, 10, 10, 20, 10],
+      ],
+    };
   },
   methods: {
     openCustomerpage() {
@@ -385,6 +559,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getCustomers");
+    this.$store.dispatch("getTransactions");
   },
   computed: {
     customers() {
@@ -423,7 +598,7 @@ export default {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    /* align-items: center; */
+    margin-bottom: 2rem;
     font-size: 0.9rem;
 
     & h1 {
@@ -519,11 +694,17 @@ export default {
 
   &__rightbottom {
     margin-top: 5rem;
+
+    &--graph {
+      height: 30rem;
+      width: 30rem;
+      margin-top: 3rem;
+    }
   }
 
   &__lefttop {
     flex-shrink: 0;
-    height: 40rem;
+    height: 46rem;
     padding: 3rem;
     @include typicalCard;
     background: linear-gradient(to bottom, rgba(248, 248, 248, 0.6), white);
@@ -557,12 +738,15 @@ export default {
     }
 
     &--tiles {
-      margin-top: 1rem;
+      margin-top: 2rem;
+      padding-bottom: 3rem;
     }
 
     &--tile {
       border-bottom: 0.4px solid rgba(47, 54, 64, 0.1);
       padding: 1rem 3rem 2.5rem 3rem;
+      display: flex;
+      align-items: flex-end;
     }
 
     &--setting {
@@ -580,8 +764,8 @@ export default {
     &--contentdata {
       display: flex;
       flex-direction: column;
-
       line-height: 2.2rem;
+      margin-right: 2rem;
 
       & span {
         display: inline-block;
@@ -603,6 +787,11 @@ export default {
         }
       }
     }
+
+    &--chart {
+      width: 14rem;
+      height: 7rem;
+    }
   }
 
   &__leftbottomright {
@@ -615,7 +804,7 @@ export default {
     box-shadow: 7px 14px 20px rgba(0, 0, 0, 0.2);
     -webkit-box-shadow: 7px 14px 20px rgba(0, 0, 0, 0.2);
     -moz-box-shadow: 7px 14px 20px rgba(0, 0, 0, 0.2);
-
+    position: relative;
     flex-direction: column;
 
     &--tiles {
@@ -626,6 +815,9 @@ export default {
       width: 100%;
       display: flex;
       justify-content: center;
+      position: absolute;
+      bottom: 2rem;
+      left: 0;
 
       & button {
         font-weight: 600;
@@ -723,10 +915,19 @@ export default {
       color: #3f8cff;
       font-weight: 500;
     }
+
+    &--right {
+      width: 55rem;
+      height: 19rem;
+    }
+
+    &--graphbody {
+      height: 19rem;
+    }
   }
 
   &__updatesettings {
-    padding: 2rem 0;
+    padding: 1rem 0;
   }
 
   &__table {
@@ -734,7 +935,6 @@ export default {
     align-items: center;
     border: 0.2px solid rgba(47, 54, 64, 0.2);
     border-radius: 1.5rem;
-    margin-top: 2rem;
 
     &--box {
       width: 22rem;
