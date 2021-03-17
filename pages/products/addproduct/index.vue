@@ -350,9 +350,7 @@
               class="addproduct__btn addproduct__btn--colored"
               @click="nextPage"
             >
-              {{
-                header === "Coverage" ? "Add New Product" : "Save and Proceed"
-              }}
+              {{ header === "Coverage" ? saveBtnLabel : "Save and Proceed" }}
             </button>
           </div>
         </div>
@@ -365,6 +363,7 @@
 export default {
   data() {
     return {
+      addingProduct: false,
       header: "Add Product Information",
       productIcon: null,
       name: null,
@@ -455,50 +454,46 @@ export default {
     },
     submitProduct() {
       const formData = new FormData();
-      formData.append("name", "name of product");
-      formData.append("ticker", "ths ticker");
-      formData.append(
-        "description",
-        "Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Donec sollicitudin molestie malesuada. Praesent sapien massa, convallis a pellentesque nec, e"
-      );
+      formData.append("name", this.name);
+      formData.append("ticker", this.ticker);
+      formData.append("description", this.description);
       formData.append("merchant_id", "2");
-      formData.append("unit_price", "50000");
-      formData.append("measurment", "litre");
+      formData.append("unit_price", this.unit_price);
+      formData.append("measurment", this.measurment);
       formData.append("image", this.file);
-      formData.append("shipping_fee", "John");
-      formData.append("tax", "10000");
+      formData.append("shipping_fee", this.shipping_fee);
+      formData.append("tax", this.tax);
       formData.append(
         "coverage",
         JSON.stringify({
-          city: "lagos",
-          state: "lagos",
+          city: this.city,
+          state: this.state,
         })
       );
-      formData.append("tags", JSON.stringify(["test", "secondtest"]));
-      //JSON.stringify(arr)
-      /*const formContent = {
-        *name: "name of product",
-        *ticker: "ths ticker",
-        *description:
-          "Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Donec sollicitudin molestie malesuada. Praesent sapien massa, convallis a pellentesque nec, e",
-        *merchant_id: "2",
-        tags: ["test", "secondtest"],
-        *unit_price: "50000",
-        *measurment: "litre",
-        *tax: "10000",
-        coverage: {
-          city: "lagos",
-          state: "lagos",
-        },
-        *image: this.file,
-        *shipping_fee: "40000",
-      };*/
+      formData.append("tags", JSON.stringify(this.tags.split(",")));
 
-      this.$store.dispatch("submitProduct", formData);
-      //this.$router.push("/products");
+      this.addingProduct = true;
+
+      this.$store
+        .dispatch("submitProduct", formData)
+        .then((res) => {
+          console.log(res);
+          this.addingProduct = false;
+          this.$store.dispatch("currentNotification", 'Product successfully added');
+          this.$router.push("/products");
+        })
+        .catch((err) => {
+          console.log(err);
+          console.log(err.response.data);
+        });
     },
   },
   mounted() {},
+  computed: {
+    saveBtnLabel() {
+      return this.addingProduct ? "Adding Product..." : "Add New Product";
+    },
+  },
   middleware: "auth",
 };
 </script>

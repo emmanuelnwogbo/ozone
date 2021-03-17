@@ -9,7 +9,8 @@ const createStore = () => {
       orders: [],
       adminToken: null,
       user: null,
-      notifications: null
+      notifications: null,
+      currentNotification: null
     },
     mutations: {
       updateCustomers(state, data) {
@@ -29,6 +30,9 @@ const createStore = () => {
       },
       updateNotifications(state, data) {
         state.notifications = data;
+      },
+      updatecurrentNotification(state, data) {
+        state.currentNotification = data;
       }
     },
     actions: {
@@ -38,10 +42,13 @@ const createStore = () => {
       updateUser(vuexContext, data) {
         vuexContext.commit("updateUser", data);
       },
+      currentNotification({ commit, state }, data) {
+        commit("updatecurrentNotification", data);
+      },
       async submitProduct(vuexContext, data) {
         const token = localStorage.getItem("hebhukvyaew");
         console.log(data);
-        axios({
+        return axios({
           method: "post",
           headers: {
             Accept: "application/json",
@@ -51,32 +58,7 @@ const createStore = () => {
           baseURL: "http://3.123.189.154:3000/",
           url: "/createProduct",
           data: data
-        })
-          .then(res => {
-            console.log(res);
-          })
-          .catch(err => {
-            console.log(err);
-            console.log(err.response.data);
-          });
-        /*axios({
-          method: "post",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "multipart/form-data",
-            token: token
-          },
-          baseURL: "http://3.123.189.154:3000/",
-          url: "/createProduct",
-          data: data
-        })
-          .then(res => {
-            console.log(res);
-          })
-          .catch(err => {
-            console.log(err);
-            console.log(err.response.data);
-          });*/
+        });
       },
       getCustomers({ commit, state }) {
         const token = localStorage.getItem("hebhukvyaew");
@@ -282,6 +264,9 @@ const createStore = () => {
       },
       notifications(state) {
         return state.notifications;
+      },
+      currentNotification(state) {
+        return state.currentNotification;
       }
     }
   });

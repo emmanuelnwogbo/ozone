@@ -103,6 +103,46 @@
         </div>
       </div>
 
+      <div class="merchants__mid">
+        <div class="merchants__midgraph merchants__midcard">
+          <div class="merchants__midgraph--top">
+            <h2>Merchant Analytics</h2>
+            <div class="merchants__midgraph--labels">
+              <span class="salescolor sales"></span>
+              <span class="label">Sales</span>
+              <span class="salescolor profit"></span>
+              <span class="label">Profit</span>
+            </div>
+          </div>
+          <div class="merchants__midgraph--body">
+            <BarGraph
+              :colors="['#159183', '#0049c6']"
+              :numberOfBarsPerArea="[
+                ['20%', '40%'],
+                ['20%', '30%'],
+                ['45%', '30%'],
+                ['67%', '100%'],
+                ['100%', '56%'],
+                ['18%', '56%'],
+                ['80%', '56%'],
+              ]"
+              :YScale="[60, 40, 20, 0]"
+              :XScale="['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'July']"
+              :barBodyWidth="'7rem'"
+              :barWidth="'3rem'"
+            />
+          </div>
+        </div>
+        <div class="merchants__midfigure merchants__midcard">
+          <h2>Top Merchant</h2>
+          <div class="merchants__midfigure--body">
+            <span>Chevron Nigeria Limited</span>
+            <span>12,000</span>
+            <span>Orders Fulfilled</span>
+          </div>
+        </div>
+      </div>
+
       <div class="merchants__table">
         <div class="merchants__head">
           <div class="merchants__head--h2">
@@ -217,10 +257,15 @@
 </template>
 
 <script>
+import BarGraph from "@/components/BarGraph";
+
 export default {
   name: "Merchants",
   mounted() {
     this.$store.dispatch("getMerchants");
+  },
+  components: {
+    BarGraph,
   },
   computed: {
     merchants() {
@@ -304,6 +349,108 @@ export default {
           &.merchants__ordercard--pendingpercent {
             color: #ffa26b;
           }
+        }
+      }
+    }
+  }
+
+  &__mid {
+    display: flex;
+    justify-content: space-between;
+    margin: 3rem 0;
+
+    & h2 {
+      font-size: 1.8rem;
+      font-weight: 500;
+    }
+  }
+
+  &__midcard {
+    @include typicalCard;
+    height: 28rem;
+    padding: 3rem;
+  }
+
+  &__midgraph {
+    width: 72rem;
+
+    &--top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    &--labels {
+      display: flex;
+      align-items: center;
+
+      & span {
+        display: inline-block;
+
+        &.label {
+          font-size: 1.2rem;
+          opacity: 0.6;
+          font-weight: 500;
+          margin-left: 1rem;
+        }
+
+        &.salescolor {
+          height: 1.2rem;
+          width: 1.2rem;
+          border-radius: 0.3rem;
+        }
+
+        &.sales {
+          margin-left: 2rem;
+          background: #159183;
+        }
+
+        &.profit {
+          margin-left: 2rem;
+          background: #0049c6;
+        }
+      }
+    }
+
+    &--body {
+      width: 100%;
+      height: 17rem;
+      margin-top: 2rem;
+    }
+  }
+
+  &__midfigure {
+    width: 41rem;
+
+    & h2 {
+      color: #838a96;
+    }
+
+    &--body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      & span {
+        display: inline-block;
+
+        &:nth-child(1) {
+          color: #0049c6;
+          font-weight: 500;
+          font-size: 1.6rem;
+          margin-top: 2rem;
+        }
+
+        &:nth-child(2) {
+          font-size: 5rem;
+          font-weight: 700;
+          margin: 2rem 0;
+        }
+
+        &:nth-child(3) {
+          font-weight: 500;
+          font-size: 1.5rem;
+          opacity: 0.5;
         }
       }
     }

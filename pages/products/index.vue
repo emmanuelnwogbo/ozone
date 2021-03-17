@@ -147,7 +147,7 @@
 
               <div class="products__ordersovertime--bottom">
                 <h3>Your earning this month</h3>
-                <p>N4,790.4</p>
+                <p>N0</p>
                 <button>View Orders</button>
               </div>
             </div>
@@ -431,6 +431,7 @@ export default {
   },
   components: {
     ProductCard,
+    CircleChart,
     BarGraph,
   },
   mounted() {
@@ -473,26 +474,24 @@ export default {
       ],
     });
 
-    console.log(Morris);
-
     Morris.Line({
       // ID of the element in which to draw the chart.
       element: "pushups",
       // Chart data records -- each entry in this array corresponds to a point on
       // the chart.
       data: [
-        { day: "4am", ordersone: 50, orderstwo: 0 },
-        { day: "5am", ordersone: 10, orderstwo: 20 },
-        { day: "6am", ordersone: 40, orderstwo: 30 },
-        { day: "7am", ordersone: 40, orderstwo: 40 },
-        { day: "8am", ordersone: 50, orderstwo: 10 },
-        { day: "9am", ordersone: 50, orderstwo: 20 },
-        { day: "10am", ordersone: 10, orderstwo: 20 },
-        { day: "11am", ordersone: 30, orderstwo: 30 },
-        { day: "12pm", ordersone: 30, orderstwo: 40 },
-        { day: "1pm", ordersone: 20, orderstwo: 10 },
-        { day: "2pm", ordersone: 20, orderstwo: 20 },
-        { day: "3pm", ordersone: 10, orderstwo: 25 },
+        { day: "4am", ordersone: 5, orderstwo: 0 },
+        { day: "5am", ordersone: 10, orderstwo: 5 },
+        { day: "6am", ordersone: 5, orderstwo: 5 },
+        { day: "7am", ordersone: 5, orderstwo: 5 },
+        { day: "8am", ordersone: 5, orderstwo: 10 },
+        { day: "9am", ordersone: 5, orderstwo: 5 },
+        { day: "10am", ordersone: 10, orderstwo: 0 },
+        { day: "11am", ordersone: 5, orderstwo: 5 },
+        { day: "12pm", ordersone: 5, orderstwo: 0 },
+        { day: "1pm", ordersone: 5, orderstwo: 0 },
+        { day: "2pm", ordersone: 5, orderstwo: 0 },
+        { day: "3pm", ordersone: 5, orderstwo: 5 },
       ],
       // The name of the data record attribute that contains x-values.
       xkey: "day",

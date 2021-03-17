@@ -81,7 +81,8 @@ export default {
     scss: [
       "~/assets/scss/mixins.scss",
       "~/assets/scss/variables.scss",
-      "~/assets/scss/utils.scss"
+      "~/assets/scss/utils.scss",
+      "~/assets/scss/utils/btn.scss"
       //"~/assets/scss/animations.scss"
     ]
   },

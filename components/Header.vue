@@ -1,5 +1,15 @@
 <template>
   <div class="header">
+    <div
+      class="header__notification"
+      v-bind:class="{
+        visible: currentNotification !== null,
+      }"
+    >
+      <div class="header__notification--content">
+        {{ "the notification here" }}
+      </div>
+    </div>
     <div class="header__left">
       <h3
         class="header__h3"
@@ -87,8 +97,18 @@ export default {
       this.user = JSON.parse(user);
       //this.$store.dispatch("updateUser", this.user);
     },
+    currentNotification(newValue) {
+      if (newValue !== null) {
+        setTimeout(() => {
+          this.dispatch("currentNotification", null);
+        }, 9000);
+      }
+    },
   },
   computed: {
+    currentNotification() {
+      this.$store.getters.currentNotification;
+    },
     userDatails() {
       const user = this.$store.getters.user;
       return user;
@@ -151,6 +171,38 @@ export default {
 
   display: flex;
   justify-content: space-between;
+
+  &__notification {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 12rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 500;
+    color: $color-primary;
+    padding-top: 1rem;
+    transition: all 0.3s ease;
+    transform: translateY(-100%);
+
+    .visible {
+      transform: translateY(0);
+    }
+
+    &--content {
+      background: #fff;
+      height: 80%;
+      padding: 3rem;
+      border-radius: 1rem;
+      box-shadow: -3px 0 20px rgba(0, 0, 0, 0.2);
+      -webkit-box-shadow: -3px 0 20px rgba(0, 0, 0, 0.2);
+      -moz-box-shadow: -3px 0 20px rgba(0, 0, 0, 0.2);
+    }
+  }
 
   &__h3 {
     font-size: 2rem;
