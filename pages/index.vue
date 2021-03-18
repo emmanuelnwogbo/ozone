@@ -8,6 +8,12 @@
         <h2>Admin Login</h2>
         <div class="auth__input">
           <label for="">Email</label>
+          <span class="error" v-if="emailError">{{ emailError }}</span>
+           <span
+            class="error"
+            v-if="error && error === 'wrong credentials, please try again'"
+            >{{ error }}</span
+          ></span>
           <input
             v-model="email"
             type="email"
@@ -19,6 +25,12 @@
           <div>
             <label for="">Password</label>
           </div>
+          <span class="error" v-if="passwordError">{{ passwordError }}</span>
+          <span
+            class="error"
+            v-if="error && error === 'wrong credentials, please try again'"
+            >{{ error }}</span
+          >
           <input
             v-model="password"
             type="password"
@@ -37,17 +49,17 @@
 </template>
 
 <script>
+import validator from "validator";
+
 export default {
   data() {
     return {
       email: "",
       password: "",
-      phoneNumber: "",
-      fullName: "",
-      confirmPassword: "",
       accountType: "admin",
+      emailError: false,
       passwordError: false,
-      loading: false
+      loading: false,
     };
   },
   created() {
@@ -68,6 +80,16 @@ export default {
   },
   methods: {
     login() {
+      console.log(this.email, this.password);
+      const { isEmail } = validator;
+      if (!isEmail(this.email)) {
+        return (this.emailError = "Please use a valid Email");
+      }
+
+      if (!this.password.length) {
+        return (this.passwordError = "Password field is empty");
+      }
+
       this.loading = true;
       this.$store.dispatch("authSignIn", {
         email: this.email,
@@ -80,11 +102,28 @@ export default {
       this.loading = false;
       this.$router.push("/overview");
     },
+    email(newValue) {
+      const { isEmail } = validator;
+      isEmail(newValue) ? (this.emailError = false) : "";
+      this.passwordError = false;
+      this.$store.commit("error", false);
+    },
+    password(newValue) {
+      this.passwordError = false;
+      this.$store.commit("error", false);
+    },
+    error(newValue) {
+      this.loading = false;
+    },
   },
   computed: {
     adminToken() {
       const token = this.$store.getters.adminToken;
       return token;
+    },
+    error() {
+      const error = this.$store.getters.error;
+      return error;
     },
   },
 };
@@ -162,6 +201,16 @@ export default {
     flex-direction: column;
     width: 47rem;
     margin-bottom: 3rem;
+
+    & span {
+      display: inline-block;
+
+      &.error {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+        color: red;
+      }
+    }
 
     & label {
       font-size: 1.2rem;

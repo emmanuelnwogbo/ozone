@@ -10,7 +10,8 @@ const createStore = () => {
       adminToken: null,
       user: null,
       notifications: null,
-      currentNotification: null
+      currentNotification: null,
+      error: false
     },
     mutations: {
       updateCustomers(state, data) {
@@ -33,6 +34,9 @@ const createStore = () => {
       },
       updatecurrentNotification(state, data) {
         state.currentNotification = data;
+      },
+      error(state, data) {
+        state.error = data;
       }
     },
     actions: {
@@ -204,6 +208,7 @@ const createStore = () => {
           })
           .catch(err => {
             console.log(err, "this is a err");
+            commit("error", "wrong credentials, please try again");
           });
       },
       getTransactions({ commit, state }) {
@@ -267,6 +272,9 @@ const createStore = () => {
       },
       currentNotification(state) {
         return state.currentNotification;
+      },
+      error(state) {
+        return state.error;
       }
     }
   });

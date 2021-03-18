@@ -113,11 +113,11 @@
                     >
                       <div class="transactions__bottomleftbody--ordersmonths">
                         <div class="transactions__bottomleftbody--ordersmonth">
-                          <span>645</span>
+                          <span>0</span>
                           <span>Orders on May 22</span>
                         </div>
                         <div class="transactions__bottomleftbody--ordersmonth">
-                          <span>472</span>
+                          <span>0</span>
                           <span>Orders on May 21</span>
                         </div>
                       </div>
@@ -211,7 +211,7 @@
           />
         </div>
 
-        <h2 class="transactions__right--h2">N586,000</h2>
+        <h2 class="transactions__right--h2">N0</h2>
         <div class="transactions__right--fundsonplatform">
           <span>
             <img src="~/assets/transactions/purple.png" alt="" />
@@ -354,18 +354,18 @@ export default {
       // Chart data records -- each entry in this array corresponds to a point on
       // the chart.
       data: [
-        { day: "4am", ordersone: 5, orderstwo: 0 },
+        { day: "4am", ordersone: 50, orderstwo: 0 },
         { day: "5am", ordersone: 10, orderstwo: 5 },
-        { day: "6am", ordersone: 5, orderstwo: 5 },
+        { day: "6am", ordersone: 5, orderstwo: 40 },
         { day: "7am", ordersone: 5, orderstwo: 5 },
-        { day: "8am", ordersone: 5, orderstwo: 10 },
-        { day: "9am", ordersone: 5, orderstwo: 5 },
-        { day: "10am", ordersone: 10, orderstwo: 0 },
-        { day: "11am", ordersone: 5, orderstwo: 5 },
-        { day: "12pm", ordersone: 5, orderstwo: 0 },
-        { day: "1pm", ordersone: 5, orderstwo: 0 },
-        { day: "2pm", ordersone: 5, orderstwo: 0 },
-        { day: "3pm", ordersone: 5, orderstwo: 5 },
+        { day: "8am", ordersone: 30, orderstwo: 70 },
+        { day: "9am", ordersone: 20, orderstwo: 65 },
+        { day: "10am", ordersone: 40, orderstwo: 0 },
+        { day: "11am", ordersone: 80, orderstwo: 5 },
+        { day: "12pm", ordersone: 15, orderstwo: 20 },
+        { day: "1pm", ordersone: 25, orderstwo: 20 },
+        { day: "2pm", ordersone: 15, orderstwo: 0 },
+        { day: "3pm", ordersone: 50, orderstwo: 50 },
       ],
       // The name of the data record attribute that contains x-values.
       xkey: "day",

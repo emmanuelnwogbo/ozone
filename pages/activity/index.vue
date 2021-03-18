@@ -10,7 +10,7 @@
           </div>
           <div class="activity__lefttoptop">
             <div class="activity__number">
-              <div class="activity__number--figure">478</div>
+              <div class="activity__number--figure">0</div>
               <div class="activity__number--perminute">
                 <div class="activity__number--perminutesvg">
                   <span>
@@ -111,7 +111,7 @@
                   </span>
                   <span>Users</span>
                 </div>
-                <div class="activity__lefttopbox--number">36K</div>
+                <div class="activity__lefttopbox--number">{{ customers.filter(customer => customer.accountType === 'Pro' || customer.accountType === 'Lite' || customer.accountType === 'lite' || customer.accountType === 'pro' || customer.accountType === 'family' || customer.accountType === 'Family' ).length }}</div>
                 <div class="activity__lefttopbox--track">
                   <span></span>
                   <span></span>
@@ -138,7 +138,7 @@
                   </span>
                   <span>Deposits</span>
                 </div>
-                <div class="activity__lefttopbox--number">1m</div>
+                <div class="activity__lefttopbox--number">N0</div>
                 <div class="activity__lefttopbox--track">
                   <span></span>
                   <span></span>
@@ -165,7 +165,7 @@
                   </span>
                   <span>Sales</span>
                 </div>
-                <div class="activity__lefttopbox--number">$327</div>
+                <div class="activity__lefttopbox--number">N0</div>
                 <div class="activity__lefttopbox--track">
                   <span></span>
                   <span></span>
@@ -192,7 +192,7 @@
                   </span>
                   <span>Products</span>
                 </div>
-                <div class="activity__lefttopbox--number">03</div>
+                <div class="activity__lefttopbox--number">0</div>
                 <div class="activity__lefttopbox--track">
                   <span></span>
                   <span></span>
@@ -212,7 +212,11 @@
               <div class="activity__usercat">
                 <div class="activity__usercat--left">
                   <span>Lite</span>
-                  <span>57m</span>
+                  <span>{{
+                    customers.filter(
+                      (customer) => customer.accountType === "lite" || customer.accountType === "Lite"
+                    ).length
+                  }}</span>
                   <span>21.77%</span>
                 </div>
                 <div class="activity__usercat--right">
@@ -234,8 +238,12 @@
               </div>
               <div class="activity__usercat">
                 <div class="activity__usercat--left">
-                  <span>Lite</span>
-                  <span>57m</span>
+                  <span>Family</span>
+                  <span>{{
+                    customers.filter(
+                      (customer) => customer.accountType === "family" || customer.accountType === "Family"
+                    ).length
+                  }}</span>
                   <span>21.77%</span>
                 </div>
                 <div class="activity__usercat--right">
@@ -257,8 +265,12 @@
               </div>
               <div class="activity__usercat">
                 <div class="activity__usercat--left">
-                  <span>Lite</span>
-                  <span>57m</span>
+                  <span>Pro</span>
+                  <span>{{
+                    customers.filter(
+                      (customer) => customer.accountType === "Pro" || customer.accountType === "pro"
+                    ).length
+                  }}</span>
                   <span>21.77%</span>
                 </div>
                 <div class="activity__usercat--right">
@@ -619,25 +631,7 @@
             </span>
           </div>
           <div class="activity__pendingorders">
-            <div class="activity__pendingorder">
-              <div class="activity__pendingorder--left">
-                <ProductCard
-                  v-bind:background="'#A0D7E7'"
-                  borderRadius="1.5rem"
-                >
-                  <div class="activity__pendingorder--leftbody">
-                    <span>Mon</span>
-                    <span>20</span>
-                  </div>
-                </ProductCard>
-              </div>
-              <div class="activity__pendingorder--right">
-                <span>ago</span>
-                <span>23 Litres</span>
-                <span>N50,000</span>
-              </div>
-            </div>
-            <div class="activity__pendingorderactive">
+            <!--<div class="activity__pendingorderactive">
               <ProductCard v-bind:background="'#6c5dd3'" borderRadius="1.5rem">
                 <div class="activity__pendingorderactive--body">
                   <div class="activity__pendingorderactive--left">
@@ -651,41 +645,23 @@
                   </div>
                 </div>
               </ProductCard>
-            </div>
-            <div class="activity__pendingorder">
+            </div>-->
+            <div class="activity__pendingorder" v-for="(item, index) in orders" :key="index">
               <div class="activity__pendingorder--left">
                 <ProductCard
                   v-bind:background="'#A0D7E7'"
                   borderRadius="1.5rem"
                 >
                   <div class="activity__pendingorder--leftbody">
-                    <span>Wed</span>
-                    <span>22</span>
+                    <span>{{moment(item.createdAt).format('MMM')}}</span>
+                    <span>{{moment(item.createdAt).format('Do').replace('th', '')}}</span>
                   </div>
                 </ProductCard>
               </div>
               <div class="activity__pendingorder--right">
-                <span>lpg</span>
-                <span>23 Litres</span>
-                <span>N50,000</span>
-              </div>
-            </div>
-            <div class="activity__pendingorder">
-              <div class="activity__pendingorder--left">
-                <ProductCard
-                  v-bind:background="'#A0D7E7'"
-                  borderRadius="1.5rem"
-                >
-                  <div class="activity__pendingorder--leftbody">
-                    <span>Thu</span>
-                    <span>23</span>
-                  </div>
-                </ProductCard>
-              </div>
-              <div class="activity__pendingorder--right">
-                <span>pms</span>
-                <span>23 Litres</span>
-                <span>N50,000</span>
+                <span>{{item.sender_name}}</span>
+                <span>{{55}}</span>
+                <span>N{{item.amount}}</span>
               </div>
             </div>
 
@@ -723,19 +699,43 @@ import ProductCard from "@/components/products/ProductCard";
 import CircleChart from "circle-chart";
 import BarGraph from "@/components/BarGraph";
 
+import moment from 'moment';
+
 export default {
   components: {
     ProductCard,
     CircleChart,
     BarGraph,
   },
+  data() {
+    return {
+      moment
+    }
+  },
   methods: {
     vieworders() {
       this.$router.push("/products/productorders");
     },
   },
+  computed: {
+    customers() {
+      const customers = this.$store.getters.customers.filter(
+        (item) => item.accountType !== "admin"
+      );
+      return customers;
+    },
+    orders() {
+      const orders = this.$store.getters.orders;
+      const pending = orders.filter(item => item.status === "pending")
+      pending.length >= 4 ? pending.length = 4 : "";
+      return pending;
+    },
+  },
+
   middleware: "auth",
   mounted() {
+    console.log(moment(1615998832757).format('Do'))
+    this.$store.dispatch("getOrders");
     new CircleChart({
       $container: document.getElementById("graph-one"),
       ringProportion: 0.42,
@@ -1293,8 +1293,8 @@ export default {
 
   &__righttop {
     width: 35rem;
-    min-height: 63rem;
     position: relative;
+    padding-bottom: 8rem;
   }
 
   &__pendingorder {

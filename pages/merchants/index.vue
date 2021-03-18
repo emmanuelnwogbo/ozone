@@ -5,7 +5,7 @@
         <div class="merchants__ordercard">
           <div class="merchants__ordercard--order">Orders Today</div>
           <div class="merchants__ordercard--middle">
-            <h2 class="merchants__ordercard--h2">469 Orders</h2>
+            <h2 class="merchants__ordercard--h2">{{ordersToday.length}} Orders</h2>
             <div class="merchants__ordercard--percent">
               <span>
                 <svg
@@ -33,12 +33,12 @@
               <span>6%</span>
             </div>
           </div>
-          <div class="merchants__ordercard--date">02-Nov-2020</div>
+          <div class="merchants__ordercard--date">{{moment(Date.now()).format('MMM Do YY')}}</div>
         </div>
         <div class="merchants__ordercard">
           <div class="merchants__ordercard--order">Fulfilled Orders</div>
           <div class="merchants__ordercard--middle">
-            <h2 class="merchants__ordercard--h2">46 Orders</h2>
+            <h2 class="merchants__ordercard--h2">{{fulfilledOrdersToday.length}} Orders</h2>
             <div class="merchants__ordercard--percent">
               <span>
                 <svg
@@ -66,12 +66,12 @@
               <span>6%</span>
             </div>
           </div>
-          <div class="merchants__ordercard--date">02-Nov-2020</div>
+          <div class="merchants__ordercard--date">{{moment(Date.now()).format('MMM Do YY')}}</div>
         </div>
         <div class="merchants__ordercard">
           <div class="merchants__ordercard--order">Pending Today</div>
           <div class="merchants__ordercard--middle">
-            <h2 class="merchants__ordercard--h2">469 Orders</h2>
+            <h2 class="merchants__ordercard--h2">{{pendingOrdersToday.length}} Orders</h2>
             <div class="merchants__ordercard--percent">
               <span>
                 <svg
@@ -99,7 +99,7 @@
               <span class="merchants__ordercard--pendingpercent">6%</span>
             </div>
           </div>
-          <div class="merchants__ordercard--date">02-Nov-2020</div>
+          <div class="merchants__ordercard--date">{{moment(Date.now()).format('MMM Do YY')}}</div>
         </div>
       </div>
 
@@ -137,7 +137,7 @@
           <h2>Top Merchant</h2>
           <div class="merchants__midfigure--body">
             <span>Chevron Nigeria Limited</span>
-            <span>12,000</span>
+            <span>0</span>
             <span>Orders Fulfilled</span>
           </div>
         </div>
@@ -258,15 +258,23 @@
 
 <script>
 import BarGraph from "@/components/BarGraph";
+import moment from 'moment';
 
 export default {
   name: "Merchants",
+  data() {
+    return {
+      moment
+    }
+  },
   mounted() {
     this.$store.dispatch("getMerchants");
+    this.$store.dispatch("getOrders");
   },
   components: {
     BarGraph,
   },
+  middleware: "auth",
   computed: {
     merchants() {
       const merchants = this.$store.getters.merchants.filter(
@@ -274,8 +282,26 @@ export default {
       );
       return merchants;
     },
+    orders() {
+      const orders = this.$store.getters.orders;
+      return orders;
+    },
+    ordersToday() {
+      const orders = this.$store.getters.orders;
+      const ordersToday = orders.filter(order => moment(order.createdAt).format('Do').replace('th', '') === moment(Date.now()).format('Do').replace('th', ''));
+      return ordersToday;
+    },
+    pendingOrdersToday() {
+      const orders = this.$store.getters.orders;
+      const pendingOrdersToday = orders.filter(order => moment(order.createdAt).format('Do').replace('th', '') === moment(Date.now()).format('Do').replace('th', '') && order.status === 'pending');
+      return pendingOrdersToday;
+    },
+    fulfilledOrdersToday() {
+      const orders = this.$store.getters.orders;
+      const fulfilledOrdersToday = orders.filter(order => moment(order.createdAt).format('Do').replace('th', '') === moment(Date.now()).format('Do').replace('th', '') && order.status === 'fulfilled');
+      return fulfilledOrdersToday;
+    }
   },
-  middleware: "auth",
   methods: {
     addMerchant() {
       this.$router.push("/merchants/addmerchant");

@@ -334,11 +334,11 @@
               class="customerprofile__editcardform--top customerprofile__editcardform--area"
             >
               <div class="customerprofile__editcardform--input">
-                <label for="">Cardholder name</label>
+                <label for="">Name on Card</label>
                 <input
                   v-model="cardholdername"
                   type="text"
-                  placeholder="Cardholder name"
+                  placeholder="Name on Card"
                 />
               </div>
             </div>
@@ -355,6 +355,28 @@
                 />
               </div>
               <div class="customerprofile__editcardform--input">
+                <label for="">Card Number</label>
+                <input
+                  
+                  class="limit"
+                  type="text"
+                  placeholder="Card Number"
+                />
+              </div>
+            </div>
+            <div
+              class="customerprofile__editcardform--bottom customerprofile__editcardform--area"
+            >
+              <div class="customerprofile__editcardform--input">
+                <label for="">CVV</label>
+                <input
+                  
+                  class="validity"
+                  type="text"
+                  placeholder="CVV"
+                />
+              </div>
+              <!--<div class="customerprofile__editcardform--input">
                 <label for="">Set Card Limit</label>
                 <input
                   v-model="cardlimit"
@@ -362,7 +384,7 @@
                   type="text"
                   placeholder="Card limit"
                 />
-              </div>
+              </div>-->
             </div>
           </div>
           <div class="customerprofile__editcardform--btns">

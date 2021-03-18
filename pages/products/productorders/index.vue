@@ -82,8 +82,7 @@
           <div class="yourorders__ordercard--order">Cancelled Orders</div>
           <div class="yourorders__ordercard--middle">
             <h2 class="yourorders__ordercard--h2">
-              {{ orders.filter((item) => item.status === "canceled").length }}
-              Orders
+              {{ orders.filter((item) => item.status === "canceled").length === 1 ? orders.filter((item) => item.status === "canceled").length + ' Order' : orders.filter((item) => item.status === "canceled").length + ' Orders'}}
             </h2>
             <div class="yourorders__ordercard--percent">
               <span>
@@ -226,7 +225,6 @@ export default {
       this.$store.dispatch("acceptOrder", data);
     },
     cancelOrder(order_id) {
-      console.log(order_id);
       this.$store
         .dispatch("cancelOrder", order_id)
         .then((res) => {

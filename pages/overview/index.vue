@@ -67,30 +67,6 @@
                   :barBodyWidth="'7rem'"
                   :barWidth="'3rem'"
                 />
-                <!-- <graph-bar
-                  :width="400"
-                  :height="300"
-                  :margin="10"
-                  :axis-min="0"
-                  :axis-max="60"
-                  :labels="['May', 'Apr', 'Mar', 'Feb', 'Jan']"
-                  :colors="['#159183', '#AAF3EA']"
-                  :values="values"
-                  :styles="{
-                    gridXAxisBorderColor: '#fff',
-                    gridYAxisBorderColor: '#fff',
-                    gridZAxisBorderColor: '#fff',
-                    gridCAxisBorderColor: '#fff',
-                    gridFaceBackgroundColor: '#fff',
-                    axisBackgroundColor: '#fff',
-                    axisBorderColor: '#fff',
-                    backgroundColor: '#fff',
-                  }"
-                >
-                  <note :text="''"></note>
-                 <tooltip :names="names" :position="'left'"></tooltip>
-        <legends :names="names" :filter="false"></legends>
-                </graph-bar>-->
               </div>
             </div>
           </div>
@@ -193,7 +169,7 @@
                   <span>Lite</span>
                   <span>{{
                     customers.filter(
-                      (customer) => customer.accountType === "lite"
+                      (customer) => customer.accountType === "lite" || customer.accountType === "Lite"
                     ).length
                   }}</span>
                   <span>21.77%</span>
@@ -220,7 +196,7 @@
                   <span>Family</span>
                   <span>{{
                     customers.filter(
-                      (customer) => customer.accountType === "family"
+                      (customer) => customer.accountType === "family" || customer.accountType === "Family"
                     ).length
                   }}</span>
                   <span>21.77%</span>
@@ -247,7 +223,7 @@
                   <span>Pro</span>
                   <span>{{
                     customers.filter(
-                      (customer) => customer.accountType === "Pro"
+                      (customer) =>  customer.accountType === "Pro" || customer.accountType === "pro"
                     ).length
                   }}</span>
                   <span>21.77%</span>
@@ -506,7 +482,7 @@
       <div class="container__right">
         <div class="container__righttop">
           <h1 class="container__righttop--h1">Total number of users</h1>
-          <div class="container__righttop--number">{{ customers.length }}</div>
+          <div class="container__righttop--number">{{ customers.filter(customer => customer.accountType === 'Pro' || customer.accountType === 'Lite' || customer.accountType === 'lite' || customer.accountType === 'pro' || customer.accountType === 'family' || customer.accountType === 'Family' ).length }}</div>
           <div class="container__righttop--tip">
             Admin can delete and add users
           </div>
