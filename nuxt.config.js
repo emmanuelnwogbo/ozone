@@ -72,7 +72,7 @@ export default {
   /*
    ** Nuxt.js dev-modules
    */
-  buildModules: [],
+  buildModules: ["@nuxtjs/dotenv"],
   /*
    ** Nuxt.js modules
    */

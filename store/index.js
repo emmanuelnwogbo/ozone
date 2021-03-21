@@ -1,6 +1,15 @@
 import Vuex from "vuex";
 import axios from "axios";
 
+const environment = process.env.NODE_ENV;
+const baseURL =
+  environment === "development"
+    ? process.env.BASE_DEV_URL
+    : process.env.BASE_PROD_URL;
+console.log(environment);
+
+console.log(baseURL);
+
 const createStore = () => {
   return new Vuex.Store({
     state: {
@@ -41,7 +50,7 @@ const createStore = () => {
     },
     actions: {
       nuxtServerInit(vuexContext, context) {
-        console.log(vuexContext);
+        //console.log(vuexContext);
       },
       updateUser(vuexContext, data) {
         vuexContext.commit("updateUser", data);
@@ -59,7 +68,7 @@ const createStore = () => {
             "Content-Type": "multipart/form-data",
             token: token
           },
-          baseURL: "http://3.123.189.154:3000/",
+          baseURL,
           url: "/createProduct",
           data: data
         });
@@ -72,7 +81,7 @@ const createStore = () => {
             "Content-Type": "multipart/form-data",
             token: token
           },
-          baseURL: "http://3.123.189.154:3000/",
+          baseURL,
           url: "/getAllSystemUsers"
         })
           .then(res => {
@@ -93,7 +102,7 @@ const createStore = () => {
             "Content-Type": "application/json",
             token: token
           },
-          baseURL: "http://3.123.189.154:3000/",
+          baseURL,
           url: "/createMerchant",
           data: data
         });
@@ -106,7 +115,7 @@ const createStore = () => {
             "Content-Type": "multipart/form-data",
             token: token
           },
-          baseURL: "http://3.123.189.154:3000/",
+          baseURL,
           url: "/getMerchants"
         })
           .then(res => {
@@ -129,7 +138,7 @@ const createStore = () => {
             "Content-type": "application/json",
             token: token
           },
-          baseURL: "http://3.123.189.154:3000/",
+          baseURL,
           url: "/getOrders"
         })
           .then(res => {
@@ -151,7 +160,7 @@ const createStore = () => {
             "Content-Type": "application/json",
             token: token
           },
-          baseURL: "http://3.123.189.154:3000/",
+          baseURL,
           url: "/confirmOrder",
           data: data
         })
@@ -170,7 +179,7 @@ const createStore = () => {
             "Content-Type": "application/json",
             token: token
           },
-          baseURL: "http://3.123.189.154:3000/",
+          baseURL,
           url: "/cancelOrder",
           data: {
             order_id: data
@@ -183,7 +192,7 @@ const createStore = () => {
           headers: {
             "Content-Type": "application/json"
           },
-          baseURL: "http://3.123.189.154:3000/",
+          baseURL,
           url: "/createAdmin",
           data: data
         });
@@ -194,7 +203,7 @@ const createStore = () => {
           headers: {
             "Content-Type": "application/json"
           },
-          baseURL: "http://3.123.189.154:3000/",
+          baseURL,
           url: "/login",
           data: data
         })
@@ -220,7 +229,7 @@ const createStore = () => {
             "Content-type": "application/json",
             token: token
           },
-          baseURL: "http://3.123.189.154:3000/",
+          baseURL,
           url: "/getTransactions"
         })
           .then(res => {
@@ -239,7 +248,7 @@ const createStore = () => {
             "Content-type": "application/json",
             token: token
           },
-          baseURL: "http://3.123.189.154:3000/",
+          baseURL,
           url: "/getNotifications"
         })
           .then(res => {
