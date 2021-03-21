@@ -8,8 +8,6 @@ const baseURL =
     : process.env.BASE_PROD_URL;
 console.log(environment);
 
-console.log(baseURL);
-
 const createStore = () => {
   return new Vuex.Store({
     state: {

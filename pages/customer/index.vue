@@ -404,7 +404,7 @@ export default {
   computed: {
     customers() {
       const customers = this.$store.getters.customers.filter(
-        (item) => item.accountType !== "admin"
+        (item) => item.accountType !== "admin" && item.accountType !== "merchant"
       );
       return customers;
     },
