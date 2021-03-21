@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="test">
     <Header />
     <Sidenav />
     <Nuxt />
@@ -15,6 +15,11 @@ export default {
     Sidenav,
   },
   middleware: "auth",
+  mounted() {
+    console.log(window.screen.availWidth * 0.041);
+    const val = window.screen.availWidth * 0.041;
+    document.getElementsByTagName('html')[0].style.fontSize = val+'%';
+  },
 };
 </script>
 
@@ -54,7 +59,7 @@ html {
   box-sizing: border-box;
   overflow-x: hidden;
 
-  @include respond(tab-land) {
+  /*@include respond(tab-land) {
     // width < 1200?
     font-size: 56.25%; //1 rem = 9px, 9/16 = 50%
   }
@@ -66,7 +71,7 @@ html {
 
   @include respond(big-desktop) {
     font-size: 78%; //1rem = 12, 12/16
-  }
+  }*/
 }
 
 *,

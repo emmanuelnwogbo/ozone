@@ -166,7 +166,7 @@ export default {
   position: absolute;
   top: 0;
   right: 0;
-  width: 127rem;
+  width: 126rem;
   padding: 4rem 5rem 4rem 6rem;
 
   display: flex;
