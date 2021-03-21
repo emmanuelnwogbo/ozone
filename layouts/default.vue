@@ -16,7 +16,6 @@ export default {
   },
   middleware: "auth",
   mounted() {
-    console.log(window.screen.availWidth * 0.041);
     const val = window.screen.availWidth * 0.041;
     document.getElementsByTagName('html')[0].style.fontSize = val+'%';
   },

@@ -38,17 +38,18 @@
               <span>{{ customer.name }}</span>
             </div>
             <div class="customerprofile__leftitem">
-              <span>date of birth</span>
-              <span>31-July-1994</span>
+              <span>account created at</span>
+              <span>{{moment(customer.createdAt).format('MMM Do YY')}}</span>
+            </div>
+            <div class="customerprofile__leftitem">
+              <span>account updated at</span>
+              <span>{{moment(customer.updatedAt).format('MMM Do YY')}}</span>
             </div>
             <div class="customerprofile__leftitem">
               <span>phone number</span>
               <span>{{ customer.phoneNumber }}</span>
             </div>
-            <div class="customerprofile__leftitem">
-              <span>gender</span>
-              <span>Male</span>
-            </div>
+            
             <div class="customerprofile__leftitem">
               <span>status</span>
               <span>{{ customer.status }}</span>
@@ -60,24 +61,16 @@
               <span>{{ customer.email }}</span>
             </div>
             <div class="customerprofile__leftitem">
-              <span>office address</span>
-              <span>{{ customer.name }}</span>
+              <span>card balance</span>
+              <span>{{ customer.wallet }}</span>
             </div>
             <div class="customerprofile__leftitem">
-              <span>id card</span>
-              <span class="colored">Screenshot 74737.png</span>
+              <span>Ozone ID</span>
+              <span class="colored">{{customer.uuidz}}</span>
             </div>
             <div class="customerprofile__leftitem">
-              <span>utility bil</span>
-              <span class="colored">IEIEKM.png</span>
-            </div>
-            <div class="customerprofile__leftitem">
-              <span>occupation</span>
-              <span>Product Designer</span>
-            </div>
-            <div class="customerprofile__leftitem">
-              <span>bvn</span>
-              <span></span>
+              <span>cards</span>
+              <span>{{customer.cards}}</span>
             </div>
           </div>
         </div>
@@ -398,10 +391,13 @@
 </template>
 
 <script>
+import moment from 'moment';
+
 export default {
   name: "CustomerProfile",
   data() {
     return {
+      moment,
       currentleft: true,
       editcard: false,
       cardholdername: null,
