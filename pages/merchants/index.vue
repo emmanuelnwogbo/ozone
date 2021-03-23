@@ -238,7 +238,7 @@
             <span class="menu">
               <span class="actions">Actions</span>
               <span class="accept option">
-                <span class="">View Merchant</span>
+                <span class="" @click="viewprofile(item)">View Merchant</span>
                 <span></span>
               </span>
               <span class="decline option">
@@ -305,6 +305,9 @@ export default {
   methods: {
     addMerchant() {
       this.$router.push("/merchants/addmerchant");
+    },
+    viewprofile(item) {
+      this.$router.push("merchants/profile/" + item.id);
     },
   },
 };

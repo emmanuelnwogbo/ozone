@@ -6,8 +6,12 @@
           <img src="~/assets/customer/icon-avatar-default.png" alt="" />
         </figure>
         <div class="customerprofile__names">
-          <h3>{{ customer ? customer.name && customer.uuidz: "" }}</h3>
-          <span>{{ customer ? customer.accountType : "" }} Member</span>
+          <h3>
+            {{
+              customer ? customer["user.name"] && customer["user.uuidz"] : ""
+            }}
+          </h3>
+          <span>{{ customer ? customer["user.accountType"] : "" }} Member</span>
         </div>
         <div class="customerprofile__btns">
           <button
@@ -30,26 +34,26 @@
         <div class="customerprofile__leftcontainer">
           <div v-if="currentleft && customer">
             <div class="customerprofile__leftitem">
-              <span>email</span>
-              <span>{{ customer.email }}</span>
+              <span>business email</span>
+              <span>{{ customer.businessEmail }}</span>
             </div>
             <div class="customerprofile__leftitem">
-              <span>username</span>
-              <span>{{ customer.name }}</span>
+              <span>business name</span>
+              <span>{{ customer.businessName }}</span>
             </div>
             <div class="customerprofile__leftitem">
               <span>account created at</span>
-              <span>{{moment(customer.createdAt).format('MMM Do YY')}}</span>
+              <span>{{ moment(customer.createdAt).format("MMM Do YY") }}</span>
             </div>
             <div class="customerprofile__leftitem">
               <span>account updated at</span>
-              <span>{{moment(customer.updatedAt).format('MMM Do YY')}}</span>
+              <span>{{ moment(customer.updatedAt).format("MMM Do YY") }}</span>
             </div>
             <div class="customerprofile__leftitem">
               <span>phone number</span>
-              <span>{{ customer.phoneNumber }}</span>
+              <span>{{ customer["user.phoneNumber"] }}</span>
             </div>
-            
+
             <div class="customerprofile__leftitem">
               <span>status</span>
               <span>{{ customer.status }}</span>
@@ -58,166 +62,38 @@
           <div v-if="!currentleft && customer">
             <div class="customerprofile__leftitem">
               <span>residential address</span>
-              <span>{{ customer.email }}</span>
+              <span>{{ customer["user.email"] }}</span>
             </div>
             <div class="customerprofile__leftitem">
               <span>card balance</span>
-              <span>{{ customer.wallet }}</span>
+              <span>{{ customer["user.wallet"] }}</span>
             </div>
             <div class="customerprofile__leftitem">
               <span>Ozone ID</span>
-              <span class="colored">{{customer.uuidz}}</span>
+              <span class="colored">{{ customer["user.uuidz"] }}</span>
             </div>
             <div class="customerprofile__leftitem">
               <span>cards</span>
-              <span>{{customer.cards}}</span>
+              <span>{{ customer["user.cards"] }}</span>
             </div>
           </div>
         </div>
       </div>
+
       <div class="customerprofile__right customerprofile__section">
         <div class="customerprofile__fuelcard">
-          <div class="customerprofile__fuelcard--top">
-            <span>Fuel Card</span>
-            <span>
-              <figure>
-                <img src="~/assets/sidenav/logo.png" alt="" />
-              </figure>
-            </span>
-          </div>
-          <div class="customerprofile__fuelcard--scanner">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="55"
-              height="42"
-              viewBox="0 0 55 42"
-              fill="none"
-            >
-              <g opacity="0.6">
-                <rect
-                  x="54.5103"
-                  y="0.457031"
-                  width="41.0705"
-                  height="53.9553"
-                  rx="4.02652"
-                  transform="rotate(90 54.5103 0.457031)"
-                  fill="#ECECEC"
-                  stroke="#397026"
-                  stroke-width="0.805303"
-                />
-                <rect
-                  x="32.7671"
-                  y="6.09399"
-                  width="28.1856"
-                  height="11.2742"
-                  rx="4.02652"
-                  transform="rotate(90 32.7671 6.09399)"
-                  stroke="#397026"
-                  stroke-width="0.805303"
-                />
-                <path
-                  d="M0.445312 8.50977L22.9723 8.50977"
-                  stroke="#397026"
-                  stroke-width="0.805303"
-                />
-                <path
-                  d="M31.895 8.50977L54.422 8.50977"
-                  stroke="#397026"
-                  stroke-width="0.805303"
-                />
-                <path
-                  d="M0.445312 20.6062L21.7296 20.6062"
-                  stroke="#397026"
-                  stroke-width="0.805303"
-                />
-                <path
-                  d="M33.105 20.6062L54.3892 20.6062"
-                  stroke="#397026"
-                  stroke-width="0.805303"
-                />
-                <path
-                  d="M0.445312 32.7021L22.9723 32.7021"
-                  stroke="#397026"
-                  stroke-width="0.805303"
-                />
-                <path
-                  d="M31.895 32.7021L54.422 32.7021"
-                  stroke="#397026"
-                  stroke-width="0.805303"
-                />
-              </g>
-            </svg>
-          </div>
-          <div class="customerprofile__fuelcard--name">
-            <p>{{ customer ? customer.name : "" }}</p>
-          </div>
-          <div class="customerprofile__fuelcard--bottom">
-            <div class="customerprofile__fuelcard--validthrough">
-              <span>Valid Through</span>
-              <span>
-                <input
-                  v-bind:class="{
-                    focused: editcard,
-                  }"
-                  type="text"
-                  v-model="validthrough"
-                />
-              </span>
-            </div>
-            <div class="customerprofile__fuelcard--logo">
-              <span></span>
-              <span></span>
-            </div>
-          </div>
-        </div>
-
-        <div class="customerprofile__editlockcard" v-if="!editcard">
-          <div class="customerprofile__editlockcard--area">
-            <span class="customerprofile__editlockcard--switch">
-              <span></span>
-            </span>
-            <label>Lock Card</label>
-          </div>
           <div
-            class="customerprofile__editlockcard--area"
-            @click="toggleditcard"
-          >
-            <span class="customerprofile__lockcard--chip">
-              <span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="38"
-                  height="38"
-                  viewBox="0 0 38 38"
-                  fill="none"
-                >
-                  <circle cx="19" cy="19" r="19" fill="#159183" />
-                  <g clip-path="url(#clip0)">
-                    <path
-                      d="M26.9223 12.7512H11.9175C10.768 12.7512 9.8335 13.6858 9.8335 14.8352V24.0048C9.8335 25.1543 10.768 26.0888 11.9175 26.0888H26.9223C28.0718 26.0888 29.0063 25.1543 29.0063 24.0048V14.8352C29.0063 13.6858 28.0718 12.7512 26.9223 12.7512ZM12.3343 16.5024C12.3343 16.2729 12.5215 16.0856 12.7511 16.0856H14.4183C14.6479 16.0856 14.8351 16.2729 14.8351 16.5024V17.7528C14.8351 17.9824 14.6479 18.1696 14.4183 18.1696H12.7511C12.5215 18.1696 12.3343 17.9824 12.3343 17.7528V16.5024ZM12.7511 20.6704H14.8351C15.0647 20.6704 15.2519 20.856 15.2519 21.0872C15.2519 21.3184 15.0647 21.504 14.8351 21.504H12.7511C12.5215 21.504 12.3343 21.3184 12.3343 21.0872C12.3343 20.856 12.5215 20.6704 12.7511 20.6704ZM18.1695 23.588H12.7511C12.5215 23.588 12.3343 23.4024 12.3343 23.1712C12.3343 22.94 12.5215 22.7544 12.7511 22.7544H18.1695C18.3991 22.7544 18.5863 22.94 18.5863 23.1712C18.5863 23.4024 18.3991 23.588 18.1695 23.588ZM18.5863 21.504H16.5023C16.2727 21.504 16.0855 21.3184 16.0855 21.0872C16.0855 20.856 16.2727 20.6704 16.5023 20.6704H18.5863C18.8159 20.6704 19.0031 20.856 19.0031 21.0872C19.0031 21.3184 18.8159 21.504 18.5863 21.504ZM22.3375 21.504H20.2535C20.0223 21.504 19.8367 21.3184 19.8367 21.0872C19.8367 20.856 20.0223 20.6704 20.2535 20.6704H22.3375C22.5687 20.6704 22.7543 20.856 22.7543 21.0872C22.7543 21.3184 22.5687 21.504 22.3375 21.504ZM26.0887 21.504H24.0047C23.7735 21.504 23.5879 21.3184 23.5879 21.0872C23.5879 20.856 23.7735 20.6704 24.0047 20.6704H26.0887C26.3199 20.6704 26.5055 20.856 26.5055 21.0872C26.5055 21.3184 26.3199 21.504 26.0887 21.504ZM26.0887 17.336H20.6703C20.4391 17.336 20.2535 17.1488 20.2535 16.9192C20.2535 16.6897 20.4391 16.5024 20.6703 16.5024H26.0887C26.3199 16.5024 26.5055 16.6897 26.5055 16.9192C26.5055 17.1488 26.3199 17.336 26.0887 17.336Z"
-                      fill="white"
-                    />
-                  </g>
-                  <defs>
-                    <clipPath id="clip0">
-                      <rect
-                        width="20.84"
-                        height="20.84"
-                        fill="white"
-                        transform="translate(9 9)"
-                      />
-                    </clipPath>
-                  </defs>
-                </svg>
-              </span>
-            </span>
-            <label class="editcard">Edit Card</label>
+            class="customerprofile__fuelcard--graph"
+            id="transovertime"
+          ></div>
+          <div class="customerprofile__fuelcard--btn">
+            <button>View Orders</button>
           </div>
         </div>
 
         <div class="customerprofile__history" v-if="!editcard">
           <div class="customerprofile__history--header">
-            <h2>Transaction History</h2>
+            <h2>Order History</h2>
             <div class="customerprofile__history--search">
               <span>
                 <span
@@ -349,12 +225,7 @@
               </div>
               <div class="customerprofile__editcardform--input">
                 <label for="">Card Number</label>
-                <input
-                  
-                  class="limit"
-                  type="text"
-                  placeholder="Card Number"
-                />
+                <input class="limit" type="text" placeholder="Card Number" />
               </div>
             </div>
             <div
@@ -362,12 +233,7 @@
             >
               <div class="customerprofile__editcardform--input">
                 <label for="">CVV</label>
-                <input
-                  
-                  class="validity"
-                  type="text"
-                  placeholder="CVV"
-                />
+                <input class="validity" type="text" placeholder="CVV" />
               </div>
               <!--<div class="customerprofile__editcardform--input">
                 <label for="">Set Card Limit</label>
@@ -391,7 +257,7 @@
 </template>
 
 <script>
-import moment from 'moment';
+import moment from "moment";
 
 export default {
   name: "CustomerProfile",
@@ -407,8 +273,38 @@ export default {
   },
   mounted() {
     if (this.cardlimit === null) {
-      this.$store.dispatch("getCustomers");
+      this.$store.dispatch("getMerchants");
     }
+
+    Morris.Line({
+      // ID of the element in which to draw the chart.
+      element: "transovertime",
+      // Chart data records -- each entry in this array corresponds to a point on
+      // the chart.
+      data: [
+        { day: "4am", ordersone: 50, orderstwo: 0 },
+        { day: "5am", ordersone: 10, orderstwo: 5 },
+        { day: "6am", ordersone: 5, orderstwo: 40 },
+        { day: "7am", ordersone: 5, orderstwo: 5 },
+        { day: "8am", ordersone: 30, orderstwo: 70 },
+        { day: "9am", ordersone: 20, orderstwo: 65 },
+        { day: "10am", ordersone: 40, orderstwo: 0 },
+        { day: "11am", ordersone: 80, orderstwo: 5 },
+        { day: "12pm", ordersone: 15, orderstwo: 20 },
+        { day: "1pm", ordersone: 25, orderstwo: 20 },
+        { day: "2pm", ordersone: 15, orderstwo: 0 },
+        { day: "3pm", ordersone: 50, orderstwo: 50 },
+      ],
+      // The name of the data record attribute that contains x-values.
+      xkey: "day",
+      parseTime: false,
+      // A list of names of data record attributes that contain y-values.
+      ykeys: ["ordersone", "orderstwo"],
+      // Labels for the ykeys -- will be displayed when you hover over the
+      // chart.
+      labels: ["May 21", "May 22"],
+      lineColors: ["#159183", "#d9e1ec"],
+    });
   },
   watch: {
     customer(new_val, old_val) {
@@ -419,7 +315,7 @@ export default {
   },
   computed: {
     customer() {
-      const customers = this.$store.getters.customers.filter(
+      const customers = this.$store.getters.merchants.filter(
         (item) => item.accountType !== "admin"
       );
       return customers.filter(
@@ -548,12 +444,44 @@ export default {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    height: 34rem;
+    height: 45rem;
+    width: 58rem;
     border-radius: 1.5rem;
     box-shadow: -3px 0 20px rgba(0, 0, 0, 0.07);
     -webkit-box-shadow: -3px 0 20px rgba(0, 0, 0, 0.07);
     -moz-box-shadow: -3px 0 20px rgba(0, 0, 0, 0.07);
-    padding: 0 3rem;
+    position: relative;
+    padding: 0 1rem;
+    margin-bottom: 3rem;
+
+    &--graph {
+      height: 25rem;
+      width: 100%;
+    }
+
+    &--btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      bottom: 3rem;
+      width: 100%;
+
+      & button {
+        cursor: pointer;
+        border: none;
+        background: #0049c6;
+        color: #fff;
+        border-radius: 1rem;
+        display: block;
+        margin: 0 auto;
+        height: 4.5rem;
+        width: 21rem;
+        font-size: 1.3rem;
+        font-weight: 600;
+        outline: none;
+      }
+    }
 
     &--top {
       display: flex;
