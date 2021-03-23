@@ -734,7 +734,6 @@ export default {
 
   middleware: "auth",
   mounted() {
-    console.log(moment(1615998832757).format('Do'))
     this.$store.dispatch("getOrders");
     new CircleChart({
       $container: document.getElementById("graph-one"),

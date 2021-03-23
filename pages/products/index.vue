@@ -42,7 +42,7 @@
                   >
                     <div class="products__productlist--figure">
                       <ProductCard
-                        v-bind:background="item.figColor"
+                        v-bind:background="'#ffa2c0'"
                         borderRadius="1.5rem"
                         v-bind:deactivate="
                           currentProduct === item.label ? true : false
@@ -59,9 +59,9 @@
                         active: currentProduct === item.label,
                       }"
                     >
-                      <span>{{ item.label }}</span>
-                      <span>{{ item.desc }}</span>
-                      <span>{{ item.bottomLabel }}</span>
+                      <span>{{ item.name }}</span>
+                      <span>{{ item.shipping_fee }}</span>
+                      <span>{{ item.unit_price }}</span>
                     </div>
                   </div>
                 </ProductCard>
@@ -435,6 +435,7 @@ export default {
     BarGraph,
   },
   mounted() {
+    this.$store.dispatch("getProducts");
     new CircleChart({
       $container: document.getElementById("one-value"),
       ringProportion: 0.42,
@@ -519,32 +520,8 @@ export default {
   },
   computed: {
     products() {
-      const products = [
-        {
-          icon:
-            "https://data.whicdn.com/images/322027365/original.jpg?t=1541703413",
-          label: "AGO",
-          desc: "200,000L in Stock",
-          bottomLabel: "N200/Litre",
-          figColor: "#FFEBF6",
-        },
-        {
-          icon:
-            "https://data.whicdn.com/images/322027365/original.jpg?t=1541703413",
-          label: "LPG",
-          desc: "9KG in Stock",
-          bottomLabel: "N100/KG",
-          figColor: "#CDF4FF",
-        },
-        {
-          icon:
-            "https://data.whicdn.com/images/322027365/original.jpg?t=1541703413",
-          label: "PMS",
-          desc: "200,000L in Stock",
-          bottomLabel: "N200/Litre",
-          figColor: "#CDF4FF",
-        },
-      ];
+      const products = this.$store.getters.products;
+      products.length ? (products.length = 3) : "";
 
       return products;
     },

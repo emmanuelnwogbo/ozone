@@ -1,5 +1,5 @@
 <template>
-  <div id="test">
+  <div id="main">
     <Header />
     <Sidenav />
     <Nuxt />
@@ -9,6 +9,15 @@
 <script>
 import Header from "@/components/Header";
 import Sidenav from "@/components/SideNav";
+
+import axios from "axios";
+
+const environment = process.env.NODE_ENV;
+const baseURL =
+  environment === "development"
+    ? process.env.BASE_DEV_URL
+    : process.env.BASE_PROD_URL;
+
 export default {
   components: {
     Header,
@@ -17,7 +26,41 @@ export default {
   middleware: "auth",
   mounted() {
     const val = window.screen.availWidth * 0.041;
-    document.getElementsByTagName('html')[0].style.fontSize = val+'%';
+    document.getElementsByTagName("html")[0].style.fontSize = val + "%";
+
+    const userData = JSON.parse(localStorage.getItem("jhbfgehgwbhef"));
+    const token = localStorage.getItem("hebhukvyaew");
+
+    axios({
+      method: "get",
+      headers: {
+        "Content-Type": "multipart/form-data",
+        "Content-type": "application/json",
+        token: token,
+      },
+      baseURL,
+      url: "/getOrders",
+    })
+      .then((res) => {
+        if (this.$route.name === "index") {
+          this.$router.push("/overview");
+          setTimeout(function () {
+            document.getElementsByTagName("html")[0].style.opacity = "1";
+          }, 600);
+
+          return;
+        }
+
+        document.getElementsByTagName("html")[0].style.opacity = "1";
+      })
+      .catch((err) => {
+        this.$router.push("/");
+        localStorage.removeItem("hebhukvyaew");
+        localStorage.removeItem("jhbfgehgwbhef");
+        document.getElementsByTagName("html")[0].style.opacity = "1";
+      });
+
+    this.$store.commit("updateUser", userData);
   },
 };
 </script>
@@ -58,19 +101,7 @@ html {
   box-sizing: border-box;
   overflow-x: hidden;
 
-  /*@include respond(tab-land) {
-    // width < 1200?
-    font-size: 56.25%; //1 rem = 9px, 9/16 = 50%
-  }
-
-  @include respond(tab-port) {
-    // width < 900?
-    font-size: 50%; //1 rem = 8px, 8/16 = 50%
-  }
-
-  @include respond(big-desktop) {
-    font-size: 78%; //1rem = 12, 12/16
-  }*/
+  opacity: 0;
 }
 
 *,

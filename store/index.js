@@ -6,7 +6,6 @@ const baseURL =
   environment === "development"
     ? process.env.BASE_DEV_URL
     : process.env.BASE_PROD_URL;
-console.log(environment);
 
 const createStore = () => {
   return new Vuex.Store({
@@ -16,6 +15,7 @@ const createStore = () => {
       orders: [],
       adminToken: null,
       user: null,
+      products: [],
       notifications: null,
       currentNotification: null,
       error: false
@@ -42,6 +42,9 @@ const createStore = () => {
       updatecurrentNotification(state, data) {
         state.currentNotification = data;
       },
+      updateProducts(state, data) {
+        state.products = data;
+      },
       error(state, data) {
         state.error = data;
       }
@@ -58,7 +61,6 @@ const createStore = () => {
       },
       async submitProduct(vuexContext, data) {
         const token = localStorage.getItem("hebhukvyaew");
-        console.log(data);
         return axios({
           method: "post",
           headers: {
@@ -70,6 +72,26 @@ const createStore = () => {
           url: "/createProduct",
           data: data
         });
+      },
+      getProducts({ commit, state }) {
+        const token = localStorage.getItem("hebhukvyaew");
+
+        axios({
+          method: "get",
+          headers: {
+            "Content-Type": "multipart/form-data",
+            token: token
+          },
+          baseURL,
+          url: "/getProducts"
+        })
+          .then(res => {
+            const data = res.data.data;
+            commit("updateProducts", data);
+          })
+          .catch(err => {
+            console.log(err);
+          });
       },
       getCustomers({ commit, state }) {
         const token = localStorage.getItem("hebhukvyaew");
@@ -279,6 +301,9 @@ const createStore = () => {
       },
       currentNotification(state) {
         return state.currentNotification;
+      },
+      products(state) {
+        return state.products;
       },
       error(state) {
         return state.error;

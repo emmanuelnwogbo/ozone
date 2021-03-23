@@ -219,32 +219,75 @@
             <div v-if="header === 'Coverage'">
               <form class="addproduct__form--information">
                 <div class="addproduct__form--formarea">
-                  <div class="addproduct__form--flexarea">
-                    <span class="addproduct__form--label">City</span>
-                    <div class="addproduct__form--input">
-                      <input
-                        class="inputfield__input"
-                        v-model="city"
+                  <div
+                    class="addproduct__form--flexarea"
+                    v-click-outside="stateClickOutside"
+                  >
+                    <span class="addproduct__form--label">State</span>
+                    <div
+                      class="addproduct__form--input"
+                      @click="stateDropdown = true"
+                    >
+                      <div
+                        class="addproduct__form--dropdowncontent"
                         v-bind:style="{
                           width: '60rem',
                         }"
-                        :placeholder="'City'"
-                        type="text"
-                      />
+                      >
+                        <span
+                          v-for="(item, index) in computedStates"
+                          :key="index"
+                          >{{ item }}</span
+                        >
+                      </div>
+                    </div>
+                    <div
+                      class="addproduct__form--dropdown"
+                      v-if="stateDropdown"
+                    >
+                      <span
+                        v-for="(item, index) in states"
+                        :key="index"
+                        @click.stop="setStateString(item.name, item.slug)"
+                      >
+                        {{ item.name }}
+                      </span>
                     </div>
                   </div>
-                  <div class="addproduct__form--flexarea">
-                    <span class="addproduct__form--label">State</span>
-                    <div class="addproduct__form--input">
-                      <input
-                        class="inputfield__input"
-                        v-model="state"
+
+                  <div
+                    class="addproduct__form--flexarea"
+                    v-click-outside="cityClickOutside"
+                  >
+                    <span class="addproduct__form--label">City</span>
+                    <div
+                      class="addproduct__form--input"
+                      @click="cityDropdown = true"
+                    >
+                      <div
+                        class="addproduct__form--dropdowncontent"
                         v-bind:style="{
                           width: '30rem',
                         }"
-                        :placeholder="'State'"
-                        type="text"
-                      />
+                      >
+                        <span
+                          v-for="(item, index) in computedCities"
+                          :key="index"
+                          >{{ item }}</span
+                        >
+                      </div>
+                    </div>
+                    <div
+                      class="addproduct__form--dropdown"
+                      v-if="cityDropdown && cities !== null"
+                    >
+                      <span
+                        v-for="(item, index) in cities"
+                        :key="index"
+                        @click.stop="setCityString(item.name, item.slug)"
+                      >
+                        {{ item.name }}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -360,6 +403,9 @@
 </template>
 
 <script>
+import sc from "states-cities-db";
+import vClickOutside from "v-click-outside";
+
 export default {
   data() {
     return {
@@ -374,10 +420,12 @@ export default {
       unit_price: null,
       shipping_fee: null,
       tax: null,
-      city: null,
-      state: null,
+      city: "",
+      state: "",
       measurment: null,
       file: null,
+      states: sc.getStates("nigeria"),
+      cities: null,
       editorOption: {
         // Some Quill options...
       },
@@ -405,19 +453,39 @@ export default {
           header: "Coverage",
         },
       ],
+      stateDropdown: false,
+      cityDropdown: false,
     };
   },
+  directives: {
+    clickOutside: vClickOutside.directive,
+  },
   methods: {
+    stateClickOutside(event) {
+      this.stateDropdown = false;
+    },
+    cityClickOutside(event) {
+      this.cityDropdown = false;
+    },
+    setStateString(option, slug) {
+      const currentState = this.state;
+      this.state = currentState.length ? `${currentState},${option}` : option;
+      this.stateDropdown = false;
+
+      this.cities = sc.getCities(slug);
+    },
+    setCityString(option, slug) {
+      const currentCity = this.city;
+      this.city = currentCity.length ? `${currentCity},${option}` : option;
+      this.cityDropdown = false;
+    },
     handleImgUpload(event) {
-      console.log(event, "trigger the image upload");
       const files = event.target.files;
       const FilesArray = Array.from(files);
       const file = FilesArray[0];
-      console.log(FilesArray);
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onloadend = () => {
-        console.log(reader.result);
         this.productIcon = reader.result;
         this.file = file;
       };
@@ -479,7 +547,10 @@ export default {
         .then((res) => {
           console.log(res);
           this.addingProduct = false;
-          this.$store.dispatch("currentNotification", 'Product successfully added');
+          this.$store.dispatch(
+            "currentNotification",
+            "Product successfully added"
+          );
           this.$router.push("/products");
         })
         .catch((err) => {
@@ -488,8 +559,20 @@ export default {
         });
     },
   },
-  mounted() {},
+  mounted() {
+    console.log(this.states);
+  },
   computed: {
+    computedStates() {
+      return this.state.length
+        ? [...new Set(this.state.split(","))]
+        : [];
+    },
+    computedCities() {
+      return this.city.length
+        ? [...new Set(this.city.split(","))]
+        : [];
+    },
     saveBtnLabel() {
       return this.addingProduct ? "Adding Product..." : "Add New Product";
     },
@@ -510,6 +593,7 @@ export default {
     border-radius: 0.6rem;
     height: 100%;
     padding: 1.5rem 2rem;
+    cursor: pointer;
 
     &:focus {
       outline: none;
@@ -688,6 +772,59 @@ export default {
 
     &--flexarea {
       flex-shrink: 0;
+      position: relative;
+      cursor: pointer;
+    }
+
+    &--dropdown {
+      display: flex;
+      flex-direction: column;
+      font-size: 1.3rem;
+      font-weight: 400;
+      height: 29rem;
+      overflow: scroll;
+      position: absolute;
+      width: 100%;
+      overflow-x: hidden;
+      background: #fff;
+      top: 6.6rem;
+      border: 0.5px solid rgba(0, 0, 0, 0.1);
+      z-index: 9;
+
+      & span {
+        &:nth-child(1) {
+          border-top: 0.5px solid rgba(0, 0, 0, 0.1);
+        }
+
+        padding: 1.3rem 0 1.3rem 2.3rem;
+        cursor: pointer;
+        border-bottom: 0.5px solid rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    &--dropdowncontent {
+      min-height: 4rem;
+      background: #ffffff;
+      border: 1px solid #f3f4f6;
+      box-sizing: border-box;
+      border-radius: 0.6rem;
+      padding: 0 2rem;
+      cursor: pointer;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      max-height: 10rem;
+      overflow: scroll;
+      overflow-x: hidden;
+
+      & span {
+        background: rgba(0, 0, 0, 0.1);
+        padding: 0.8rem 1.3rem;
+        border-radius: 1.9rem;
+        display: inline-block;
+        margin: 0rem 1rem 1rem 0rem;
+        font-size: 1.3rem;
+      }
     }
 
     &--label {
@@ -699,6 +836,7 @@ export default {
 
     &--input {
       height: 4.2rem;
+      cursor: pointer;
     }
 
     &--width100 {
