@@ -229,16 +229,20 @@ const createStore = () => {
         })
           .then(res => {
             const { userData, token } = res.data.data;
-            console.log("logged", userData);
             commit("updateUser", userData);
             commit("updateToken", token);
             localStorage.setItem("hebhukvyaew", token);
             localStorage.setItem("jhbfgehgwbhef", JSON.stringify(userData));
           })
           .catch(err => {
-            console.log(err, "this is a err");
             commit("error", "wrong credentials, please try again");
           });
+      },
+      authLogOut({ commit, state }) {
+        commit("updateUser", null);
+        commit("updateToken", null);
+        localStorage.removeItem("hebhukvyaew");
+        localStorage.removeItem("jhbfgehgwbhef");
       },
       getTransactions({ commit, state }) {
         const token = localStorage.getItem("hebhukvyaew");

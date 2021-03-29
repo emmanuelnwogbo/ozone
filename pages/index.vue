@@ -62,22 +62,6 @@ export default {
       loading: false,
     };
   },
-  created() {
-    console.log("hello world from index");
-    //this.$router.push("/overview");
-  },
-  mounted() {
-    if (this.adminToken !== null) {
-      //this.$router.push("/overview");
-    }
-
-    const user = localStorage.getItem("jhbfgehgwbhef");
-    if (user !== null) {
-      console.log("user already exists", JSON.parse(user));
-      //this.$store.dispatch("updateUser", JSON.parse(user));
-      //this.$router.push("/overview");
-    }
-  },
   methods: {
     login() {
       console.log(this.email, this.password);

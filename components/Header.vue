@@ -104,8 +104,19 @@ export default {
         }, 9000);
       }
     },
+    adminToken(newValue) {
+      if (newValue === null) {
+        console.log("logged out");
+        this.$router.push("/")
+      }
+      //newValue === null ? this.$router.push("/") : "";
+    },
   },
   computed: {
+    adminToken() {
+      const token = this.$store.getters.adminToken;
+      return token;
+    },
     currentNotification() {
       this.$store.getters.currentNotification;
     },

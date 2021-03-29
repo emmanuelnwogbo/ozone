@@ -477,6 +477,19 @@
             <span>Settings</span>
           </div>
         </div>
+        <div class="sidenav__bottomlabel" @click="logout">
+          <div class="sidenav__bottomlabel--left">
+            <span
+              v-bind:style="{
+                height: '2rem',
+                width: '2rem',
+              }"
+            >
+              <img src="~/assets/svg/off-btn.svg" alt="" />
+            </span>
+            <span>Log out</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -546,16 +559,16 @@ export default {
   },
   mounted() {
     const token = localStorage.getItem("hebhukvyaew");
-    console.log(token);
     if (token) {
       this.token = token;
     }
   },
   watch: {
     adminToken(newValue) {
-      const token = localStorage.getItem("hebhukvyaew");
-      this.token = token;
-      //this.$router.push("/overview");
+      if (newValue !== null) {
+        const token = localStorage.getItem("hebhukvyaew");
+        this.token = token;
+      }
     },
   },
   computed: {
@@ -570,6 +583,10 @@ export default {
   methods: {
     open_page(page) {
       this.$router.push(page);
+    },
+    logout() {
+      //this.$router.push("/");
+      this.$store.dispatch("authLogOut");
     },
   },
 };
@@ -610,7 +627,7 @@ export default {
       opacity: 0.7;
       font-size: 1.3rem;
       font-weight: 500;
-      margin-bottom: 3rem;
+      margin-bottom: 1.8rem;
     }
   }
 
