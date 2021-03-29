@@ -218,6 +218,65 @@
 
             <div v-if="header === 'Coverage'">
               <form class="addproduct__form--information">
+                <div
+                  class="addproduct__coveragearea"
+                  v-for="(item, covindex) in coverageInputAreas"
+                  :key="covindex"
+                >
+                  <div class="addproduct__form--formarea">
+                    <div class="addproduct__form--flexarea">
+                      <span class="addproduct__form--label">State</span>
+                      <div class="addproduct__form--input">
+                        <div
+                          class="addproduct__form--dropdowncontent"
+                          v-bind:style="{
+                            width: '60rem',
+                          }"
+                        >
+                          <span
+                            v-for="(state, index) in item.state"
+                            :key="index"
+                            >{{ state }}</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="addproduct__form--flexarea">
+                      <span class="addproduct__form--label">City</span>
+                      <div class="addproduct__form--input">
+                        <div
+                          class="addproduct__form--dropdowncontent"
+                          v-bind:style="{
+                            width: '30rem',
+                          }"
+                        >
+                          <span
+                            v-for="(city, index) in item.cities"
+                            :key="index"
+                            >{{ city }}</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="addproduct__coveragearea--btn">
+                    <button
+                      class="addproduct__btn addproduct__coveragearea--remove"
+                      @click.prevent.stop="removeCoverage(covindex)"
+                    >
+                      remove
+                    </button>
+                  </div>
+                </div>
+
+                <div
+                  v-bind:style="{
+                    padding: '.5rem 0',
+                  }"
+                ></div>
+
                 <div class="addproduct__form--formarea">
                   <div
                     class="addproduct__form--flexarea"
@@ -290,6 +349,21 @@
                       </span>
                     </div>
                   </div>
+                </div>
+
+                <div
+                  v-bind:style="{
+                    padding: '.5rem 0',
+                  }"
+                ></div>
+
+                <div class="">
+                  <button
+                    class="addproduct__btn addproduct__btn--colored"
+                    @click.prevent="addCoverageOption"
+                  >
+                    Add coverage
+                  </button>
                 </div>
 
                 <div
@@ -409,6 +483,9 @@ import vClickOutside from "v-click-outside";
 export default {
   data() {
     return {
+      chosenstates: "",
+      tempstate: "",
+      tempcity: "",
       addingProduct: false,
       header: "Add Product Information",
       productIcon: null,
@@ -455,6 +532,7 @@ export default {
       ],
       stateDropdown: false,
       cityDropdown: false,
+      coverageInputAreas: [],
     };
   },
   directives: {
@@ -470,14 +548,62 @@ export default {
     setStateString(option, slug) {
       const currentState = this.state;
       this.state = currentState.length ? `${currentState},${option}` : option;
+
+      this.tempstate = option;
       this.stateDropdown = false;
 
       this.cities = sc.getCities(slug);
     },
     setCityString(option, slug) {
       const currentCity = this.city;
+      const tempCity = this.tempcity;
       this.city = currentCity.length ? `${currentCity},${option}` : option;
+      this.tempcity = tempCity.length ? `${tempCity},${option}` : option;
       this.cityDropdown = false;
+    },
+    addCoverageOption() {
+      if (
+        !this.tempstate.length ||
+        !this.tempcity.length ||
+        this.chosenstates.includes(this.tempstate)
+      ) {
+        return;
+      }
+
+      const coverageObject = {
+        state: [...new Set(this.tempstate.split(","))],
+        cities: [...new Set(this.tempcity.split(","))],
+      };
+
+      const coverageInputAreas = this.coverageInputAreas;
+      coverageInputAreas.push(coverageObject);
+      this.coverageInputAreas = coverageInputAreas;
+      this.chosenstates = this.state;
+      this.tempstate = "";
+      this.tempcity = "";
+    },
+    removeCoverage(itemindex) {
+      console.log(itemindex);
+      const coverageInputAreas = this.coverageInputAreas;
+      const filt = coverageInputAreas.filter(
+        (cov, index) => index !== itemindex
+      );
+
+      const item = coverageInputAreas[itemindex];
+
+      const state = [...new Set(this.state.split(","))];
+      const filtsta = state.filter(
+        (sta) => sta.trim() !== item.state[0].trim()
+      );
+      this.state = filtsta.toString();
+
+      const city = [...new Set(this.city.split(","))];
+      const filtcit = city.filter(
+        (cit) => cit.trim() !== item.cities[0].trim()
+      );
+      this.city = filtcit.toString();
+
+      this.coverageInputAreas = filt;
     },
     handleImgUpload(event) {
       const files = event.target.files;
@@ -564,14 +690,12 @@ export default {
   },
   computed: {
     computedStates() {
-      return this.state.length
-        ? [...new Set(this.state.split(","))]
+      return this.tempstate.length
+        ? [...new Set(this.tempstate.split(","))]
         : [];
     },
     computedCities() {
-      return this.city.length
-        ? [...new Set(this.city.split(","))]
-        : [];
+      return this.tempcity.length ? [...new Set(this.tempcity.split(","))] : [];
     },
     saveBtnLabel() {
       return this.addingProduct ? "Adding Product..." : "Add New Product";
@@ -943,6 +1067,32 @@ export default {
       background: $color-primary;
       color: #fff;
       width: 25rem;
+    }
+  }
+
+  &__coveragearea {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-bottom: 5rem;
+
+    & > .addproduct__form--flexarea {
+      margin-bottom: 0;
+    }
+
+    &--btn {
+      height: 4rem;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+    }
+
+    &--remove {
+      background: rgba(223, 230, 233, 0.6);
+      min-width: 8rem !important;
+      height: 3rem;
+      margin: 0;
+      font-weight: 300;
     }
   }
 }
