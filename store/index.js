@@ -224,7 +224,7 @@ const createStore = () => {
             "Content-Type": "application/json"
           },
           baseURL,
-          url: "/login",
+          url: "/LoginAdmin",
           data: data
         })
           .then(res => {
