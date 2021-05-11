@@ -27,6 +27,24 @@
             View KYC Details
           </button>
         </div>
+        <div class="customerprofile__btns">
+          <button
+            v-if="!disabled"
+            @click="freezeAccount"
+            class="freeze"
+          >
+            Freeze Profile
+          </button>
+
+          <button
+            v-if="disabled"
+            @click="activateAccount"
+            class="activate"
+          >
+            Activate Profile
+          </button>
+          
+        </div>
         <div class="customerprofile__leftcontainer">
           <div v-if="currentleft && customer">
             <div class="customerprofile__leftitem">
@@ -323,6 +341,7 @@
 
         <div class="customerprofile__editcardform" v-if="editcard">
           <div class="customerprofile__editcardform--inputs">
+           <div class="error" >{{cardError}}</div>
             <div
               class="customerprofile__editcardform--top customerprofile__editcardform--area"
             >
@@ -350,9 +369,9 @@
               <div class="customerprofile__editcardform--input">
                 <label for="">Card Number</label>
                 <input
-                  
+                  v-model="cardnumber"
                   class="limit"
-                  type="text"
+                  type="number"
                   placeholder="Card Number"
                 />
               </div>
@@ -363,9 +382,9 @@
               <div class="customerprofile__editcardform--input">
                 <label for="">CVV</label>
                 <input
-                  
+                  v-model="cardCVV"
                   class="validity"
-                  type="text"
+                  type="number"
                   placeholder="CVV"
                 />
               </div>
@@ -382,7 +401,10 @@
           </div>
           <div class="customerprofile__editcardform--btns">
             <button @click="toggleditcard">Cancel</button>
-            <button>Save O-ZONE Card</button>
+            <button @click="addcard">
+
+              {{ loading ? "Saving......" : "Save O-ZONE Card" }}
+            </button>
           </div>
         </div>
       </div>
@@ -392,6 +414,14 @@
 
 <script>
 import moment from 'moment';
+import axios from "axios";
+import Swal from 'sweetalert2'
+
+const environment = process.env.NODE_ENV;
+const baseURL =
+  environment === "development"
+    ? process.env.BASE_DEV_URL
+    : process.env.BASE_PROD_URL;
 
 export default {
   name: "CustomerProfile",
@@ -401,8 +431,13 @@ export default {
       currentleft: true,
       editcard: false,
       cardholdername: null,
+      cardnumber: null,
+      cardCVV: null,
       validthrough: null,
       cardlimit: null,
+      loading: false,
+      cardError: "",
+      disabled:false,
     };
   },
   mounted() {
@@ -412,7 +447,9 @@ export default {
   },
   watch: {
     customer(new_val, old_val) {
+     
       this.cardholdername = new_val.name;
+      this.disabled = new_val.status === "disabled"?true:false;
       this.validthrough = "11/22";
       this.cardlimit = "₦ 240,000";
     },
@@ -431,6 +468,124 @@ export default {
     toggleditcard() {
       this.editcard ? (this.editcard = false) : (this.editcard = true);
     },
+    freezeAccount() {
+      Swal.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, freeze it!'
+}).then((result) => {
+  if (result.isConfirmed) {
+     const token = localStorage.getItem("hebhukvyaew");
+    axios({
+      method: "POST",
+      headers: {
+        "Content-Type": "multipart/form-data",
+        "Content-type": "application/json",
+        token: token,
+      },
+      baseURL,
+      url: "/freezeUserMerchant",
+      data: {
+          user_id: this.customer.id
+          } 
+    }).then(data => {
+      this.loading = false
+      Swal.fire(
+        'Freeze!',
+        'The user has been disabled Successfully',
+        'success'
+      ) 
+      window.location.reload();
+    })
+   
+  }
+})
+  
+    },
+    activateAccount() {
+      Swal.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, activate it!'
+}).then((result) => {
+  if (result.isConfirmed) {
+     const token = localStorage.getItem("hebhukvyaew");
+    axios({
+      method: "POST",
+      headers: {
+        "Content-Type": "multipart/form-data",
+        "Content-type": "application/json",
+        token: token,
+      },
+      baseURL,
+      url: "/activateUserMerchant",
+      data: {
+          user_id: this.customer.id
+          } 
+    }).then(data => {
+      this.loading = false
+      Swal.fire(
+      'Activated!',
+      'The user has been activated Successfully',
+      'success'
+    ) 
+    window.location.reload();
+    })
+   
+  }
+})
+  
+    },
+    addcard() {
+      this.loading = true
+      const token = localStorage.getItem("hebhukvyaew");
+      
+    axios({
+      method: "POST",
+      headers: {
+        "Content-Type": "multipart/form-data",
+        "Content-type": "application/json",
+        token: token,
+      },
+      baseURL,
+      url: "/addCard",
+      data: {
+          card_No: this.cardnumber, 
+          card_name: this.cardholdername, 
+          ex_month: this.validthrough.split("/")[0], 
+          ex_year: this.validthrough.split("/")[1], 
+          ccv: this.cardCVV, 
+          user_id: this.customer.id
+          } 
+    }).then(data => {
+      this.loading = false
+      
+      Swal.fire(
+  'Success!',
+  'Card Added Successfully',
+  'success'
+)
+this.editcard = false
+    
+    
+    }).catch(err => {
+        this.loading = false
+           Swal.fire({
+            icon: 'error',
+  title: 'Oops...',
+  text: err.response.data.data,
+          })
+    })
+
+    },
     switchCurrentTrue() {
       this.currentleft = true;
     },
@@ -442,6 +597,11 @@ export default {
 </script>
 
 <style lang="scss">
+.error {
+        font-size: 1.5rem;
+        color: red;
+        margin-bottom: 1rem;
+      }
 .customerprofile {
   padding-left: 21rem;
 
@@ -481,6 +641,8 @@ export default {
     margin-top: 3rem;
     margin-bottom: 3.5rem;
 
+    
+
     & button {
       background: #e5fffc;
       border: none;
@@ -497,6 +659,16 @@ export default {
         background: $color-primary;
         color: #fff;
       }
+    }
+    & .freeze{
+       background: $primary-color;
+       color: #fff;
+       width: 100%;
+    }
+    & .activate{
+       background: $color-primary;
+       color: #fff;
+       width: 100%;
     }
   }
 
