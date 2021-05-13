@@ -521,9 +521,9 @@ export default {
   computed: {
     products() {
       const products = this.$store.getters.products;
-      products.length ? (products.length = 3) : "";
+      const newProduct = products.length ? products: []
 
-      return products;
+      return newProduct.slice(0, 3);
     },
     saleslocation() {
       const locations = [

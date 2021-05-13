@@ -112,7 +112,7 @@
                       v-bind:style="{
                         width: '38rem',
                       }"
-                      :placeholder="''"
+                      :placeholder="'Seperate by comma (,)'"
                       type="text"
                     />
                   </div>
@@ -146,7 +146,7 @@
                   </figure>
                 </label>
               </div>
-              <div class="addproduct__form--formarea">
+              <!-- <div class="addproduct__form--formarea">
                 <div class="addproduct__form--uploadset">
                   <div class="addproduct__form--uploadsettop">
                     <span>image</span>
@@ -161,7 +161,7 @@
                     <span></span>
                   </div>
                 </div>
-              </div>
+              </div> -->
             </form>
 
             <form
@@ -380,7 +380,7 @@
                     <div class="addproduct__form--input">
                       <input
                         class="inputfield__input"
-                        v-model="value"
+                        v-model="width"
                         v-bind:style="{
                           width: '60rem',
                         }"
@@ -394,7 +394,7 @@
                     <div class="addproduct__form--input">
                       <input
                         class="inputfield__input"
-                        v-model="value"
+                        v-model="height"
                         v-bind:style="{
                           width: '30rem',
                         }"
@@ -411,7 +411,7 @@
                     <div class="addproduct__form--input">
                       <input
                         class="inputfield__input"
-                        v-model="value"
+                        v-model="depth"
                         v-bind:style="{
                           width: '60rem',
                         }"
@@ -425,7 +425,7 @@
                     <div class="addproduct__form--input">
                       <input
                         class="inputfield__input"
-                        v-model="value"
+                        v-model="weight"
                         v-bind:style="{
                           width: '30rem',
                         }"
@@ -499,6 +499,10 @@ export default {
       tax: null,
       city: "",
       state: "",
+      width: "",
+      height: "",
+      depth: "",
+      weight: "",
       measurment: null,
       file: null,
       states: sc.getStates("nigeria"),
