@@ -137,7 +137,7 @@
               </ProductCard>
             </div>
 
-            <div class="transactions__history">
+            <!-- <div class="transactions__history">
               <div class="transactions__history--header">
                 <h2>Transaction History</h2>
                 <div class="transactions__search--drop">
@@ -191,13 +191,13 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
 
-        <div class="transactions__btn">
+        <!-- <div class="transactions__btn">
           <button>Load More</button>
-        </div>
+        </div> -->
       </div>
       <div class="transactions__right">
         <div class="transactions__search--drop">

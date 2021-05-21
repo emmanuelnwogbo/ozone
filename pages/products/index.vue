@@ -28,7 +28,7 @@
                 v-for="(item, index) in products"
                 :key="index"
               >
-                <ProductCard
+                <div
                   v-bind:background="
                     currentProduct === item.label ? '#159183' : '#fff'
                   "
@@ -64,7 +64,7 @@
                       <span>{{ item.unit_price }}</span>
                     </div>
                   </div>
-                </ProductCard>
+                </div>
               </div>
             </div>
             <button
@@ -148,7 +148,7 @@
               <div class="products__ordersovertime--bottom">
                 <h3>Your earning this month</h3>
                 <p>N0</p>
-                <button>View Orders</button>
+                <button @click="vieworders">View Orders</button>
               </div>
             </div>
           </ProductCard>
@@ -506,6 +506,9 @@ export default {
     });
   },
   methods: {
+    vieworders() {
+      this.$router.push("/products/productorders");
+    },
     getRandomColor() {
       var letters = "0123456789ABCDEF";
       var color = "#";
@@ -523,7 +526,7 @@ export default {
       const products = this.$store.getters.products;
       const newProduct = products.length ? products: []
 
-      return newProduct.slice(0, 3);
+      return newProduct;
     },
     saleslocation() {
       const locations = [
@@ -557,6 +560,19 @@ export default {
 </script>
 
 <style lang="scss">
+.products__productlist--products{
+  height: 400px;
+  overflow-y: scroll;
+}
+.products__productlist--products::-webkit-scrollbar {
+  width: 5px;
+  border-radius: 2px;
+  background: #ccc;
+  transition: all 0.3s ease;
+}
+.products__productlist--product{
+  height: 300px;
+}
 .products {
   padding-left: 21rem;
 

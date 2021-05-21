@@ -352,9 +352,9 @@
                   <div @click="activateAccount(item.id)"  v-if="item.status == 'disabled'" class="customer__bottom--option">
                     <span>Unfreeze Account</span><span></span>
                   </div>
-                  <div class="customer__bottom--option">
+                  <!-- <div class="customer__bottom--option">
                     <span>Delete Account</span><span></span>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>
@@ -444,9 +444,9 @@ export default {
       data: {
           user_id: id
           } 
-    }).then(data => {
+    }).then(async data => {
       this.loading = false
-      Swal.fire(
+      await Swal.fire(
         'Freeze!',
         'The user has been disabled Successfully',
         'success'
@@ -482,9 +482,9 @@ export default {
       data: {
           user_id: id
           } 
-    }).then(data => {
+    }).then(async data => {
       this.loading = false
-      Swal.fire(
+      await Swal.fire(
       'Activated!',
       'The user has been activated Successfully',
       'success'
@@ -940,4 +940,5 @@ h2 {
   font-size: 1.7rem;
   font-weight: 500;
 }
+
 </style>

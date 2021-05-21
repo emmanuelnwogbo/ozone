@@ -396,7 +396,7 @@
             ></span>
             <span>Support</span>
           </div>
-          <div class="sidenav__bottomlabel--right"><span>18</span></div>
+          <div class="sidenav__bottomlabel--right"><span>{{currentSupport}}</span></div>
         </div>
         <div
           class="sidenav__bottomlabel"
@@ -431,7 +431,7 @@
             ></span>
             <span>Notifications</span>
           </div>
-          <div class="sidenav__bottomlabel--right"><span>6</span></div>
+          <div class="sidenav__bottomlabel--right"><span>{{currentNotification}}</span></div>
         </div>
         <div
           class="sidenav__bottomlabel"
@@ -562,6 +562,7 @@ export default {
     if (token) {
       this.token = token;
     }
+    this.$store.dispatch("currentNotification", null);
   },
   watch: {
     adminToken(newValue) {
@@ -572,6 +573,17 @@ export default {
     },
   },
   computed: {
+     currentNotification() {
+      const notification = this.$store.getters.currentNotification;
+      this.notifi = notification
+      // return 11
+      return notification.length
+    },
+     currentSupport() {
+      const support = this.$store.getters.supports;
+      
+      return support.length
+    },
     current_route() {
       return this.$route.name;
     },
@@ -585,7 +597,6 @@ export default {
       this.$router.push(page);
     },
     logout() {
-      //this.$router.push("/");
       this.$store.dispatch("authLogOut");
     },
   },

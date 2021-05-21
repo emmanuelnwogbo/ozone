@@ -3,7 +3,7 @@
     <div class="notifications__body">
       <div class="notifications__sectionone">
         <div class="notifications__search">
-          <div class="notifications__search--input">
+          <!-- <div class="notifications__search--input">
             <input type="text" placeholder="Recent notifications" />
             <span class="recentnots">
               <svg
@@ -23,8 +23,8 @@
                 </g>
               </svg>
             </span>
-          </div>
-          <div class="notifications__search--input">
+          </div> -->
+          <!-- <div class="notifications__search--input">
             <span class="search"
               ><svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -41,9 +41,9 @@
                 ></path></svg
             ></span>
             <input class="search" type="text" placeholder="Search" />
-          </div>
+          </div> -->
         </div>
-        <div class="notifications__buttons">
+        <!-- <div class="notifications__buttons">
           <button
             v-bind:class="{
               active: currentBtn === item,
@@ -54,7 +54,7 @@
           >
             {{ item }}
           </button>
-        </div>
+        </div> -->
 
         <div class="notifications__recent">
           <h2 class="notifications__recent--h2">Recent Notifications</h2>
@@ -66,12 +66,16 @@
             You have no notifications
           </div>
 
-          <div class="notifications__cards">
+          <div  v-if="notifications && notifications.length" class="notifications__cards">
             <div
               class="notifications__card"
-              v-if="notifications && notifications.length"
+             
+              v-for="(item, index) in notifications"
+               :key="index"
+              
+              
             >
-              <div class="notifications__card--left">
+              <!-- <div  class="notifications__card--left" >
                 <figure class="notifications__card--img">
                   <span>
                     <img src="~/assets/notifications/comment.png" alt="" />
@@ -81,20 +85,25 @@
                     alt=""
                   />
                 </figure>
-              </div>
-              <div class="notifications__card--right">
-                <div class="notifications__card--top">
-                  <h2>Arlen McCoy</h2>
+              </div> -->
+              <div 
+             
+                 class="notifications__card--right">
+                <div v-if="item.title" class="notifications__card--top">
+                  <h2>{{item.title}}</h2>
+                </div>
+                <div v-else class="notifications__card--top">
+                  <h2>{{item.description}}</h2>
+                </div>
+                 <div class="notifications__card--preview">
+                  <p>{{item.details}}</p>
                 </div>
                 <div class="notifications__card--middle">
-                  <span>Requested Support on</span>
-                  <span>Card</span>
-                  <span>12h</span>
+                  <span>{{item.status}}</span>
+                  <span>{{formatDate(item.createdAt)}}</span>
                 </div>
-                <div class="notifications__card--preview">
-                  <p>I'm yet to receive my O-zone card</p>
-                </div>
-                <div class="notifications__card--bottom">
+               
+                <!-- <div class="notifications__card--bottom">
                   <span>
                     <img src="~/assets/notifications/bubble.png" alt="" />
                   </span>
@@ -107,18 +116,18 @@
                   <span>
                     <img src="~/assets/notifications/trail.png" alt="" />
                   </span>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
         </div>
-
-        <div class="notifications__loadmore">
-          <button>Load More</button>
+       
+        <div v-if="max > sliceSize" class="notifications__loadmore">
+          <button @click="loadMore">Load More</button>
         </div>
       </div>
 
-      <div class="notifications__sectiontwo">
+      <!-- <div class="notifications__sectiontwo">
         <h2>Filter</h2>
 
         <div class="notifications__filters">
@@ -211,7 +220,8 @@
             <p>Reset all filters</p>
           </div>
         </div>
-      </div>
+      </div> -->
+    
     </div>
   </div>
 </template>
@@ -225,6 +235,8 @@ export default {
       currentBtn: "Merchants",
       unselectall: true,
       from: "merchants",
+      sliceSize: 4,
+      max: 0,
       buttons: [
         "Merchants",
         "Products",
@@ -236,16 +248,31 @@ export default {
   },
   middleware: "auth",
   mounted() {
-    this.$store.dispatch("getNotifications");
+    this.$store.dispatch("currentNotification");
   },
   computed: {
     notifications() {
-      return this.$store.getters.notifications;
+      const data = this.$store.getters.currentNotification
+      this.max = data.length
+    
+      return data.slice(0, this.sliceSize)
+
     },
+    
   },
   methods: {
+    loadMore(){
+      const newSize = this.sliceSize + 4
+      this.sliceSize = newSize
+     
+    },
     toggleFrom(from) {
       this.from = from;
+    },
+    formatDate: function (data){
+      const event = new Date(data);
+      return event.toString().split("GMT")[0]
+
     },
     reset(from) {
       this.from = from;
@@ -262,6 +289,17 @@ export default {
     display: flex;
     justify-content: space-between;
   }
+  &__cards {
+      height: 600px;
+    overflow-y: scroll;
+
+  }
+  &__cards::-webkit-scrollbar {
+  width: 5px;
+  border-radius: 2px;
+  background: #ccc;
+  transition: all 0.3s ease;
+}
 
   &__search {
     display: flex;
@@ -320,7 +358,8 @@ export default {
       width: 1px;
       top: 0;
       right: 42rem;
-      background: rgba(0, 0, 0, 0.1);
+      /* background: rgba(0, 0, 0, 0.1); */
+      /* border: solid red 2px; */
     }
   }
 
@@ -479,6 +518,8 @@ export default {
     margin-top: 4rem;
     padding: 3rem;
     margin-bottom: 10rem;
+    /* border: solid red 2px; */
+  
 
     &--h2 {
       font-weight: 500;
@@ -488,6 +529,12 @@ export default {
       color: #11142d;
     }
   }
+  &__recent::-webkit-scrollbar {
+  width: 5px;
+  border-radius: 2px;
+  background: #ccc;
+  transition: all 0.3s ease;
+}
 
   &__buttons {
     display: flex;
@@ -528,6 +575,7 @@ export default {
     margin-top: 7rem;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     padding-bottom: 5rem;
+   
 
     &--left {
       margin-right: 3rem;
@@ -555,14 +603,15 @@ export default {
 
         &:nth-child(1) {
           font-weight: 500;
-          color: #808191;
+         color: #5f75ee;
+         text-transform: capitalize;
           font-size: 1.4rem;
         }
 
         &:nth-child(2) {
           font-weight: 600;
-
-          color: #5f75ee;
+          
+         color: #808191;
         }
 
         &:nth-child(3) {
@@ -597,7 +646,7 @@ export default {
     &--preview {
       font-size: 1.5rem;
       color: #808191;
-      margin-bottom: 4rem;
+      margin-bottom: 2rem;
     }
 
     &--bottom {

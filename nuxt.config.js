@@ -8,6 +8,7 @@ export default {
    ** Nuxt target
    ** See https://nuxtjs.org/api/configuration-target
    */
+  // target: 'static',
   target: "server",
   /*
    ** Headers of the page
@@ -51,6 +52,9 @@ export default {
       }
     ]
   },
+  generate: {
+    fallback: true
+  },
   /*
    ** Global CSS
    */
@@ -61,7 +65,8 @@ export default {
    */
   plugins: [
     { src: "~/plugins/vue-graph.js", mode: "client" },
-    { src: "~/plugins/vuequill.js", mode: "client" }
+    { src: "~/plugins/vuequill.js", mode: "client" },
+    { src: "~/plugins/cardVal.js", mode: "client" },
     //{ src: "~/plugins/multiselect.js", mode: "client" }
   ],
   /*
