@@ -346,12 +346,15 @@
                   >
                     <span>View Account</span><span></span>
                   </div>
-                  <div class="customer__bottom--option">
+                  <div @click="freezeAccount(item.id)"  v-if="item.status == 'active'" class="customer__bottom--option">
                     <span>Freeze Account</span><span></span>
                   </div>
-                  <div class="customer__bottom--option">
-                    <span>Delete Account</span><span></span>
+                  <div @click="activateAccount(item.id)"  v-if="item.status == 'disabled'" class="customer__bottom--option">
+                    <span>Unfreeze Account</span><span></span>
                   </div>
+                  <!-- <div class="customer__bottom--option">
+                    <span>Delete Account</span><span></span>
+                  </div> -->
                 </div>
               </div>
             </div>
@@ -367,10 +370,18 @@
 </template>
 
 <script>
+import axios from "axios";
+import Swal from 'sweetalert2'
 import ProductCard from "@/components/products/ProductCard";
 
 import CircleChart from "circle-chart";
 import BarGraph from "@/components/BarGraph";
+
+const environment = process.env.NODE_ENV;
+const baseURL =
+  environment === "development"
+    ? process.env.BASE_DEV_URL
+    : process.env.BASE_PROD_URL;
 
 export default {
   component: {
@@ -379,7 +390,9 @@ export default {
     BarGraph,
   },
   data() {
-    return {};
+    return {
+       disabled:false,
+    };
   },
   mounted() {
     new CircleChart({
@@ -395,10 +408,93 @@ export default {
       ],
     });
   },
+  watch: {
+    customer(new_val, old_val) {
+      this.disabled = new_val.status === "disabled"?true:false;
+     
+    },
+  },
   middleware: "auth",
   methods: {
     viewprofile(item) {
       this.$router.push("customer/profile/" + item.id);
+    },
+     freezeAccount(id) {
+       console.log(id)
+      Swal.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, freeze it!'
+}).then((result) => {
+  if (result.isConfirmed) {
+     const token = localStorage.getItem("hebhukvyaew");
+    axios({
+      method: "POST",
+      headers: {
+        "Content-Type": "multipart/form-data",
+        "Content-type": "application/json",
+        token: token,
+      },
+      baseURL,
+      url: "/freezeUserMerchant",
+      data: {
+          user_id: id
+          } 
+    }).then(async data => {
+      this.loading = false
+      await Swal.fire(
+        'Freeze!',
+        'The user has been disabled Successfully',
+        'success'
+      ) 
+      window.location.reload();
+    })
+   
+  }
+})
+  
+    },
+    activateAccount(id) {
+      Swal.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, activate it!'
+}).then((result) => {
+  if (result.isConfirmed) {
+     const token = localStorage.getItem("hebhukvyaew");
+    axios({
+      method: "POST",
+      headers: {
+        "Content-Type": "multipart/form-data",
+        "Content-type": "application/json",
+        token: token,
+      },
+      baseURL,
+      url: "/activateUserMerchant",
+      data: {
+          user_id: id
+          } 
+    }).then(async data => {
+      this.loading = false
+      await Swal.fire(
+      'Activated!',
+      'The user has been activated Successfully',
+      'success'
+    ) 
+    window.location.reload();
+    })
+   
+  }
+})
+  
     },
   },
   computed: {
@@ -844,4 +940,5 @@ h2 {
   font-size: 1.7rem;
   font-weight: 500;
 }
+
 </style>

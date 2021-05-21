@@ -16,8 +16,9 @@ const createStore = () => {
       adminToken: null,
       user: null,
       products: [],
+      supports: [],
       notifications: null,
-      currentNotification: null,
+      currentNotification: [],
       error: false
     },
     mutations: {
@@ -45,6 +46,9 @@ const createStore = () => {
       updateProducts(state, data) {
         state.products = data;
       },
+      updateSupports(state, data) {
+        state.supports = data;
+      },
       error(state, data) {
         state.error = data;
       }
@@ -57,7 +61,36 @@ const createStore = () => {
         vuexContext.commit("updateUser", data);
       },
       currentNotification({ commit, state }, data) {
-        commit("updatecurrentNotification", data);
+        const token = localStorage.getItem("hebhukvyaew");
+        const P1 = axios({
+          method: "get",
+          headers: {
+            "Content-Type": "multipart/form-data",
+            token: token
+          },
+          baseURL,
+          url: "/getSystemNotifications"
+        })
+        const P2 = axios({
+          method: "get",
+          headers: {
+            "Content-Type": "multipart/form-data",
+            token: token
+          },
+          baseURL,
+          url: "/getAllSystemTransactions"
+        })
+        Promise.all([P1, P2]).then((values) => {
+       
+          const data  = values.map(res => res.data.data)
+          commit("updatecurrentNotification", [...data[0], ...data[1]]);
+         
+        }).catch(err => {
+          console.log("there is an error", err);
+        });;
+       
+       
+       
       },
       async submitProduct(vuexContext, data) {
         const token = localStorage.getItem("hebhukvyaew");
@@ -88,6 +121,26 @@ const createStore = () => {
           .then(res => {
             const data = res.data.data;
             commit("updateProducts", data);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      },
+      getSupports({ commit, state }) {
+        const token = localStorage.getItem("hebhukvyaew");
+
+        axios({
+          method: "get",
+          headers: {
+            "Content-Type": "multipart/form-data",
+            token: token
+          },
+          baseURL,
+          url: "/getAllSupportTickets"
+        })
+          .then(res => {
+            const data = res.data.data;
+            commit("updateSupports", data);
           })
           .catch(err => {
             console.log(err);
@@ -308,6 +361,9 @@ const createStore = () => {
       },
       products(state) {
         return state.products;
+      },
+      supports(state) {
+        return state.supports;
       },
       error(state) {
         return state.error;

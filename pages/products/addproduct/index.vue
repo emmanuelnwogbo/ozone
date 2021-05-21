@@ -36,6 +36,7 @@
             >
               <div class="addproduct__form--formarea">
                 <div class="addproduct__form--flexarea">
+                  
                   <span class="addproduct__form--label">Product Name</span>
                   <div class="addproduct__form--input">
                     <input
@@ -46,8 +47,10 @@
                       }"
                       :placeholder="''"
                       type="text"
+                      required
                     />
                   </div>
+                  <span class="error">{{nameError}}</span>
                 </div>
                 <div class="addproduct__form--flexarea">
                   <span class="addproduct__form--label">Product Ticker</span>
@@ -62,6 +65,7 @@
                       type="text"
                     />
                   </div>
+                  <span class="error">{{tickerError}}</span>
                 </div>
               </div>
               <div class="addproduct__form--formarea">
@@ -85,6 +89,7 @@
                         @change="onEditorChange($event)"
                       />
                     </div>
+                    <span class="error">{{descriptionError}}</span>
                   </div>
                 </div>
               </div>
@@ -102,6 +107,7 @@
                       type="text"
                     />
                   </div>
+                  <span class="error">{{categoryError}}</span>
                 </div>
                 <div class="addproduct__form--flexarea">
                   <span class="addproduct__form--label">Tags</span>
@@ -112,10 +118,11 @@
                       v-bind:style="{
                         width: '38rem',
                       }"
-                      :placeholder="''"
+                      :placeholder="'Seperate by comma (,)'"
                       type="text"
                     />
                   </div>
+                    <span class="error">{{tagsError}}</span>
                 </div>
               </div>
             </form>
@@ -146,7 +153,8 @@
                   </figure>
                 </label>
               </div>
-              <div class="addproduct__form--formarea">
+              <span class="error">{{fileError}}</span>
+              <!-- <div class="addproduct__form--formarea">
                 <div class="addproduct__form--uploadset">
                   <div class="addproduct__form--uploadsettop">
                     <span>image</span>
@@ -161,7 +169,7 @@
                     <span></span>
                   </div>
                 </div>
-              </div>
+              </div> -->
             </form>
 
             <form
@@ -180,8 +188,10 @@
                       }"
                       :placeholder="''"
                       type="text"
+                      @keypress="isNumber($event)"
                     />
                   </div>
+                   <span class="error">{{unit_priceError}}</span>
                 </div>
                 <div class="addproduct__form--flexarea">
                   <span class="addproduct__form--label">Measurement</span>
@@ -196,6 +206,7 @@
                       type="text"
                     />
                   </div>
+                    <span class="error">{{measurmentError}}</span>
                 </div>
               </div>
               <div class="addproduct__form--formarea">
@@ -212,6 +223,7 @@
                       type="text"
                     />
                   </div>
+                  <span class="error">{{taxError}}</span>
                 </div>
               </div>
             </form>
@@ -259,6 +271,8 @@
                         </div>
                       </div>
                     </div>
+
+                    
                   </div>
 
                   <div class="addproduct__coveragearea--btn">
@@ -380,28 +394,32 @@
                     <div class="addproduct__form--input">
                       <input
                         class="inputfield__input"
-                        v-model="value"
+                        v-model="width"
                         v-bind:style="{
                           width: '60rem',
                         }"
                         :placeholder="'Width'"
                         type="text"
+                         @keypress="isNumber($event)"
                       />
                     </div>
+                     <span class="error">{{widthError}}</span>
                   </div>
                   <div class="addproduct__form--flexarea">
                     <span class="addproduct__form--label">Height</span>
                     <div class="addproduct__form--input">
                       <input
                         class="inputfield__input"
-                        v-model="value"
+                        v-model="height"
                         v-bind:style="{
                           width: '30rem',
                         }"
                         :placeholder="'Height'"
                         type="text"
+                         @keypress="isNumber($event)"
                       />
                     </div>
+                    <span class="error">{{heightError}}</span>
                   </div>
                 </div>
 
@@ -411,28 +429,32 @@
                     <div class="addproduct__form--input">
                       <input
                         class="inputfield__input"
-                        v-model="value"
+                        v-model="depth"
                         v-bind:style="{
                           width: '60rem',
                         }"
                         :placeholder="'Depth'"
                         type="text"
+                         @keypress="isNumber($event)"
                       />
                     </div>
+                    <span class="error">{{depthError}}</span>
                   </div>
                   <div class="addproduct__form--flexarea">
                     <span class="addproduct__form--label">Weight</span>
                     <div class="addproduct__form--input">
                       <input
                         class="inputfield__input"
-                        v-model="value"
+                        v-model="weight"
                         v-bind:style="{
                           width: '30rem',
                         }"
                         :placeholder="'Weight'"
                         type="text"
+                         @keypress="isNumber($event)"
                       />
                     </div>
+                    <span class="error">{{weightError}}</span>
                   </div>
                 </div>
 
@@ -448,8 +470,10 @@
                         }"
                         :placeholder="'Shipping Fees'"
                         type="text"
+                         @keypress="isNumber($event)"
                       />
                     </div>
+                    <span class="error">{{shipping_feeError}}</span>
                   </div>
                 </div>
               </form>
@@ -489,17 +513,35 @@ export default {
       addingProduct: false,
       header: "Add Product Information",
       productIcon: null,
-      name: null,
-      ticker: null,
-      description: null,
-      category: null,
-      tags: null,
-      unit_price: null,
-      shipping_fee: null,
-      tax: null,
+      name: "",
+      ticker: "",
+      description: "",
+      category: "",
+      tags: "",
+      unit_price: "",
+      shipping_fee: "",
+      tax: "",
       city: "",
       state: "",
-      measurment: null,
+      width: "",
+      height: "",
+      depth: "",
+      weight: "",
+      nameError:"",
+      tickerError:"",
+      descriptionError:"",
+      categoryError:"",
+      tagsError:"",
+      measurmentError:"",
+      unit_priceError:"",
+      taxError:"",
+      widthError:"",
+      heightError:"",
+      fileError:"",
+      depthError:"",
+      shipping_feeError:"",
+      weightError:"",
+      measurment: "",
       file: null,
       states: sc.getStates("nigeria"),
       cities: null,
@@ -539,6 +581,15 @@ export default {
     clickOutside: vClickOutside.directive,
   },
   methods: {
+    isNumber: function(evt) {
+      evt = (evt) ? evt : window.event;
+      var charCode = (evt.which) ? evt.which : evt.keyCode;
+      if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
+        evt.preventDefault();;
+      } else {
+        return true;
+      }
+    },
     stateClickOutside(event) {
       this.stateDropdown = false;
     },
@@ -629,13 +680,124 @@ export default {
       console.log("editor changed here");
     },
     nextPage() {
-      if (this.pageTracker !== this.nav.length - 1) {
-        let pageTracker = this.pageTracker;
-        pageTracker += 1;
-        this.pageTracker = pageTracker;
-        this.header = this.nav[this.pageTracker].header;
-      } else {
-        this.submitProduct();
+      // if (this.pageTracker !== this.nav.length - 1) {
+      //   let pageTracker = this.pageTracker;
+      //   pageTracker += 1;
+      //   this.pageTracker = pageTracker;
+      //   this.header = this.nav[this.pageTracker].header;
+      // } else {
+      //   this.submitProduct();
+      // }
+      if (this.pageTracker === 0) {
+        if(!this.name.length){
+          this.nameError = "Product Name should not be empty"
+          this.tickerError = ""
+           this.descriptionError = ""
+           this.categoryError = ""
+           this.tagsError = ""
+        }else if(!this.ticker.length){
+          this.tickerError = "Product Ticker should not be empty"
+          this.nameError = ""
+           this.descriptionError = ""
+           this.categoryError = ""
+           this.tagsError = ""
+        }else if(!this.description.length){
+          this.descriptionError = "Description should not be empty"
+          this.nameError = ""
+          this.tickerError = ""
+           this.categoryError = ""
+           this.tagsError = ""
+        }else if(!this.category.length){
+          this.categoryError = "Category should not be empty"
+          this.nameError = ""
+          this.tickerError = ""
+           this.descriptionError = ""
+           this.tagsError = ""
+        }else if(!this.tags.length){
+          this.tagsError = "Tags should not be empty"
+          this.nameError = ""
+          this.tickerError = ""
+           this.descriptionError = ""
+           this.categoryError = ""
+        }else{
+          // let pageTracker = this.pageTracker;
+          // pageTracker += 1;
+          this.pageTracker = 1;
+          this.header = this.nav[1].header;
+        }
+
+      }
+      if (this.pageTracker === 1) {
+        if(this.file){
+          this.pageTracker = 2;
+          this.header = this.nav[2].header;
+
+        }else{
+          this.fileError = "Product image should not be empty. Please select an image"
+          
+        }
+      
+      }
+      if (this.pageTracker === 2) {
+        if(!this.unit_price.length){
+          this.unit_priceError = "Unit Price should not be empty"
+          this.taxError = ""
+           this.measurmentError = ""
+        }else if(!this.measurment.length){
+          this.measurmentError = "Measurement should not be empty"
+          this.unit_priceError = ""
+          this.taxError = ""
+        }else if(!this.tax.length){
+          this.taxError = "Tax Rule should not be empty"
+            this.unit_priceError = ""
+           this.measurmentError = ""
+        }else{
+          let pageTracker = this.pageTracker;
+          pageTracker += 1;
+          this.pageTracker = pageTracker;
+          this.header = this.nav[this.pageTracker].header;
+        }
+
+      }
+      if (this.pageTracker === 3) {
+        if(!this.width.length){
+          this.widthError = "Width should not be empty"
+           this.heightError = ""
+            this.depthError = ""
+            this.weightError = ""
+            this.shipping_feeError = ""
+        }else if(!this.height.length){
+          this.heightError = "Height should not be empty"
+            this.widthError = ""
+            this.depthError = ""
+            this.weightError = ""
+            this.shipping_feeError = ""
+        }else if(!this.depth.length){
+          this.depthError = "Depth should not be empty"
+           this.heightError = ""
+            this.widthError = ""
+            this.weightError = ""
+            this.shipping_feeError = ""
+        }else if(!this.weight.length){
+          this.weightError = "Weight should not be empty"
+          this.depthError = ""
+           this.heightError = ""
+            this.widthError = ""
+            this.shipping_feeError = ""
+        }else if(!this.shipping_fee.length){
+          this.shipping_feeError = "Shipping Fee should not be empty"
+          this.weightError = ""
+          this.depthError = ""
+           this.heightError = ""
+            this.widthError = ""
+        }else{
+          // let pageTracker = this.pageTracker;
+          // pageTracker += 1;
+          // this.pageTracker = pageTracker;
+          // this.header = this.nav[this.pageTracker].header;
+          this.submitProduct();
+        }
+
       }
     },
     prevPage() {
@@ -774,6 +936,11 @@ export default {
       background: rgba(178, 190, 195, 0.1);
     }
   }
+}
+.error{
+  color:red;
+  font-size: 12px;
+  text-align: center;
 }
 
 .addproduct {
@@ -1109,4 +1276,6 @@ export default {
 .ql-toolbar.ql-snow {
   border: none !important;
 }
+
+
 </style>

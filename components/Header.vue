@@ -26,7 +26,7 @@
         class="header__h3"
         v-if="this.$route.name === 'products-productorders'"
       >
-        {{ "54 Orders" }},
+        <!-- {{ "54 Orders" }}, -->
       </h3>
     </div>
     <div class="header__right">
@@ -75,7 +75,7 @@
             />
           </svg>
         </span>
-        <span>6</span>
+        <span>{{notifi.length}}</span>
       </div>
     </div>
   </div>
@@ -86,24 +86,27 @@ export default {
   data() {
     return {
       user: null,
+      notifi: [],
     };
   },
   mounted() {
     this.$store.dispatch("getCustomers");
+    this.$store.dispatch("currentNotification", null);
   },
   watch: {
-    userDatails(newValue) {
-      const user = localStorage.getItem("jhbfgehgwbhef");
-      this.user = JSON.parse(user);
-      //this.$store.dispatch("updateUser", this.user);
-    },
-    currentNotification(newValue) {
+     currentNotification(newValue) {
       if (newValue !== null) {
         setTimeout(() => {
           this.dispatch("currentNotification", null);
         }, 9000);
       }
     },
+    userDatails(newValue) {
+      const user = localStorage.getItem("jhbfgehgwbhef");
+      this.user = JSON.parse(user);
+      //this.$store.dispatch("updateUser", this.user);
+    },
+   
     adminToken(newValue) {
       if (newValue === null) {
         console.log("logged out");
@@ -118,7 +121,9 @@ export default {
       return token;
     },
     currentNotification() {
-      this.$store.getters.currentNotification;
+      const notification = this.$store.getters.currentNotification;
+      this.notifi = notification
+      return notification
     },
     userDatails() {
       const user = this.$store.getters.user;

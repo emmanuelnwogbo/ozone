@@ -27,6 +27,24 @@
             View KYC Details
           </button>
         </div>
+        <div class="customerprofile__btns">
+          <button
+            v-if="!disabled"
+            @click="freezeAccount"
+            class="freeze"
+          >
+            Freeze Profile
+          </button>
+
+          <button
+            v-if="disabled"
+            @click="activateAccount"
+            class="activate"
+          >
+            Activate Profile
+          </button>
+          
+        </div>
         <div class="customerprofile__leftcontainer">
           <div v-if="currentleft && customer">
             <div class="customerprofile__leftitem">
@@ -61,22 +79,22 @@
               <span>{{ customer.email }}</span>
             </div>
             <div class="customerprofile__leftitem">
-              <span>card balance</span>
+              <span>Wallet balance</span>
               <span>{{ customer.wallet }}</span>
             </div>
             <div class="customerprofile__leftitem">
               <span>Ozone ID</span>
               <span class="colored">{{customer.uuidz}}</span>
             </div>
-            <div class="customerprofile__leftitem">
+            <!-- <div class="customerprofile__leftitem">
               <span>cards</span>
               <span>{{customer.cards}}</span>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
       <div class="customerprofile__right customerprofile__section">
-        <div class="customerprofile__fuelcard">
+        <div v-if="customerCardsData.length"  class="customerprofile__fuelcard">
           <div class="customerprofile__fuelcard--top">
             <span>Fuel Card</span>
             <span>
@@ -149,26 +167,145 @@
             </svg>
           </div>
           <div class="customerprofile__fuelcard--name">
-            <p>{{ customer ? customer.name : "" }}</p>
+            <p>{{customerCardsData[customerCardsDataView].card_name}}</p>
+          </div>
+          <div class="customerprofile__fuelcard--bottom">
+            <div class="customerprofile__fuelcard--validthrough">
+              <span>Card No.</span>
+              <span>
+                {{customerCardsData[customerCardsDataView].card_No.slice(0, 4)}}
+                  ****
+                  {{customerCardsData[customerCardsDataView].card_No.slice(-4)}}
+              </span>
+            </div>
+            
+            <!-- <div class="customerprofile__fuelcard--logo">
+              <span></span>
+              <span></span>
+            </div> -->
           </div>
           <div class="customerprofile__fuelcard--bottom">
             <div class="customerprofile__fuelcard--validthrough">
               <span>Valid Through</span>
               <span>
-                <input
-                  v-bind:class="{
-                    focused: editcard,
-                  }"
-                  type="text"
-                  v-model="validthrough"
-                />
+                  {{customerCardsData[customerCardsDataView].ex_month}}/{{customerCardsData[customerCardsDataView].ex_year}}
+
               </span>
             </div>
+            
             <div class="customerprofile__fuelcard--logo">
               <span></span>
               <span></span>
             </div>
           </div>
+        </div>
+        <div v-if="!customerCardsData.length"  class="customerprofile__fuelcard">
+          <div class="customerprofile__fuelcard--top">
+            <span>Fuel Card</span>
+            <span>
+              <figure>
+                <img src="~/assets/sidenav/logo.png" alt="" />
+              </figure>
+            </span>
+          </div>
+          <div class="customerprofile__fuelcard--scanner">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="55"
+              height="42"
+              viewBox="0 0 55 42"
+              fill="none"
+            >
+              <g opacity="0.6">
+                <rect
+                  x="54.5103"
+                  y="0.457031"
+                  width="41.0705"
+                  height="53.9553"
+                  rx="4.02652"
+                  transform="rotate(90 54.5103 0.457031)"
+                  fill="#ECECEC"
+                  stroke="#397026"
+                  stroke-width="0.805303"
+                />
+                <rect
+                  x="32.7671"
+                  y="6.09399"
+                  width="28.1856"
+                  height="11.2742"
+                  rx="4.02652"
+                  transform="rotate(90 32.7671 6.09399)"
+                  stroke="#397026"
+                  stroke-width="0.805303"
+                />
+                <path
+                  d="M0.445312 8.50977L22.9723 8.50977"
+                  stroke="#397026"
+                  stroke-width="0.805303"
+                />
+                <path
+                  d="M31.895 8.50977L54.422 8.50977"
+                  stroke="#397026"
+                  stroke-width="0.805303"
+                />
+                <path
+                  d="M0.445312 20.6062L21.7296 20.6062"
+                  stroke="#397026"
+                  stroke-width="0.805303"
+                />
+                <path
+                  d="M33.105 20.6062L54.3892 20.6062"
+                  stroke="#397026"
+                  stroke-width="0.805303"
+                />
+                <path
+                  d="M0.445312 32.7021L22.9723 32.7021"
+                  stroke="#397026"
+                  stroke-width="0.805303"
+                />
+                <path
+                  d="M31.895 32.7021L54.422 32.7021"
+                  stroke="#397026"
+                  stroke-width="0.805303"
+                />
+              </g>
+            </svg>
+          </div>
+          <div class="customerprofile__fuelcard--name">
+            <p>You dont have a card</p>
+          </div>
+          <div class="customerprofile__fuelcard--bottom">
+            <div class="customerprofile__fuelcard--validthrough">
+              <span>Card No.</span>
+              <span>
+                ****
+              </span>
+            </div>
+            
+            <!-- <div class="customerprofile__fuelcard--logo">
+              <span></span>
+              <span></span>
+            </div> -->
+          </div>
+          <div class="customerprofile__fuelcard--bottom">
+            <div class="customerprofile__fuelcard--validthrough">
+              <!-- <span>Valid Through</span>
+              <span>
+                  {{customerCardsData[customerCardsDataView].ex_month}}/{{customerCardsData[customerCardsDataView].ex_year}}
+
+              </span> -->
+            </div>
+            
+            <div class="customerprofile__fuelcard--logo">
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="loadmore">
+          <button @click="handlePreCard" v-if="customerCardsData.length && customerCardsDataView !== 0">Previous Card</button>
+          <button v-if=" customerCardsData.length && customerCardsDataView !== customerCardsData.length -1" @click="handleNextCard">Next Card</button>
         </div>
 
         <div class="customerprofile__editlockcard" v-if="!editcard">
@@ -215,7 +352,7 @@
           </div>
         </div>
 
-        <div class="customerprofile__history" v-if="!editcard">
+        <!-- <div class="customerprofile__history" v-if="!editcard">
           <div class="customerprofile__history--header">
             <h2>Transaction History</h2>
             <div class="customerprofile__history--search">
@@ -319,10 +456,11 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <div class="customerprofile__editcardform" v-if="editcard">
           <div class="customerprofile__editcardform--inputs">
+           <div class="error" >{{cardError}}</div>
             <div
               class="customerprofile__editcardform--top customerprofile__editcardform--area"
             >
@@ -341,20 +479,30 @@
               <div class="customerprofile__editcardform--input">
                 <label for="">Card Validity</label>
                 <input
+                  ref="cardExpInput" id="card-exp" :data-error="(cardErrors.cardExpiry)?true:false" v-model="cardExpiry" maxlength="10" class="form-controlX validity" v-cardformat:formatCardExpiry
+                />
+                <div v-if="cardErrors.cardExpiry" class="error">
+                    <small>{{ cardErrors.cardExpiry }}</small>
+                  </div>
+                <!-- <input
                   v-model="validthrough"
                   class="validity"
                   type="text"
                   placeholder="Card validity"
-                />
+                /> -->
               </div>
               <div class="customerprofile__editcardform--input">
                 <label for="">Card Number</label>
-                <input
-                  
+                <input ref="cardNumInput" :data-error="(cardErrors.cardNumber)?true:false" v-model="cardNumber" type="tel" class="form-controlX limit" placeholder="#### #### #### ####" v-cardformat:formatCardNumber>
+                <div v-if="cardErrors.cardNumber" class="error">
+                    <small>{{ cardErrors.cardNumber }}</small>
+                  </div>
+                <!-- <input
+                  v-model="cardnumber"
                   class="limit"
-                  type="text"
+                  type="number"
                   placeholder="Card Number"
-                />
+                /> -->
               </div>
             </div>
             <div
@@ -362,28 +510,29 @@
             >
               <div class="customerprofile__editcardform--input">
                 <label for="">CVV</label>
-                <input
-                  
+                  <input ref="cardCvcInput" :data-error="(cardErrors.cardCvc)?true:false" v-model="cardCvc" class="form-controlX validity" v-cardformat:formatCardCVC>
+                   <div v-if="cardErrors.cardCvc" class="error">
+                    <small>{{ cardErrors.cardCvc }}</small>
+                  </div>
+                <!-- <input
+                  v-model="cardCVV"
                   class="validity"
-                  type="text"
+                  type="number"
                   placeholder="CVV"
-                />
+                /> -->
               </div>
-              <!--<div class="customerprofile__editcardform--input">
-                <label for="">Set Card Limit</label>
-                <input
-                  v-model="cardlimit"
-                  class="limit"
-                  type="text"
-                  placeholder="Card limit"
-                />
-              </div>-->
+              
             </div>
           </div>
           <div class="customerprofile__editcardform--btns">
             <button @click="toggleditcard">Cancel</button>
-            <button>Save O-ZONE Card</button>
+            <button @click="addcard">
+
+              {{ loading ? "Saving......" : "Save O-ZONE Card" }}
+            </button>
           </div>
+
+
         </div>
       </div>
     </div>
@@ -392,32 +541,78 @@
 
 <script>
 import moment from 'moment';
+import axios from "axios";
+import Swal from 'sweetalert2'
+
+const environment = process.env.NODE_ENV;
+const baseURL =
+  environment === "development"
+    ? process.env.BASE_DEV_URL
+    : process.env.BASE_PROD_URL;
 
 export default {
   name: "CustomerProfile",
   data() {
     return {
       moment,
+      customerCardsData: [],
+      customerCardsDataView: 0,
       currentleft: true,
       editcard: false,
       cardholdername: null,
+      cardnumber: null,
+      cardCVV: null,
       validthrough: null,
       cardlimit: null,
+      loading: false,
+      cardError: "",
+      disabled:false,
+
+
+      cardNumber: null,
+        cardExpiry: null,
+        cardCvc: null,
+        cardPostal: null,
+        cardErrors: {},
+        // declaring card-brand in data{} enables card brand name/classes.
+        cardBrand: null,
+        // demo only
+        // $cardFormat: Vue.prototype.$cardFormat
     };
   },
   mounted() {
-    if (this.cardlimit === null) {
-      this.$store.dispatch("getCustomers");
-    }
+    // if (this.cardlimit === null) {
+    //   this.$store.dispatch("getCustomers");
+    // }
+    this.customerCards()
+  
   },
   watch: {
     customer(new_val, old_val) {
+    
       this.cardholdername = new_val.name;
-      this.validthrough = "11/22";
-      this.cardlimit = "₦ 240,000";
+      this.disabled = new_val.status === "disabled"?true:false;
+      // this.validthrough = "11/22";
+      // this.cardlimit = "₦ 240,000";
     },
+
+    // handle auto-focus to next field
+        // Note: since CVC can be 3 OR 4 digits we don't watch it
+        cardNumber: function(val){
+          if(this.$cardFormat.validateCardNumber(val)){
+            // this.$refs.cardExpInput.focus();
+          }
+        },
+        cardExpiry: function (val) {
+          if (this.$cardFormat.validateCardExpiry(val)) {
+            // this.$refs.cardCvcInput.focus();
+          }
+        }
+
+
   },
   computed: {
+   
     customer() {
       const customers = this.$store.getters.customers.filter(
         (item) => item.accountType !== "admin"
@@ -426,10 +621,172 @@ export default {
         (customer) => customer.id == this.$route.params.index
       )[0];
     },
+    
+    cardBrandClass(){
+          return this.getBrandClass(this.cardBrand);
+        }
   },
   methods: {
+    handleNextCard(){
+      this.customerCardsDataView +=1
+    },
+    handlePreCard(){
+      this.customerCardsDataView -=1
+    },
+       customerCards(){
+      console.log("data")
+      console.log("data")
+      console.log("data")
+      const token = localStorage.getItem("hebhukvyaew");
+       axios({
+      method: "POST",
+      headers: {
+        "Content-Type": "multipart/form-data",
+        "Content-type": "application/json",
+        token: token,
+      },
+      baseURL,
+      url: "/getCards",
+      data: {
+          user_id: this.$route.params.index
+          } 
+    }).then(({data}) => {
+      console.log("data")
+      console.log("data")
+      console.log("data")
+      console.log(data.data)
+      this.customerCardsData = data.data
+      // return []
+    })
+
+    },
+    
     toggleditcard() {
       this.editcard ? (this.editcard = false) : (this.editcard = true);
+    },
+    freezeAccount() {
+      Swal.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, freeze it!'
+}).then((result) => {
+  if (result.isConfirmed) {
+     const token = localStorage.getItem("hebhukvyaew");
+    axios({
+      method: "POST",
+      headers: {
+        "Content-Type": "multipart/form-data",
+        "Content-type": "application/json",
+        token: token,
+      },
+      baseURL,
+      url: "/freezeUserMerchant",
+      data: {
+          user_id: this.customer.id
+          } 
+    }).then(async data => {
+      this.loading = false
+      await Swal.fire(
+        'Freeze!',
+        'The user has been disabled Successfully',
+        'success'
+      ) 
+      window.location.reload();
+    })
+   
+  }
+})
+  
+    },
+    activateAccount() {
+      Swal.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, activate it!'
+}).then((result) => {
+  if (result.isConfirmed) {
+     const token = localStorage.getItem("hebhukvyaew");
+    axios({
+      method: "POST",
+      headers: {
+        "Content-Type": "multipart/form-data",
+        "Content-type": "application/json",
+        token: token,
+      },
+      baseURL,
+      url: "/activateUserMerchant",
+      data: {
+          user_id: this.customer.id
+          } 
+    }).then(async data => {
+      this.loading = false
+      await Swal.fire(
+      'Activated!',
+      'The user has been activated Successfully',
+      'success'
+    ) 
+    window.location.reload();
+    })
+   
+  }
+})
+  
+    },
+    addcard() {
+      this.loading = true
+      const token = localStorage.getItem("hebhukvyaew");
+      this.validate()
+if(!Object.keys(this.cardErrors).length){
+
+      axios({
+      method: "POST",
+      headers: {
+        "Content-Type": "multipart/form-data",
+        "Content-type": "application/json",
+        token: token,
+      },
+      baseURL,
+      url: "/addCard",
+      data: {
+          card_No: this.cardNumber.replace(/\s/g, ''), 
+          card_name: this.cardholdername, 
+          ex_month: this.cardExpiry.split("/")[0].trim(), 
+          ex_year: this.cardExpiry.split("/")[1].trim(), 
+          ccv: this.cardCvc, 
+          user_id: this.customer.id
+          } 
+    }).then(data => {
+      this.loading = false
+      
+            Swal.fire(
+        'Success!',
+        'Card Added Successfully',
+        'success'
+      )
+      this.editcard = false
+
+    }).catch(err => {
+        this.loading = false
+           Swal.fire({
+            icon: 'error',
+  title: 'Oops...',
+  text: err.response.data.data,
+          })
+    })
+
+}else{
+  this.loading = false
+
+}
+
     },
     switchCurrentTrue() {
       this.currentleft = true;
@@ -437,11 +794,101 @@ export default {
     switchCurrentFalse() {
       this.currentleft = false;
     },
+
+
+     validate: function(){
+
+          // init
+          this.cardErrors = {};
+          
+          // validate card number
+          if(!this.$cardFormat.validateCardNumber(this.cardNumber)){
+            this.cardErrors.cardNumber = "Invalid Credit Card Number.";
+          };
+
+          // validate card expiry
+          if (!this.$cardFormat.validateCardExpiry(this.cardExpiry)) {
+            this.cardErrors.cardExpiry = "Invalid Expiration Date.";
+          };
+
+          // validate card CVC
+          if (!this.$cardFormat.validateCardCVC(this.cardCvc)) {
+            this.cardErrors.cardCvc = "Invalid CVC.";
+          };
+
+        },
+        reset: function(){
+          this.cardErrors = {};
+          this.cardNumber = null;
+          this.cardExpiry = null;
+          this.cardCvc = null;
+          this.cardPostal = null;
+          this.$refs.cardNumInput.focus();
+        },
+        prefill: function(ccNum){
+          this.cardNumber = ccNum;
+          this.$cardFormat.setCardType({
+            currentTarget : this.$refs.cardNumInput,
+            value: ccNum
+          });
+        },
+        getBrandClass: function (brand) {
+          let icon = '';
+          brand = brand || 'unknown';
+          let cardBrandToClass = {
+            'visa': 'fab fa-cc-visa',
+            'mastercard': 'fab fa-cc-mastercard',
+            'amex': 'fab fa-cc-amex',
+            'discover': 'fab fa-cc-discover',
+            'diners': 'fab fa-cc-diners-club',
+            'jcb': 'fab fa-cc-jcb',
+            'unknown': 'fa fa-credit-card',
+          };
+          if (cardBrandToClass[brand]) {
+            icon = cardBrandToClass[brand];
+          };
+
+          return icon;
+        }
   },
 };
 </script>
 
 <style lang="scss">
+.loadmore {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3rem;
+
+    & button {
+      font-weight: 600;
+      background: #1b1d21;
+      margin: 10px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      outline: none;
+      cursor: pointer;
+      border: none;
+      font-size: 1.3rem;
+      border-radius: 1.2rem;
+      height: 4.5rem;
+      width: 14rem;
+    }
+  }
+.card_Index{
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  /* border: solid red 2px; */
+}
+.error {
+        font-size: 1.5rem;
+        color: red;
+        margin-bottom: 1rem;
+      }
 .customerprofile {
   padding-left: 21rem;
 
@@ -481,6 +928,8 @@ export default {
     margin-top: 3rem;
     margin-bottom: 3.5rem;
 
+    
+
     & button {
       background: #e5fffc;
       border: none;
@@ -497,6 +946,16 @@ export default {
         background: $color-primary;
         color: #fff;
       }
+    }
+    & .freeze{
+       background: $primary-color;
+       color: #fff;
+       width: 100%;
+    }
+    & .activate{
+       background: $color-primary;
+       color: #fff;
+       width: 100%;
     }
   }
 
